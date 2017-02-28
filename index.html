@@ -7,6 +7,7 @@
 <body>
 <div id="dragzone" class="">
     <h1>Drag files here</h1>
+    <strong>only SVGs allowed</strong>
 </div>
 <div id="result"></div>
 
@@ -26,9 +27,13 @@
     #dragzone {
         border: 2px dashed var(--secondary-color);
         margin-bottom: 2em;
+        padding: 1em;
         text-align: center;
         color: var(--secondary-color);
         background-color: var(--main-bg-color);
+    }
+    h1 {
+        margin:0;
     }
 
     #dragzone.drag-active {
