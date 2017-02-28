@@ -12,7 +12,7 @@ let mainWindow;
 
 function createWindow() {
     // Create the browser window.
-    mainWindow = new BrowserWindow({width: 600, height: 600, frame: true,backgroundColor: '#F7F7F7'});
+    mainWindow = new BrowserWindow({width: 300, height: 400, frame: true,backgroundColor: '#F7F7F7'});
 
     // and load the index.html of the app.
     mainWindow.loadURL(url.format({
@@ -23,7 +23,7 @@ function createWindow() {
 
 
     // Open the DevTools.
-     mainWindow.webContents.openDevTools()
+    // mainWindow.webContents.openDevTools()
 
     mainWindow.on('closed', () => {
         mainWindow = null
