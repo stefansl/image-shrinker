@@ -1,26 +1,35 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
-  </head>
-  <body>
-    <div id="dragzone">
+    <title>SVG Shrinker</title>
+</head>
+<body>
+<div id="dragzone">
     <h1>Drag files here</h1>
+</div>
+<div id="result"></div>
+</body>
 
-    </div>
-    <div id="result">
-
-    </div>
-  </body>
-
-  <style>
-      #dragzone {
-          border: 2px dashed grey;
-      }
-  </style>
-  <script>
+<style>
+    body {
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        color: #1e1c1d;
+    }
+    #dragzone {
+        border: 2px dashed grey;
+        margin-bottom: 2em;
+        text-align: center;
+        color: lightgray;
+        background-color: #efefef;
+    }
+    .resLine{
+        border-bottom: 1px solid #efefef;
+        padding: 1em .5em;
+    }
+</style>
+<script>
     // You can also require other files to run in this process
     require('./renderer.js')
-  </script>
+</script>
 </html>
