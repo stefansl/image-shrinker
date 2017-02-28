@@ -52,8 +52,7 @@ app.on('activate', () => {
     }
 })
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
+// Main logic
 ipc.on('shrinkSvg', (event, svgName, svgPath, svgLastModified) => {
 
     fs.readFile(svgPath, 'utf8', function (err, data) {
