@@ -1,14 +1,8 @@
+const {app, BrowserWindow, ipcMain} = require('electron');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
-const electron = require('electron');
 
-// Module to control application life.
-const app = electron.app;
-
-// Module to create native browser window.
-const BrowserWindow = electron.BrowserWindow;
-const ipc = electron.ipcMain
 const url = require('url');
 const SVGO = require('svgo');
 
@@ -37,12 +31,12 @@ function createWindow() {
 }
 
 
-app.on('ready', () => createWindow);
+app.on('ready', createWindow);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
-        app.quit();
+        app.quit()
     }
 })
 
@@ -53,7 +47,7 @@ app.on('activate', () => {
 })
 
 // Main logic
-ipc.on('shrinkSvg', (event, svgName, svgPath, svgLastModified) => {
+ipcMain.on('shrinkSvg', (event, svgName, svgPath, svgLastModified) => {
 
     fs.readFile(svgPath, 'utf8', function (err, data) {
 

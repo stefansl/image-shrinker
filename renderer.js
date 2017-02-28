@@ -1,7 +1,7 @@
 
 'use strict';
 
-const ipc = require('electron').ipcRenderer
+const {ipcRenderer} = require('electron')
 
 
 var dragzone = document.getElementById('dragzone'),
@@ -15,14 +15,14 @@ dragzone.ondrop = (e) => {
     e.preventDefault();
 
     for (let f of e.dataTransfer.files) {
-        ipc.send('shrinkSvg', f.name, f.path, f.lastModified);
+        ipcRenderer.send('shrinkSvg', f.name, f.path, f.lastModified);
     }
 
     return false;
 };
 
 
-ipc.on('isShrinked', (event, path) => {
+ipcRenderer.on('isShrinked', (event, path) => {
     const result = `Wrote SVG to: ${path}`
     resultBox.innerHTML += '<div class="resLine">' + result + '</div>';
 })
