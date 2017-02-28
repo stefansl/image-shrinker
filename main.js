@@ -1,4 +1,4 @@
-const {app, BrowserWindow, ipcMain} = require('electron');
+const {app, BrowserWindow, ipcMain, dialog} = require('electron');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
@@ -23,7 +23,7 @@ function createWindow() {
 
 
     // Open the DevTools.
-    // mainWindow.webContents.openDevTools()
+     mainWindow.webContents.openDevTools()
 
     mainWindow.on('closed', () => {
         mainWindow = null
@@ -51,26 +51,33 @@ ipcMain.on('shrinkSvg', (event, svgName, svgPath, svgLastModified) => {
 
     fs.readFile(svgPath, 'utf8', function (err, data) {
 
-        if (err || !checkFileType(svgName)) {
+        if (err) {
             throw err;
-
         }
 
-        let newFile = generateNewPath(svgPath);
-
-        svgo.optimize(data, function (result) {
-            fs.writeFile(newFile, result.data, '', () => {
-
+        if (!checkFileType(svgName)) {
+            dialog.showMessageBox({
+                'type': 'error',
+                'message': 'Only SVG allowed'
             })
+        } else {
+            let newFile = generateNewPath(svgPath);
 
-            event.sender.send('isShrinked', newFile);
-        })
+            svgo.optimize(data, function (result) {
+                fs.writeFile(newFile, result.data, '', () => {
+
+                })
+
+                event.sender.send('isShrinked', newFile);
+            })
+        }
+
     })
 })
 
 let checkFileType = fileName => {
     if (fileName.split('.').pop() !== 'svg') {
-        throw 'Not SVG!'
+
         return false;
     }
 
