@@ -1,0 +1,22 @@
+{
+  "name": "svg-shrinker",
+  "version": "1.0.0",
+  "description": "GUI for SVGO",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://lab.clickpress.de/svg-shrinker",
+  "keywords": [
+    "SVG",
+    "GUI"
+  ],
+  "author": "Stefan Schulz-Lauterbach",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^1.4.1"
+  },
+  "dependencies": {
+    "svgo": "^0.7.2"
+  }
+}
