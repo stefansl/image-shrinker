@@ -9,12 +9,12 @@ let dragzone = document.getElementById('dragzone'),
 
 document.ondragover = () => {
     dragzone.classList.add('drag-active');
-    return false
+    return false;
 };
 
 document.ondragleave = () => {
     dragzone.classList.remove('drag-active');
-    return false
+    return false;
 };
 
 document.ondragend = () => {

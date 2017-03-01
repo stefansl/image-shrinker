@@ -1,6 +1,5 @@
 const {app, BrowserWindow, ipcMain, dialog} = require('electron');
 const fs = require('fs');
-const os = require('os');
 const path = require('path');
 
 const url = require('url');
@@ -25,7 +24,7 @@ function createWindow() {
     // mainWindow.webContents.openDevTools()
 
     mainWindow.on('closed', () => {
-        mainWindow = null
+        mainWindow = null;
     });
 }
 
@@ -35,7 +34,7 @@ app.on('ready', createWindow);
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
-        app.quit()
+        app.quit();
     }
 });
 
@@ -58,7 +57,7 @@ ipcMain.on('shrinkSvg', (event, svgName, svgPath) => {
             dialog.showMessageBox({
                 'type': 'error',
                 'message': 'Only SVG allowed'
-            })
+            });
         } else {
             let newFile = generateNewPath(svgPath);
 
@@ -68,9 +67,9 @@ ipcMain.on('shrinkSvg', (event, svgName, svgPath) => {
                 });
 
                 event.sender.send('isShrinked', newFile);
-            })
+            });
         }
-    })
+    });
 });
 
 
