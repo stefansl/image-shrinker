@@ -8,15 +8,18 @@
     "pack-mac": "electron-packager . 'SVG Shrinker' --platform=darwin --arch=x64 --ignore=/^SVG/i",
     "pack-linux": "electron-packager . 'SVG Shrinker' --platform=linux --arch=x64 --ignore=/^SVG/i"
   },
-  "repository": "https://lab.clickpress.de/stefan.sl/svg-shrinker",
+  "repository": "https://github.com/stefansl/svg-shrinker",
   "keywords": [
     "SVG",
-    "GUI"
+    "svgo",
+    "SVG Shrinking",
+    "shrinking tool"
   ],
   "author": "Stefan Schulz-Lauterbach",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^1.4.1"
+    "electron": "^1.4.1",
+    "electron-packager": "^8.5.2"
   },
   "dependencies": {
     "svgo": "^0.7.2"
