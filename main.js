@@ -6,7 +6,7 @@ const path = require('path');
 const url = require('url');
 const SVGO = require('svgo');
 
-var svgo = new SVGO();
+let svgo = new SVGO();
 
 let mainWindow;
 
@@ -37,16 +37,16 @@ app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit()
     }
-})
+});
 
 app.on('activate', () => {
     if (mainWindow === null) {
         createWindow();
     }
-})
+});
 
 // Main logic
-ipcMain.on('shrinkSvg', (event, svgName, svgPath, svgLastModified) => {
+ipcMain.on('shrinkSvg', (event, svgName, svgPath) => {
 
     fs.readFile(svgPath, 'utf8', function (err, data) {
 
@@ -65,28 +65,22 @@ ipcMain.on('shrinkSvg', (event, svgName, svgPath, svgLastModified) => {
             svgo.optimize(data, function (result) {
                 fs.writeFile(newFile, result.data, '', () => {
 
-                })
+                });
 
                 event.sender.send('isShrinked', newFile);
             })
         }
     })
-})
+});
 
 
 const checkFileType = fileName => {
-    if (fileName.split('.').pop() !== 'svg') {
-
-        return false;
-    }
-
-    return true;
-}
+    return (fileName.split('.').pop() === 'svg');
+};
 
 
 const generateNewPath = pathName => {
-    let arrPath = pathName.split('.'),
-        newPath = arrPath[0] + '.min.' + arrPath[1];
+    let arrPath = pathName.split('.');
 
-    return newPath;
-}
+    return arrPath[0] + '.min.' + arrPath[1];
+};
