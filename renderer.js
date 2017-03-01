@@ -7,22 +7,22 @@ const {ipcRenderer} = require('electron');
 let dragzone = document.getElementById('dragzone'),
     resultBox = document.getElementById('result');
 
-dragzone.ondragover = () => {
+document.ondragover = () => {
     dragzone.classList.add('drag-active');
     return false
 };
 
-dragzone.ondragleave = () => {
+document.ondragleave = () => {
     dragzone.classList.remove('drag-active');
     return false
 };
 
-dragzone.ondragend = () => {
+document.ondragend = () => {
     dragzone.classList.remove('drag-active');
     return false;
 };
 
-dragzone.ondrop = (e) => {
+document.ondrop = (e) => {
     e.preventDefault();
 
     for (let f of e.dataTransfer.files) {
