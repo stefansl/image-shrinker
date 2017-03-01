@@ -1,12 +1,11 @@
 # SVG Shrinker
 
-Another GUI for SVGO. Made with Electron
+SVGO-GUI is not maintained anymore. So I decided to rebuild it with Electron.
+SVG Shrinker is a tool to cleanup SVG graphics. 
 
 ## How to use
-
-Drag your SVG in the window and it will optimized and saved as yourfilename.min.svg
-
-Easy, bitch!
+Drag you SVG onto the SVG Shrinker window and it will saved in the same folder as reduced SVG.
+The original graphic will be not replaced.
 
 ## Installation
 Get the repo
