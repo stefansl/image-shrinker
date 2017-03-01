@@ -21,7 +21,6 @@ function createWindow() {
         slashes: true
     }));
 
-
     // Open the DevTools.
     // mainWindow.webContents.openDevTools()
 
@@ -71,11 +70,11 @@ ipcMain.on('shrinkSvg', (event, svgName, svgPath, svgLastModified) => {
                 event.sender.send('isShrinked', newFile);
             })
         }
-
     })
 })
 
-let checkFileType = fileName => {
+
+const checkFileType = fileName => {
     if (fileName.split('.').pop() !== 'svg') {
 
         return false;
@@ -84,9 +83,10 @@ let checkFileType = fileName => {
     return true;
 }
 
-let generateNewPath = pathName => {
-    let arrPath = pathName.split('.');
-    let newPath = arrPath[0] + '.min.' + arrPath[1];
+
+const generateNewPath = pathName => {
+    let arrPath = pathName.split('.'),
+        newPath = arrPath[0] + '.min.' + arrPath[1];
 
     return newPath;
 }

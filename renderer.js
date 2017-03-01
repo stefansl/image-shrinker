@@ -1,7 +1,7 @@
 
 'use strict';
 
-const {ipcRenderer} = require('electron')
+const {ipcRenderer,shell} = require('electron')
 
 
 var dragzone = document.getElementById('dragzone'),
@@ -33,8 +33,7 @@ dragzone.ondrop = (e) => {
     return false;
 };
 
-
 ipcRenderer.on('isShrinked', (event, path) => {
-    const result = `Wrote SVG to: ${path}`
-    resultBox.innerHTML += '<div class="resLine">' + result + '</div>';
+    const result = `<span>Wrote SVG to:</span><br>${path}`
+    resultBox.innerHTML += `<div class="resLine" data-finder="${result}">${result}</div>`;
 })

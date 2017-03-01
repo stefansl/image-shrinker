@@ -9,7 +9,9 @@
     <h1>Drag files here</h1>
     <strong>only SVGs allowed</strong>
 </div>
-<div id="result"></div>
+<div id="result">
+    <div class="resLine"><span>Wrote SVG to:</span><br>/Users/stefansl/Downloads/icon_excel.min.svg</div>
+</div>
 
 <style>
     :root {
@@ -42,8 +44,13 @@
     }
 
     .resLine {
+        font-size: .625em;
         border-bottom: 1px solid var(--secondary-color);
         padding: 1em .5em;
+    }
+
+    .resLine span {
+        color: var(--secondary-color)
     }
 
 </style>
