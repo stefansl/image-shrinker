@@ -5,8 +5,8 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "pack-mac": "electron-packager . 'SVG Shrinker' --platform=darwin --arch=x64 --ignore=/^SVG/i --icon=assets/icons/mac/svg-shrinker.png.icns --overwrite --prune=true --out=release-builds",
-    "pack-linux": "electron-packager . 'SVG Shrinker' --platform=linux --arch=x64 --ignore=/^SVG/i --icon=assets/icons/png/512x512 --overwrite"
+    "pack-mac": "electron-packager . 'SVG Shrinker' --platform=darwin --arch=x64 --ignore=/^release/i --icon=assets/icons/mac/svg-shrinker.png.icns --overwrite --prune=true --out=release-builds",
+    "pack-linux": "electron-packager . 'SVG Shrinker' --platform=linux --arch=x64 --ignore=/^release/i --icon=assets/icons/png/512x512 --overwrite"
   },
   "repository": "https://github.com/stefansl/svg-shrinker",
   "keywords": [
