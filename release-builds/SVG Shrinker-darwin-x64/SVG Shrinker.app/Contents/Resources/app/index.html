@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>SVG Shrinker</title>
+</head>
+<body>
+<div id="dragzone" class="">
+    <h1>Drag files here</h1>
+    <strong>only SVGs allowed</strong>
+</div>
+<div id="result"></div>
+
+<style>
+    :root {
+        --main-bg-color: #39B54A;
+        --main-color: #F3FFE2;
+        --secondary-color: #7ec049;
+        --third-color: #5dc7e6;
+    }
+    body {
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        color: var(--main-color);
+        background-color: var(--main-bg-color);
+    }
+
+    #dragzone {
+        border: 2px dashed var(--main-color);
+        margin-bottom: 2em;
+        padding: 1em;
+        text-align: center;
+        color: color: var(--main-color);;
+        background-color: var(--main-bg-color);
+    }
+    h1 {
+        margin:0;
+    }
+
+    #dragzone.drag-active {
+        border-color: var(--secondary-colorcolor);
+        color: var(--secondary-color);
+    }
+
+    .resLine {
+        font-size: .625em;
+        border-bottom: 1px solid var(--secondary-color);
+        padding: 1em .5em;
+    }
+
+    .resLine span {
+        color: var(--secondary-color)
+    }
+
+</style>
+
+</body>
+
+
+<script>
+    // You can also require other files to run in this process
+    require('./renderer.js')
+</script>
+</html>
