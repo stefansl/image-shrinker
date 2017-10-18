@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "pack-mac": "electron-packager . 'SVG Shrinker' --platform=darwin --arch=x64 --ignore=/^release/i --icon=assets/icons/mac/svg-shrinker.png.icns --overwrite --prune=true --out=release-builds",
+    "build": "electron-packager . 'SVG Shrinker' --platform=darwin --arch=x64 --ignore=/^release/i --icon=assets/icons/mac/svg-shrinker.png.icns --overwrite --prune=true --out=release-builds",
     "pack-linux": "electron-packager . 'SVG Shrinker' --platform=linux --arch=x64 --ignore=/^release/i --icon=assets/icons/png/512x512 --overwrite"
   },
   "repository": "https://github.com/stefansl/svg-shrinker",
@@ -18,10 +18,16 @@
   "author": "Stefan Schulz-Lauterbach",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^1.4.1",
-    "electron-packager": "^8.5.2"
+    "electron": "^1.7.5",
+    "electron-packager": "^8.7.2"
   },
   "dependencies": {
     "svgo": "^0.7.2"
+  },
+  "build": {
+    "appId": "your.id",
+    "mac": {
+      "category": "your.app.category.type"
+    }
   }
 }
