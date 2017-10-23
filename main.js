@@ -74,7 +74,7 @@ ipcMain.on('shrinkSvg', (event, fileName, filePath) => {
             case 'jpg':
             case 'jpeg':
                 execFile(jpegtran, ['-outfile', newFile, filePath], (err) => {
-                    console.log('Image minified!');
+                    event.sender.send('isShrinked', newFile);
                 });
                 break;
             case 'png':
@@ -88,7 +88,7 @@ ipcMain.on('shrinkSvg', (event, fileName, filePath) => {
                         imageminPngquant({quality: '65-80'})
                     ]
                 }).then(files => {
-                    console.log(files);
+                    event.sender.send('isShrinked', newFile);
                     //=> [{data: <Buffer 89 50 4e …>, path: 'build/images/foo.jpg'}, …]
                 });
                 break;
