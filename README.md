@@ -14,7 +14,7 @@ git clone https://lab.clickpress.de/stefan.sl/image-shrinker.git
 ```
 Install dependencies
 ```shell
-$ cd svg-shrinker
+$ cd image-shrinker
 $ npm install
 ```
 Generate your MacOS package
