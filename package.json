@@ -1,19 +1,24 @@
 {
-  "name": "svg-shrinker",
+  "name": "image-shrinker",
   "version": "1.0.0",
-  "description": "GUI for SVGO",
+  "description": "GUI for minifying images",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "build": "electron-packager . 'SVG Shrinker' --platform=darwin --arch=x64 --ignore=/^release/i --icon=assets/icons/mac/svg-shrinker.png.icns --overwrite --prune=true --out=release-builds",
     "pack-linux": "electron-packager . 'SVG Shrinker' --platform=linux --arch=x64 --ignore=/^release/i --icon=assets/icons/png/512x512 --overwrite"
   },
-  "repository": "https://github.com/stefansl/svg-shrinker",
+  "repository": "https://github.com/stefansl/image-shrinker",
   "keywords": [
     "SVG",
     "svgo",
     "SVG Shrinking",
-    "shrinking tool"
+    "shrinking tool",
+    "image minifying",
+    "image",
+    "png",
+    "jpg",
+    "minifying"
   ],
   "author": "Stefan Schulz-Lauterbach",
   "license": "CC0-1.0",
