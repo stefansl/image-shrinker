@@ -1,5 +1,5 @@
 /* eslint-disable indent */
-const {app, BrowserWindow, ipcMain, dialog} = require('electron');
+const {app, Menu, BrowserWindow, ipcMain, dialog} = require('electron');
 const fs = require('fs');
 const path = require('path');
 
@@ -37,6 +37,38 @@ function createWindow() {
     mainWindow.on('closed', () => {
         mainWindow = null;
     });
+    const template = [
+
+        {
+            role: 'window',
+            submenu: [
+                {role: 'minimize'},
+                {role: 'close'}
+            ]
+        }
+    ];
+
+    if (process.platform === 'darwin') {
+        template.unshift({
+            label: app.getName(),
+            submenu: [
+                {role: 'about'},
+                {role: 'preferences'},
+                {role: 'quit'}
+            ]
+        });
+
+        // Window menu
+        template[1].submenu = [
+            {role: 'minimize'},
+            {role: 'zoom'},
+            {type: 'separator'},
+            {role: 'front'},
+        ];
+    }
+
+    const menu = Menu.buildFromTemplate(template);
+    Menu.setApplicationMenu(menu);
 }
 
 
@@ -110,6 +142,8 @@ ipcMain.on('shrinkSvg', (event, fileName, filePath) => {
     });
 });
 
+
+
 const checkFileType = fileName => {
     return fileName.split('.').pop();
 };
@@ -120,4 +154,5 @@ const generateNewPath = pathName => {
 
     return arrPath[0] + '.min.' + arrPath[1];
 };
+
 

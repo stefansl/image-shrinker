@@ -33,7 +33,15 @@ document.ondrop = (e) => {
     return false;
 };
 
+
+
 ipcRenderer.on('isShrinked', (event, path) => {
     const result = `<span>Wrote image to:</span><br>${path}`;
     resultBox.innerHTML += `<div class="resLine" data-finder="${result}">${result}</div>`;
+    new window.Notification('Image shrinked, pal!', {
+        body: path,
+        silent: true
+    });
+    //sound.play('DONE');
+    //ipcRenderer.send('focusWindow', 'main');
 });

@@ -1,16 +1,16 @@
-# SVG Shrinker
+# Image Shrinker
 
 SVGO-GUI is not maintained anymore. So I decided to rebuild it with Electron.
-SVG Shrinker is a tool to cleanup SVG graphics. 
+Image Shrinker (prev. SVG Shrinker) is a tool to cleanup images and graphics. 
 
 ## How to use
-Drag your SVG file onto the SVG Shrinker window and it will saved in the same folder as reduced SVG.
+Drag your SVG file onto the Image Shrinker window and it will saved in the same folder as reduced SVG.
 The original graphic will be not replaced.
 
 ## Installation
 Get the repo
 ```shell
-git clone https://lab.clickpress.de/stefan.sl/svg-shrinker.git
+git clone https://lab.clickpress.de/stefan.sl/image-shrinker.git
 ```
 Install dependencies
 ```shell
@@ -23,7 +23,7 @@ npm run pack-mac
 ```
 
 Or just download it here:
-https://github.com/stefansl/svg-shrinker/releases/download/1.0.0/SVG.Shrinker.zip
+https://github.com/stefansl/image-shrinker/releases/download/1.0.0/SVG.Shrinker.zip
 
 Generate your Linux package
 ```shell
