@@ -8,7 +8,7 @@ const svgo = require('svgo');
 const execFile = require('child_process').execFile;
 const jpegtran = require('jpegtran-bin');
 const pngquant = require('pngquant-bin');
-const console = require('console');
+// const console = require('console'); // only for dev
 
 let svg = new svgo();
 
@@ -119,19 +119,7 @@ ipcMain.on('shrinkSvg', (event, fileName, filePath) => {
                 execFile(pngquant, ['-o', newFile, filePath], () => {
                     event.sender.send('isShrinked', newFile);
                 });
-                /*
-                // I would use imagemin, but it wants to save in a new folder. Damn it!
-                imagemin([filePath], newFile, {
-                        plugins: [
-                            imageminPngquant({quality: '65-80'})
-                        ]
-                    }
-                ).then(files => {
-                    console.log(path.dirname(filePath) + '/');
-                    console.log(filePath);
-                    console.log(files);
-                    event.sender.send('isShrinked', newFile);
-                });*/
+
                 break;
             default:
                 dialog.showMessageBox({
@@ -142,7 +130,6 @@ ipcMain.on('shrinkSvg', (event, fileName, filePath) => {
 
     });
 });
-
 
 
 const checkFileType = fileName => {
