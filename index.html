@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Image Shrinker</title>
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:200,400i,500i" rel="stylesheet">
 </head>
 <body>
 <div id="dragzone" class="">
@@ -12,6 +13,7 @@
 <div id="result"></div>
 
 <style>
+
     :root {
         --main-bg-color: #111;
         --main-color: #F3FFE2;
@@ -22,9 +24,11 @@
         -webkit-app-region: drag;
     }
     body {
-        font-family: "Helvetica Neue", Arial, sans-serif;
+
+        font-family: 'Fira Sans', sans-serif;
+        font-weight: 400;
         color: var(--main-color);
-        background-color: var(--main-bg-color);
+        background: #fff url("assets/img/bg_poly.min.svg") repeat-x 0 0;
     }
 
     a {
@@ -35,15 +39,19 @@
     }
 
     #dragzone {
-        border: 2px dashed var(--main-color);
+        border: 2px dashed var(--main-bg-color);
         margin-bottom: 2em;
         padding: 1em;
         text-align: center;
-        color: var(--main-color);
-        background-color: var(--main-bg-color);
+        color: var(--main-bg-color);
+        font-style: italic;
+    }
+    #dragzone strong {
+        font-weight: 500;
     }
     h1 {
         margin:0;
+        font-weight: 200;
     }
 
     #dragzone.drag-active {
@@ -52,6 +60,7 @@
     }
 
     .resLine {
+        font-weight: 200;
         display: block;
         font-size: .625em;
         border-bottom: 1px solid var(--secondary-color);
