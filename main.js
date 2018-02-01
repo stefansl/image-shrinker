@@ -103,11 +103,16 @@ ipcMain.on(
             switch (checkFileType(fileName)) {
                 case 'svg':
 
-                    svg.optimize(data, function (result) {
-                        fs.writeFile(newFile, result.data, '', () => {
+                    svg.optimize(data)
+                        .then(function (result) {
+                            fs.writeFile(newFile, result.data, '', () => {
+                            });
+                            event.sender.send('isShrinked', newFile);
+                        })
+                        .catch(function (error) {
+                            console.log(error.message);
                         });
-                        event.sender.send('isShrinked', newFile);
-                    });
+
                     break;
                 case 'jpg':
                 case 'jpeg':
