@@ -1,7 +1,7 @@
 
 'use strict';
 
-const {ipcRenderer} = require('electron');
+const {ipcRenderer, shell} = require('electron');
 
 
 let dragzone = document.getElementById('dragzone'),
@@ -35,13 +35,33 @@ document.ondrop = (e) => {
 
 
 
-ipcRenderer.on('isShrinked', (event, path) => {
-    const result = `<span>Wrote image to:</span><br>${path}`;
-    resultBox.innerHTML += `<div class="resLine" data-finder="${result}">${result}</div>`;
-    new window.Notification('Image shrinked, pal!', {
-        body: path,
-        silent: true
-    });
-    //sound.play('DONE');
-    //ipcRenderer.send('focusWindow', 'main');
-});
+ipcRenderer.on(
+    'isShrinked', (event, path) => {
+        const result = `<span>Your shrinked image is here:</span><br>${path}`;
+        //resultBox.innerHTML += '<a onclick="shell.showItemInFolder(' + path + `)" href="#" class="resLine" data-finder="${result}">${result}</a>`;
+
+        let resContainer = document.createElement('div');
+        resContainer.className ='resLine';
+        resContainer.innerHTML = '<span>Your shrinked image is here:</span><br>';
+        let resElement = document.createElement('a');
+        resElement.setAttribute('data-finder', result);
+        resElement.setAttribute('href', '#');
+
+        let resText = document.createTextNode(path);
+        resElement.appendChild(resText);
+
+        resElement.addEventListener('click', function (el){
+            el.preventDefault();
+            shell.showItemInFolder(path);
+        });
+        resContainer.appendChild(resElement);
+
+        resultBox.appendChild(resContainer);
+
+        // Notification
+        new window.Notification('Image shrinked, pal!', {
+            body: path,
+            silent: true
+        });
+    }
+);

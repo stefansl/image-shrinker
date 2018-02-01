@@ -1,5 +1,5 @@
 /* eslint-disable indent */
-const {app, Menu, BrowserWindow, ipcMain, dialog} = require('electron');
+const {app, Menu, BrowserWindow, ipcMain, dialog, shell} = require('electron');
 const fs = require('fs');
 const path = require('path');
 
@@ -8,7 +8,7 @@ const svgo = require('svgo');
 const execFile = require('child_process').execFile;
 const jpegtran = require('jpegtran-bin');
 const pngquant = require('pngquant-bin');
-// const console = require('console'); // only for dev
+const console = require('console'); // only for dev
 
 let svg = new svgo();
 
@@ -32,7 +32,7 @@ function createWindow() {
     }));
 
     // Open the DevTools.
-    // mainWindow.webContents.openDevTools()
+    mainWindow.webContents.openDevTools();
 
     mainWindow.on('closed', () => {
         mainWindow = null;
@@ -89,47 +89,49 @@ app.on('activate', () => {
 });
 
 // Main logic
-ipcMain.on('shrinkSvg', (event, fileName, filePath) => {
+ipcMain.on(
+    'shrinkSvg', (event, fileName, filePath) => {
 
-    fs.readFile(filePath, 'utf8', function (err, data) {
+        fs.readFile(filePath, 'utf8', function (err, data) {
 
-        if (err) {
-            throw err;
-        }
+            if (err) {
+                throw err;
+            }
 
-        let newFile = generateNewPath(filePath);
+            let newFile = generateNewPath(filePath);
 
-        switch (checkFileType(fileName)) {
-            case 'svg':
+            switch (checkFileType(fileName)) {
+                case 'svg':
 
-                svg.optimize(data, function (result) {
-                    fs.writeFile(newFile, result.data, '', () => {
+                    svg.optimize(data, function (result) {
+                        fs.writeFile(newFile, result.data, '', () => {
+                        });
+                        event.sender.send('isShrinked', newFile);
                     });
-                    event.sender.send('isShrinked', newFile);
-                });
-                break;
-            case 'jpg':
-            case 'jpeg':
-                execFile(jpegtran, ['-outfile', newFile, filePath], () => {
-                    console.log(err);
-                    event.sender.send('isShrinked', newFile);
-                });
-                break;
-            case 'png':
-                execFile(pngquant, ['-o', newFile, filePath], () => {
-                    event.sender.send('isShrinked', newFile);
-                });
+                    break;
+                case 'jpg':
+                case 'jpeg':
+                    execFile(jpegtran, ['-outfile', newFile, filePath], () => {
+                        console.log(err);
+                        event.sender.send('isShrinked', newFile);
+                    });
+                    break;
+                case 'png':
+                    execFile(pngquant, ['-o', newFile, filePath], () => {
+                        event.sender.send('isShrinked', newFile);
+                    });
 
-                break;
-            default:
-                dialog.showMessageBox({
-                    'type': 'error',
-                    'message': 'Only SVG, JPG and PNG allowed'
-                });
-        }
+                    break;
+                default:
+                    dialog.showMessageBox({
+                        'type': 'error',
+                        'message': 'Only SVG, JPG and PNG allowed'
+                    });
+            }
 
-    });
-});
+        });
+    }
+);
 
 
 const checkFileType = fileName => {
