@@ -9,7 +9,14 @@ Image Shrinker (prev. SVG Shrinker) is a tool to minify images and graphics usin
 Drag your SVG file onto the Image Shrinker window and it will saved in the same folder as reduced SVG.
 The original graphic will be not replaced.
 
-## Installation
+## Download and Installation on MacOsX
+Download Image Shrinker here:
+https://github.com/stefansl/image-shrinker/releases/download/v1.0.0/Image.Shrinker.zip
+
+Unpack zip and copy the app into your MacOsX Application folder.
+If you want to uninstall it, just drop the app into the bin.
+
+## Build your own
 Get the repo
 ```shell
 git clone https://lab.clickpress.de/stefan.sl/image-shrinker.git
@@ -23,9 +30,6 @@ Generate your MacOS package
 ```shell
 npm run pack-mac
 ```
-
-Or just download it here:
-https://github.com/stefansl/image-shrinker/releases/download/v1.0.0/Image.Shrinker.zip
 
 Generate your Linux package
 ```shell
