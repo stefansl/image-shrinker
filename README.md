@@ -13,7 +13,7 @@ The original graphic will be not replaced.
 Download Image Shrinker here:
 https://github.com/stefansl/image-shrinker/releases/download/v1.0.0/Image.Shrinker.zip
 
-Unpack zip and copy the app into your MacOsX Application folder.
+Unpack and copy or drag the app into your MacOsX application folder.
 If you want to uninstall it, just drop the app into the bin.
 
 ## Build your own
