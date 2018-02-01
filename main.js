@@ -58,6 +58,7 @@ function createWindow() {
             ]
         });
 
+
         // Window menu
         template[1].submenu = [
             {role: 'minimize'},
