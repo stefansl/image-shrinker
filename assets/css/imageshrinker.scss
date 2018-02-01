@@ -1,0 +1,83 @@
+// Fira Sans
+@font-face {
+  font-family: 'Fira Sans';
+  src: local('Fira Sans Italic'), local('FiraSans-Italic'), url(../fonts/FiraSans-Italic.woff2) format('woff2');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Fira Sans';
+  src: local('Fira Sans'), local('FiraSans'), url(../fonts/FiraSans-Regular.woff2) format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Fira Sans';
+  src: local('Fira Sans Bold Italic'), local('FiraSans-BoldItalic'), url(../fonts/FiraSans-BoldItalic.woff2) format('woff2');
+  font-weight: 700;
+  font-style: italic;
+}
+
+$black: #111;
+
+:root {
+  --main-bg-color: #111;
+  --main-color: #F3FFE2;
+  --secondary-color: #7ec049;
+  --third-color: #5dc7e6;
+}
+
+html {
+  -webkit-app-region: drag;
+}
+
+body {
+  font-family: 'Fira Sans', sans-serif;
+  font-weight: 400;
+  color: $black;
+  background: #fff url("../img/bg_poly.min.svg") repeat-x fixed 0 0;
+}
+
+#dragzone {
+  opacity: .5;
+  border: 2px dashed var(--main-bg-color);
+  margin-bottom: 2em;
+  padding: 1em;
+  text-align: center;
+  color: var(--main-bg-color);
+  font-style: italic;
+  transition: opacity .1s ease-out;
+  &.drag-active {
+    opacity: .9;
+  }
+  &:hover {
+    opacity: .75;
+  }
+  strong {
+    font-weight: 400;
+    font-style: italic;
+    //font-family: 'Fira Sans Italic', sans-serif;
+  }
+  h1 {
+    margin: 0;
+    font-weight: 700;
+  }
+}
+
+.resLine {
+  border-bottom: 1px solid rgba($black, .3);
+  padding: 1em .5em;
+  span {
+    color: rgba($black, .7);
+    font-weight: 400;
+    font-size: 8px;
+  }
+  a {
+    font-style: italic;
+    font-size: 10px;
+    display: block;
+    color: rgba($black, .9);
+  }
+}

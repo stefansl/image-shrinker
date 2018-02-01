@@ -1,5 +1,5 @@
 /* eslint-disable indent */
-const {app, Menu, BrowserWindow, ipcMain, dialog, shell} = require('electron');
+const {app, Menu, BrowserWindow, ipcMain, dialog} = require('electron');
 const fs = require('fs');
 const path = require('path');
 
@@ -32,7 +32,7 @@ function createWindow() {
     }));
 
     // Open the DevTools.
-    //mainWindow.webContents.openDevTools();
+    // mainWindow.webContents.openDevTools();
 
     mainWindow.on('closed', () => {
         mainWindow = null;

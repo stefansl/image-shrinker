@@ -5,8 +5,8 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-packager . 'Image Shrinker' --platform=darwin --arch=x64 --ignore=/^release/i --icon=assets/icons/mac/svg-shrinker.png.icns --overwrite --prune=true --out=release-builds",
-    "pack-mac": "electron-packager . 'Image Shrinker' --platform=darwin --arch=x64 --ignore=/^release/i --icon=assets/icons/mac/svg-shrinker.png.icns --overwrite --prune=true --out=release-builds",
+    "build": "electron-packager . 'Image Shrinker' --platform=darwin --arch=x64 --ignore=/^release/i --icon=assets/icons/mac/icon_image-shrinker.png.icns --overwrite --prune=true --out=release-builds",
+    "pack-mac": "electron-packager . 'Image Shrinker' --platform=darwin --arch=x64 --ignore=/^release/i --icon=assets/icons/mac/icon_image-shrinker.png.icns --overwrite --prune=true --out=release-builds",
     "pack-linux": "electron-packager . 'Image Shrinker' --platform=linux --arch=x64 --ignore=/^release/i --icon=assets/icons/png/512x512 --overwrite"
   },
   "repository": "https://github.com/stefansl/image-shrinker",
