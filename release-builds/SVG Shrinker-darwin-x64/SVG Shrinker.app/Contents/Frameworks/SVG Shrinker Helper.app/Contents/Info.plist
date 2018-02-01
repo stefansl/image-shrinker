@@ -3,7 +3,7 @@
 <plist version="1.0">
   <dict>
     <key>BuildMachineOSBuild</key>
-    <string>15G31</string>
+    <string>16G29</string>
     <key>CFBundleIdentifier</key>
     <string>com.electron.svg-shrinker.helper</string>
     <key>CFBundleName</key>

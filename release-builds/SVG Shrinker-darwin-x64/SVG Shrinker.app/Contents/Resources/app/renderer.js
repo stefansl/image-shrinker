@@ -34,6 +34,6 @@ document.ondrop = (e) => {
 };
 
 ipcRenderer.on('isShrinked', (event, path) => {
-    const result = `<span>Wrote SVG to:</span><br>${path}`;
+    const result = `<span>Wrote image to:</span><br>${path}`;
     resultBox.innerHTML += `<div class="resLine" data-finder="${result}">${result}</div>`;
 });

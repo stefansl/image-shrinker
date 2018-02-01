@@ -1,11 +1,16 @@
+/* eslint-disable indent */
 const {app, BrowserWindow, ipcMain, dialog} = require('electron');
 const fs = require('fs');
 const path = require('path');
 
 const url = require('url');
-const SVGO = require('svgo');
+const svgo = require('svgo');
+const execFile = require('child_process').execFile;
+const jpegtran = require('jpegtran-bin');
+const pngquant = require('pngquant-bin');
+const console = require('console');
 
-let svgo = new SVGO();
+let svg = new svgo();
 
 let mainWindow;
 
@@ -51,36 +56,62 @@ app.on('activate', () => {
 });
 
 // Main logic
-ipcMain.on('shrinkSvg', (event, svgName, svgPath) => {
+ipcMain.on('shrinkSvg', (event, fileName, filePath) => {
 
-    fs.readFile(svgPath, 'utf8', function (err, data) {
+    fs.readFile(filePath, 'utf8', function (err, data) {
 
         if (err) {
             throw err;
         }
 
-        if (!checkFileType(svgName)) {
-            dialog.showMessageBox({
-                'type': 'error',
-                'message': 'Only SVG allowed'
-            });
-        } else {
-            let newFile = generateNewPath(svgPath);
+        let newFile = generateNewPath(filePath);
 
-            svgo.optimize(data, function (result) {
-                fs.writeFile(newFile, result.data, '', () => {
+        switch (checkFileType(fileName)) {
+            case 'svg':
 
+                svg.optimize(data, function (result) {
+                    fs.writeFile(newFile, result.data, '', () => {
+                    });
+                    event.sender.send('isShrinked', newFile);
                 });
-
-                event.sender.send('isShrinked', newFile);
-            });
+                break;
+            case 'jpg':
+            case 'jpeg':
+                execFile(jpegtran, ['-outfile', newFile, filePath], () => {
+                    console.log(err);
+                    event.sender.send('isShrinked', newFile);
+                });
+                break;
+            case 'png':
+                execFile(pngquant, ['-o', newFile, filePath], () => {
+                    event.sender.send('isShrinked', newFile);
+                });
+                /*
+                // I would use imagemin, but it wants to save in a new folder. Damn it!
+                imagemin([filePath], newFile, {
+                        plugins: [
+                            imageminPngquant({quality: '65-80'})
+                        ]
+                    }
+                ).then(files => {
+                    console.log(path.dirname(filePath) + '/');
+                    console.log(filePath);
+                    console.log(files);
+                    event.sender.send('isShrinked', newFile);
+                });*/
+                break;
+            default:
+                dialog.showMessageBox({
+                    'type': 'error',
+                    'message': 'Only SVG, JPG and PNG allowed'
+                });
         }
+
     });
 });
 
-
 const checkFileType = fileName => {
-    return (fileName.split('.').pop() === 'svg');
+    return fileName.split('.').pop();
 };
 
 
@@ -89,3 +120,4 @@ const generateNewPath = pathName => {
 
     return arrPath[0] + '.min.' + arrPath[1];
 };
+

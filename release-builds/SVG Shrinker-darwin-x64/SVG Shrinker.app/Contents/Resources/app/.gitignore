@@ -1,4 +1,4 @@
 node_modules
 .idea
-/SVG Shrinker-linux-x64/
-/SVG Shrinker-darwin-x64/
+release-builds
+.DS_Store
