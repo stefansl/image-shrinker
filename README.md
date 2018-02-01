@@ -23,7 +23,7 @@ npm run pack-mac
 ```
 
 Or just download it here:
-https://github.com/stefansl/image-shrinker/releases/download/1.0.0/SVG.Shrinker.zip
+https://github.com/stefansl/image-shrinker/releases/download/1.0.0/Image.Shrinker.zip
 
 Generate your Linux package
 ```shell
