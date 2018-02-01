@@ -1,0 +1,64 @@
+@font-face {
+  font-family: 'Fira Sans';
+  src: local("Fira Sans Italic"), local("FiraSans-Italic"), url(../fonts/FiraSans-Italic.woff2) format("woff2");
+  font-weight: 400;
+  font-style: italic; }
+@font-face {
+  font-family: 'Fira Sans';
+  src: local("Fira Sans"), local("FiraSans"), url(../fonts/FiraSans-Regular.woff2) format("woff2");
+  font-weight: 400;
+  font-style: normal; }
+@font-face {
+  font-family: 'Fira Sans';
+  src: local("Fira Sans Bold Italic"), local("FiraSans-BoldItalic"), url(../fonts/FiraSans-BoldItalic.woff2) format("woff2");
+  font-weight: 700;
+  font-style: italic; }
+:root {
+  --main-bg-color: #111;
+  --main-color: #F3FFE2;
+  --secondary-color: #7ec049;
+  --third-color: #5dc7e6; }
+
+html {
+  -webkit-app-region: drag; }
+
+body {
+  font-family: 'Fira Sans', sans-serif;
+  font-weight: 400;
+  color: #111;
+  background: #fff url("../img/bg_poly.min.svg") repeat-x fixed 0 0; }
+
+#dragzone {
+  opacity: .5;
+  border: 2px dashed var(--main-bg-color);
+  margin-bottom: 2em;
+  padding: 1em;
+  text-align: center;
+  color: var(--main-bg-color);
+  font-style: italic;
+  transition: opacity .1s ease-out; }
+  #dragzone.drag-active {
+    opacity: .9; }
+  #dragzone:hover {
+    opacity: .75; }
+  #dragzone strong {
+    font-weight: 400;
+    font-style: italic; }
+  #dragzone h1 {
+    margin: 0;
+    font-weight: 700; }
+
+.resLine {
+  border-bottom: 1px solid rgba(17, 17, 17, 0.3);
+  padding: 1em .5em; }
+  .resLine span {
+    color: rgba(17, 17, 17, 0.7);
+    font-weight: 400;
+    font-size: 8px; }
+  .resLine a {
+    font-style: italic;
+    font-size: 10px;
+    display: block;
+    color: rgba(17, 17, 17, 0.9); }
+
+/*# sourceMappingURL=imageshrinker.css.map */
