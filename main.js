@@ -1,13 +1,16 @@
+/* eslint-disable indent */
 const {app, BrowserWindow, ipcMain, dialog} = require('electron');
 const fs = require('fs');
 const path = require('path');
 
 const url = require('url');
-const SVGO = require('svgo');
-var execFile = require('child_process').execFile;
-var jpegtran = require('jpegtran-bin');
+const svgo = require('svgo');
+const execFile = require('child_process').execFile;
+const jpegtran = require('jpegtran-bin');
+const pngquant = require('pngquant-bin');
+const console = require('console');
 
-let svgo = new SVGO();
+let svg = new svgo();
 
 let mainWindow;
 
@@ -62,38 +65,42 @@ ipcMain.on('shrinkSvg', (event, fileName, filePath) => {
         }
 
         let newFile = generateNewPath(filePath);
-        
+
         switch (checkFileType(fileName)) {
             case 'svg':
-                console.log('SVG, du Schwein');
-                svgo.optimize(data, function (result) {
-                    fs.writeFile(newFile, result.data, '', () => {});
+
+                svg.optimize(data, function (result) {
+                    fs.writeFile(newFile, result.data, '', () => {
+                    });
                     event.sender.send('isShrinked', newFile);
                 });
                 break;
             case 'jpg':
             case 'jpeg':
-                execFile(jpegtran, ['-outfile', newFile, filePath], (err) => {
+                execFile(jpegtran, ['-outfile', newFile, filePath], () => {
+                    console.log(err);
                     event.sender.send('isShrinked', newFile);
                 });
                 break;
             case 'png':
-                console.log(filePath);
-                console.log(newFile);
-
-                console.log(checkFileType(fileName) + ', du Affe!');
-                imagemin([filePath], newFile, {
-                    plugins: [
-                        imageminJpegtran(),
-                        imageminPngquant({quality: '65-80'})
-                    ]
-                }).then(files => {
+                execFile(pngquant, ['-o', newFile, filePath], () => {
                     event.sender.send('isShrinked', newFile);
-                    //=> [{data: <Buffer 89 50 4e …>, path: 'build/images/foo.jpg'}, …]
                 });
+                /*
+                // I would use imagemin, but it wants to save in a new folder. Damn it!
+                imagemin([filePath], newFile, {
+                        plugins: [
+                            imageminPngquant({quality: '65-80'})
+                        ]
+                    }
+                ).then(files => {
+                    console.log(path.dirname(filePath) + '/');
+                    console.log(filePath);
+                    console.log(files);
+                    event.sender.send('isShrinked', newFile);
+                });*/
                 break;
             default:
-                console.log('EAT SHIT AND DIE!');
                 dialog.showMessageBox({
                     'type': 'error',
                     'message': 'Only SVG, JPG and PNG allowed'
@@ -103,11 +110,8 @@ ipcMain.on('shrinkSvg', (event, fileName, filePath) => {
     });
 });
 
-
 const checkFileType = fileName => {
-    var mime = fileName.split('.').pop();
-
-    return mime;
+    return fileName.split('.').pop();
 };
 
 
@@ -116,3 +120,4 @@ const generateNewPath = pathName => {
 
     return arrPath[0] + '.min.' + arrPath[1];
 };
+
