@@ -1,4 +1,3 @@
-
 'use strict';
 
 const {ipcRenderer, shell} = require('electron');
@@ -33,29 +32,27 @@ document.ondrop = (e) => {
     return false;
 };
 
-
-
 ipcRenderer.on(
     'isShrinked', (event, path) => {
-        const result = `<span>Your shrinked image is here:</span><br>${path}`;
-        //resultBox.innerHTML += '<a onclick="shell.showItemInFolder(' + path + `)" href="#" class="resLine" data-finder="${result}">${result}</a>`;
 
+        // Create container
         let resContainer = document.createElement('div');
-        resContainer.className ='resLine';
+        resContainer.className = 'resLine';
         resContainer.innerHTML = '<span>Your shrinked image is here:</span><br>';
-        let resElement = document.createElement('a');
-        resElement.setAttribute('data-finder', result);
-        resElement.setAttribute('href', '#');
 
+        // Create link
+        let resElement = document.createElement('a');
+        resElement.setAttribute('href', '#');
         let resText = document.createTextNode(path);
         resElement.appendChild(resText);
 
-        resElement.addEventListener('click', function (el){
+        // Add click event
+        resElement.addEventListener('click', function (el) {
             el.preventDefault();
             shell.showItemInFolder(path);
         });
-        resContainer.appendChild(resElement);
 
+        resContainer.appendChild(resElement);
         resultBox.appendChild(resContainer);
 
         // Notification
