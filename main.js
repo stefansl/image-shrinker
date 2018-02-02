@@ -8,7 +8,7 @@ const svgo = require('svgo');
 const execFile = require('child_process').execFile;
 const jpegtran = require('jpegtran-bin');
 const pngquant = require('pngquant-bin');
-const console = require('console'); // only for dev
+// const console = require('console'); // only for dev
 
 let svg = new svgo();
 
@@ -101,32 +101,35 @@ ipcMain.on(
             let newFile = generateNewPath(filePath);
 
             switch (checkFileType(fileName)) {
-                case 'svg':
 
+                case 'svg':
                     svg.optimize(data)
                         .then(function (result) {
-                            fs.writeFile(newFile, result.data, '', () => {
-                            });
+                            fs.writeFile(newFile, result.data, '', () => {});
                             event.sender.send('isShrinked', newFile);
                         })
                         .catch(function (error) {
-                            console.log(error.message);
+                            dialog(error.message);
                         });
 
                     break;
+
                 case 'jpg':
                 case 'jpeg':
                     execFile(jpegtran, ['-outfile', newFile, filePath], () => {
-                        console.log(err);
+                        dialog(err);
                         event.sender.send('isShrinked', newFile);
                     });
+
                     break;
+
                 case 'png':
                     execFile(pngquant, ['-o', newFile, filePath], () => {
                         event.sender.send('isShrinked', newFile);
                     });
 
                     break;
+
                 default:
                     dialog.showMessageBox({
                         'type': 'error',
