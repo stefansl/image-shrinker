@@ -1,12 +1,12 @@
 # Image Shrinker
 
 SVGO-GUI is not maintained anymore. So I decided to rebuild it with Electron.
-Image Shrinker (prev. SVG Shrinker) is a tool to minify images and graphics using [pngquant](https://pngquant.org/), [jpegtran-bin](https://github.com/imagemin/jpegtran-bin) and [SVGgo](https://github.com/svg/svgo). 
+Image Shrinker (prev. SVG Shrinker) is a tool to minify images and graphics using [pngquant](https://pngquant.org/), [mozjpg](https://github.com/mozilla/mozjpeg) and [SVGgo](https://github.com/svg/svgo). 
 
 ![Screenshot Imageshrinker](https://raw.githubusercontent.com/stefansl/image-shrinker/dev/assets/img/screen.min.png "Screenshot Image Shrinker")
 
 ## How to use
-Drag your image file onto the Image Shrinker window and it will saved in the same folder as reduced SVG.
+Drag your image file onto the Image Shrinker window and it will saved in the same folder as reduced image.
 The original graphic will be not replaced.
 
 ## Download and Installation on MacOsX

@@ -28,7 +28,7 @@
     "electron-packager": "^10.1.0"
   },
   "dependencies": {
-    "jpegtran-bin": "^3.2.0",
+    "mozjpeg": "^5.0.0",
     "pngquant-bin": "^3.1.1",
     "svgo": "^1.0.4"
   },

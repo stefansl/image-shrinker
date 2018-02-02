@@ -6,7 +6,7 @@ const path = require('path');
 const url = require('url');
 const svgo = require('svgo');
 const execFile = require('child_process').execFile;
-const jpegtran = require('jpegtran-bin');
+const mozjpeg = require('mozjpeg');
 const pngquant = require('pngquant-bin');
 // const console = require('console'); // only for dev
 
@@ -116,8 +116,7 @@ ipcMain.on(
 
                 case 'jpg':
                 case 'jpeg':
-                    execFile(jpegtran, ['-outfile', newFile, filePath], () => {
-                        dialog(err);
+                    execFile(mozjpeg, ['-outfile', newFile, filePath], () => {
                         event.sender.send('isShrinked', newFile);
                     });
 
@@ -152,5 +151,3 @@ const generateNewPath = pathName => {
 
     return arrPath[0] + '.min.' + arrPath[1];
 };
-
-
