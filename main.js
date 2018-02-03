@@ -12,13 +12,13 @@ const pngquant = require('pngquant-bin');
 
 let svg = new svgo();
 
-// Todo: fix initial user settings
 let userSettings = {};
 
-const debug = 0;
+const debug = 1;
 let mainWindow;
 
 function createWindow() {
+
     // Create the browser window.
     mainWindow = new BrowserWindow({
         titleBarStyle: 'hidden-inset',
@@ -46,10 +46,22 @@ function createWindow() {
         mainWindow = null;
     });
 
+    settings.deleteAll();
+
+    let defaultSettings = {
+        notification: true,
+        folderswitch: true,
+        clearlist: false
+    };
+
+    // set default settings at first launch
+    if (Object.keys(settings.getAll()).length === 0) {
+        settings.setAll(defaultSettings);
+    }
+
     userSettings = settings.getAll();
 
     require('./menu/mainmenu');
-
 }
 
 

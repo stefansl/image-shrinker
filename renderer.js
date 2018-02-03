@@ -24,23 +24,20 @@ let dragzone = document.getElementById('dragzone'),
  * Settings
  */
 let userSetting = settings.getAll();
-notification.checked = (true === userSetting.notification) ? true : false;
-clearlist.checked = (true === userSetting.clearlist) ? true : false;
-folderswitch.checked = (true === userSetting.folderswitch) ? true : false;
+notification.checked = userSetting.notification;
+clearlist.checked = userSetting.clearlist;
 
-if (userSetting.folderswitch === false) wrapperSavePath.classList.remove('d-none');
+if (userSetting.folderswitch === false) {
+    folderswitch.checked = false;
+    wrapperSavePath.classList.remove('d-none');
+} else {
+    folderswitch.checked = true;
+}
 if (userSetting.savepath) btnSavepath.innerText = userSetting.savepath;
 
 /*
-settings.watch('notification', (newValue) => {
-    userSetting.notification = newValue;
-});
-
-settings.watch('clearlist', (newValue) => {
-    userSetting.clearlist = newValue;
-});
-*/
-
+ * Open filepicker
+ */
 dragzone.onclick = () => {
     dialog.showOpenDialog(
         {
@@ -78,6 +75,9 @@ document.ondragend = () => {
     return false;
 };
 
+/*
+ * Action on drag drop
+ */
 document.ondrop = (e) => {
     e.preventDefault();
     // console.log(e.dataTransfer.files);
@@ -94,18 +94,9 @@ document.ondrop = (e) => {
     return false;
 };
 
-
-Array.from(switches).forEach((switchEl) => {
-    switchEl.onchange = (e) => {
-        settings.set(e.target.name, e.target.checked);
-        if(e.target.name === 'folderswitch' && e.target.checked === false) {
-            wrapperSavePath.classList.remove('d-none');
-        } else {
-            wrapperSavePath.classList.add('d-none');
-        }
-    };
-});
-
+/*
+ * Choose folder for saving shrinked images
+ */
 btnSavepath.onclick = () => {
     dialog.showOpenDialog(
         {
@@ -119,6 +110,25 @@ btnSavepath.onclick = () => {
     );
 };
 
+/*
+ * Save settings
+ */
+Array.from(switches).forEach((switchEl) => {
+    switchEl.onchange = (e) => {
+        settings.set(e.target.name, e.target.checked);
+        if(e.target.name === 'folderswitch') {
+            if (e.target.checked === false) {
+                wrapperSavePath.classList.remove('d-none');
+            } else {
+                wrapperSavePath.classList.add('d-none');
+            }
+        }
+    };
+});
+
+/*
+ * Settings menu
+ */
 btnOpenSettings.onclick = (e) => {
     e.preventDefault();
     menuSettings.classList.add('is--open');
@@ -128,7 +138,9 @@ btnCloseSettings.onclick = (e) => {
     menuSettings.classList.remove('is--open');
 };
 
-
+/*
+ * Renderer process
+ */
 ipcRenderer
     .on(
         'isShrinked', (event, path) => {
@@ -169,7 +181,9 @@ ipcRenderer
     );
 
 
-// Parallax background
+/*
+ * Parallax background
+ */
 let bg = document.getElementById('background'),
     winX = window.innerWidth / 2,
     winY = window.innerHeight / 2;
@@ -197,6 +211,9 @@ document.onmouseleave = () => {
 };
 
 
+/*
+ * Open external links in browser
+ */
 Array.from(openInBrowserLink).forEach(function(el) {
     el.onclick = (e) => {
         e.preventDefault();
