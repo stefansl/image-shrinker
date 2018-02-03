@@ -18,7 +18,9 @@
         <strong>only SVG, JPG and PNG allowed</strong>
     </section>
     <section id="result"></section>
-    <section id="menuSettings">
+
+    <!-- Settings pane -->
+    <section id="menuSettings" class="is--open">
         <div class="container">
             <h3>Settings</h3>
 
@@ -32,18 +34,18 @@
                         <i class="form-icon"></i>
                     </label>
                 </div>
+                <div id="wrapperSavePath" class="d-none">
+                    <div class="column col-12">
+                        <span>Choose folder</span>
+                    </div>
+                    <div class="column col-12 ">
+                        <button id="btnSavepath" class="btn btn-sm  btn-primary text-small">> Open</button>
+                    </div>
+                </div>
             </div>
 
-            <div id="wrapperSavePath" class="columns d-none">
-                <div class="column col-12">
-                    <span>Choose folder</span>
-                </div>
-                <div class="column col-12 ">
-                    <button id="btnSavepath" class="btn btn-sm  btn-primary text-small">Choose</button>
-                </div>
-            </div>
 
-            <div class="divider"></div>
+
             <div class="columns">
                 <div class="column col-9">
                     Enable notifications
@@ -56,7 +58,7 @@
 
                 </div>
             </div>
-            <div class="divider"></div>
+
             <div class="columns">
                 <div class="column col-9">
                     Clear result list, when shrinking new images

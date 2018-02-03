@@ -108,8 +108,13 @@ body {
     #menuSettings li:after {
       clear: both;
       content: " "; }
-  #menuSettings .column span {
-    line-height: 1rem; }
+  #menuSettings .columns {
+    border-bottom: 1px solid rgba(254, 254, 254, 0.1);
+    padding: 1rem 0; }
+  #menuSettings .column {
+    align-self: center; }
+    #menuSettings .column span {
+      line-height: 1rem; }
 
 #btnOpenSettings, #btnCloseSettings {
   position: absolute;
