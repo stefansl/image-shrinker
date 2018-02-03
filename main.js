@@ -90,9 +90,9 @@ ipcMain.on(
 
             let newFile = generateNewPath(filePath);
 
-            switch (checkFileType(fileName)) {
+            switch (path.extname(fileName)) {
 
-                case 'svg':
+                case '.svg':
                     svg.optimize(data)
                         .then(function (result) {
                             fs.writeFile(newFile, result.data, '', () => {});
@@ -104,15 +104,15 @@ ipcMain.on(
 
                     break;
 
-                case 'jpg':
-                case 'jpeg':
+                case '.jpg':
+                case '.jpeg':
                     execFile(mozjpeg, ['-outfile', newFile, filePath], () => {
                         event.sender.send('isShrinked', newFile);
                     });
 
                     break;
 
-                case 'png':
+                case '.png':
                     execFile(pngquant, ['-o', newFile, filePath], () => {
                         event.sender.send('isShrinked', newFile);
                     });
@@ -128,11 +128,6 @@ ipcMain.on(
         });
     }
 );
-
-
-const checkFileType = fileName => {
-    return fileName.split('.').pop();
-};
 
 
 const generateNewPath = pathName => {
