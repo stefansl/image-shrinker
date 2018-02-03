@@ -48,6 +48,7 @@ if (process.platform === 'darwin') {
         {role: 'front'},
     ];
 
+    // Todo: fix debug
     if (debug === 1) {
         template[2].submenu.push(
             {type: 'separator'},
