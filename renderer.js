@@ -188,6 +188,16 @@ let bg = document.getElementById('background'),
     winX = window.innerWidth / 2,
     winY = window.innerHeight / 2;
 
+// Fix window size on resize
+window.onresize = () => {
+    setTimeout(()=>{
+        winX = window.innerWidth / 2;
+        winY = window.innerHeight / 2;
+        console.log(window.innerWidth);
+    }, 1000);
+};
+
+// Let's do some parallax stuff
 document.onmousemove = (e) => {
     let transX = e.clientX - winX,
         transY = e.clientY - winY,
@@ -206,6 +216,7 @@ document.onmousemove = (e) => {
     bg.style.transform = transform;
 };
 
+// Reset, if mouse leaves window
 document.onmouseleave = () => {
     bg.style.transform = '';
 };

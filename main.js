@@ -14,7 +14,7 @@ let svg = new svgo();
 
 let userSettings = {};
 
-const debug = 1;
+let debug = 1;
 let mainWindow;
 
 function createWindow() {
@@ -22,11 +22,11 @@ function createWindow() {
     // Create the browser window.
     mainWindow = new BrowserWindow({
         titleBarStyle: 'hidden-inset',
-        width: 300,
-        height: 400,
+        width: 340,
+        height: 550,
         frame: true,
         backgroundColor: '#F7F7F7',
-        resizable: false, // Todo: fix parallax for resizing
+        resizable: true,
         icon: path.join(__dirname, 'assets/icons/png/64x64.png')
     });
 
