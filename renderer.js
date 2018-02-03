@@ -5,7 +5,7 @@ const {dialog} = require('electron').remote;
 //const console = require('console');
 const path = require('path');
 
-let settings;
+let settings = {clearResultBox: ''};
 
 let dragzone = document.getElementById('dragzone'),
     resultBox = document.getElementById('result'),
@@ -31,6 +31,7 @@ dragzone.onclick = () => {
 
             for (let f of item) {
                 let filename = path.parse(f).base;
+                console.log(filename);
                 ipcRenderer.send('shrinkImage', filename, f);
             }
         }
