@@ -3,15 +3,15 @@ const {app, BrowserWindow, ipcMain, dialog} = require('electron');
 const fs = require('fs');
 const path = require('path');
 const url = require('url');
-
 const svgo = require('svgo');
 const execFile = require('child_process').execFile;
 const mozjpeg = require('mozjpeg');
 const pngquant = require('pngquant-bin');
-const console = require('console'); // only for dev
+// const console = require('console'); // only for dev
 
 let svg = new svgo();
 
+const debug = 0;
 let mainWindow;
 
 function createWindow() {
@@ -33,13 +33,17 @@ function createWindow() {
     }));
 
     // Open the DevTools.
-    mainWindow.webContents.openDevTools();
+    if (debug === 1) {
+        mainWindow.webContents.openDevTools();
+    }
 
     mainWindow.on('closed', () => {
         mainWindow = null;
     });
 
+
     require('./menu/mainmenu');
+
 }
 
 
@@ -108,13 +112,7 @@ ipcMain.on(
             }
         });
     }
-)
-    .on(
-        'openSettings',
-        (event) => {
-            console.log(event);
-        }
-    );
+);
 
 
 const checkFileType = fileName => {
@@ -128,3 +126,5 @@ const generateNewPath = pathName => {
     return arrPath[0] + '.min.' + arrPath[1];
 };
 
+
+module.exports = debug;

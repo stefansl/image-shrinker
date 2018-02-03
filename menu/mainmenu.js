@@ -1,4 +1,5 @@
 const {app, Menu} = require('electron');
+const {debug} = require('../main');
 
 const template = [
     {
@@ -29,10 +30,12 @@ if (process.platform === 'darwin') {
             {
                 label: 'Preferences',
                 click: (item, focusedWindow) => {
-                    focusedWindow.webContents.send('test');
+                    focusedWindow.webContents.send('openSettings');
                 },
                 accelerator: 'Cmd+,',
             },
+
+            {type: 'separator'},
             {role: 'quit'}
         ]
     });
@@ -44,6 +47,19 @@ if (process.platform === 'darwin') {
         {type: 'separator'},
         {role: 'front'},
     ];
+
+    if (debug === 1) {
+        template[2].submenu.push(
+            {type: 'separator'},
+            {
+                label: 'Open Dev-Tools',
+                click: (item, focusedWindow) => {
+                    if (focusedWindow)
+                        focusedWindow.toggleDevTools();
+                }
+            }
+        );
+    }
 }
 
 const menu = Menu.buildFromTemplate(template);

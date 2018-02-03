@@ -71,8 +71,9 @@ document.ondrop = (e) => {
 
 Array.from(switches).forEach((switchEl) => {
     switchEl.onchange = (e) => {
-        console.log(e.target.name);
-        console.log(e.target.checked);
+        // Todo: get and set settings
+        // console.log(e.target.name);
+        // console.log(e.target.checked);
     };
 });
 
@@ -118,8 +119,8 @@ ipcRenderer
         }
     )
     .on(
-        'test', (event) => {
-            console.log(event);
+        'openSettings', () => {
+            menuSettings.classList.add('is--open');
         }
     );
 
