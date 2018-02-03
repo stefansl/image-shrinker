@@ -2,8 +2,10 @@
 
 const {ipcRenderer, shell} = require('electron');
 const {dialog} = require('electron').remote;
-//const console = require('console');
+const console = require('console');
 const path = require('path');
+
+let settings;
 
 let dragzone = document.getElementById('dragzone'),
     resultBox = document.getElementById('result'),
@@ -23,7 +25,7 @@ dragzone.onclick = () => {
                 return;
             }
 
-            if(setting.clearResultBox) {
+            if(settings.clearResultBox) {
                 resultBox.innerHTML = '';
             }
 
@@ -57,7 +59,7 @@ document.ondrop = (e) => {
         ipcRenderer.send('shrinkImage', f.name, f.path, f.lastModified);
     }
 
-    if(setting.clearResultBox) {
+    if(settings.clearResultBox) {
         resultBox.innerHTML = '';
     }
 
@@ -145,11 +147,6 @@ document.onmouseleave = () => {
     bg.style.transform = '';
 };
 
-openInBrowserLink.onclick = (e) => {
-    e.preventDefault();
-    console.log(e.target.href);
-    //shell.openExternal(e.target.href);
-};
 
 Array.from(openInBrowserLink).forEach(function(el) {
     el.onclick = (e) => {
