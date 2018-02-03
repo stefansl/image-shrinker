@@ -98,7 +98,8 @@ body {
   background-color: rgba(17, 17, 17, 0.85);
   color: rgba(254, 254, 254, 0.95);
   transform: translate3d(-100%, 0, 0);
-  transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1); }
+  transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1);
+  font-size: .675rem; }
   #menuSettings.is--open {
     transform: translate3d(0, 0, 0); }
   #menuSettings li {
@@ -107,6 +108,8 @@ body {
     #menuSettings li:after {
       clear: both;
       content: " "; }
+  #menuSettings .column span {
+    line-height: 1rem; }
 
 .setting {
   float: right; }
@@ -142,5 +145,11 @@ body {
     line-height: 0; }
     .copyright a:hover img {
       opacity: 1; }
+
+.text-small {
+  font-size: .5rem; }
+
+.btn.btn-sm {
+  font-size: .5rem; }
 
 /*# sourceMappingURL=imageshrinker.css.map */

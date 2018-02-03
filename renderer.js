@@ -1,11 +1,10 @@
 'use strict';
 
 const {ipcRenderer, shell} = require('electron');
+const settings = require('electron-settings');
 const {dialog} = require('electron').remote;
 //const console = require('console');
 const path = require('path');
-
-let settings = {clearResultBox: ''};
 
 let dragzone = document.getElementById('dragzone'),
     resultBox = document.getElementById('result'),
@@ -13,7 +12,34 @@ let dragzone = document.getElementById('dragzone'),
     btnCloseSettings = document.getElementById('btnCloseSettings'),
     menuSettings = document.getElementById('menuSettings'),
     switches = document.getElementsByTagName('input'),
-    openInBrowserLink = document.getElementsByClassName('openInBrowser');
+    openInBrowserLink = document.getElementsByClassName('openInBrowser'),
+    btnSavepath = document.getElementById('btnSavepath'),
+    wrapperSavePath = document.getElementById('wrapperSavePath'),
+    folderswitch = document.getElementById('folderswitch'),
+    clearlist = document.getElementById('clearlist'),
+    notification = document.getElementById('notification');
+
+
+/*
+ * Settings
+ */
+let userSetting = settings.getAll();
+notification.checked = (true === userSetting.notification) ? true : false;
+clearlist.checked = (true === userSetting.clearlist) ? true : false;
+folderswitch.checked = (true === userSetting.folderswitch) ? true : false;
+
+if (userSetting.folderswitch === false) wrapperSavePath.classList.remove('d-none');
+if (userSetting.savepath) btnSavepath.innerText = userSetting.savepath;
+
+/*
+settings.watch('notification', (newValue) => {
+    userSetting.notification = newValue;
+});
+
+settings.watch('clearlist', (newValue) => {
+    userSetting.clearlist = newValue;
+});
+*/
 
 dragzone.onclick = () => {
     dialog.showOpenDialog(
@@ -25,13 +51,12 @@ dragzone.onclick = () => {
                 return;
             }
 
-            if(settings.clearResultBox) {
+            if (settings.get('clearlist') === true) {
                 resultBox.innerHTML = '';
             }
 
             for (let f of item) {
                 let filename = path.parse(f).base;
-                console.log(filename);
                 ipcRenderer.send('shrinkImage', filename, f);
             }
         }
@@ -60,7 +85,7 @@ document.ondrop = (e) => {
         ipcRenderer.send('shrinkImage', f.name, f.path, f.lastModified);
     }
 
-    if(settings.clearResultBox) {
+    if(settings.get('clearlist')) {
         resultBox.innerHTML = '';
     }
 
@@ -72,11 +97,27 @@ document.ondrop = (e) => {
 
 Array.from(switches).forEach((switchEl) => {
     switchEl.onchange = (e) => {
-        // Todo: get and set settings
-        // console.log(e.target.name);
-        // console.log(e.target.checked);
+        settings.set(e.target.name, e.target.checked);
+        if(e.target.name === 'folderswitch' && e.target.checked === false) {
+            wrapperSavePath.classList.remove('d-none');
+        } else {
+            wrapperSavePath.classList.add('d-none');
+        }
     };
 });
+
+btnSavepath.onclick = () => {
+    dialog.showOpenDialog(
+        {
+            properties: ['openDirectory']
+        }, (path) => {
+            if (typeof path !== 'undefined') {
+                btnSavepath.innerText = path;
+                settings.set('savepath', path);
+            }
+        }
+    );
+};
 
 btnOpenSettings.onclick = (e) => {
     e.preventDefault();
@@ -113,10 +154,12 @@ ipcRenderer
             resultBox.prepend(resContainer);
 
             // Notification
-            new window.Notification('Image shrinked, pal!', {
-                body: path,
-                silent: true
-            });
+            if (settings.get('notification') === true) {
+                new window.Notification('Image shrinked, pal!', {
+                    body: path,
+                    silent: true
+                });
+            }
         }
     )
     .on(

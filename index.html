@@ -18,7 +18,7 @@
         <strong>only SVG, JPG and PNG allowed</strong>
     </section>
     <section id="result"></section>
-    <section id="menuSettings" class="_is--open">
+    <section id="menuSettings">
         <div class="container">
             <h3>Settings</h3>
 
@@ -28,12 +28,21 @@
                 </div>
                 <div class="column col-3 ">
                     <label class="form-switch float-right">
-                        <input name="folderswitch" type="checkbox" checked="checked">
+                        <input id="folderswitch" name="folderswitch" type="checkbox" checked="checked">
                         <i class="form-icon"></i>
                     </label>
-
                 </div>
             </div>
+            <div class="divider"></div>
+            <div id="wrapperSavePath" class="columns d-none">
+                <div class="column col-12">
+                    <span>Choose folder</span>
+                </div>
+                <div class="column col-12 ">
+                    <button id="btnSavepath" class="btn btn-sm  btn-primary text-small">Choose</button>
+                </div>
+            </div>
+
             <div class="divider"></div>
             <div class="columns">
                 <div class="column col-9">
@@ -41,7 +50,7 @@
                 </div>
                 <div class="column col-3 ">
                     <label class="form-switch float-right">
-                        <input name="notification" type="checkbox" checked="checked">
+                        <input id="notification" name="notification" type="checkbox" checked="checked">
                         <i class="form-icon"></i>
                     </label>
 
@@ -54,7 +63,7 @@
                 </div>
                 <div class="column col-3 ">
                     <label class="form-switch float-right">
-                        <input name="clearlist" type="checkbox">
+                        <input id="clearlist" name="clearlist" type="checkbox">
                         <i class="form-icon"></i>
                     </label>
 

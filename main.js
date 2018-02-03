@@ -4,12 +4,16 @@ const fs = require('fs');
 const path = require('path');
 const url = require('url');
 const svgo = require('svgo');
+const settings = require('electron-settings');
 const execFile = require('child_process').execFile;
 const mozjpeg = require('mozjpeg');
 const pngquant = require('pngquant-bin');
 // const console = require('console'); // only for dev
 
 let svg = new svgo();
+
+// Todo: fix initial user settings
+let userSettings = {};
 
 const debug = 0;
 let mainWindow;
@@ -22,6 +26,7 @@ function createWindow() {
         height: 400,
         frame: true,
         backgroundColor: '#F7F7F7',
+        resizable: false, // Todo: fix parallax for resizing
         icon: path.join(__dirname, 'assets/icons/png/64x64.png')
     });
 
@@ -41,6 +46,7 @@ function createWindow() {
         mainWindow = null;
     });
 
+    userSettings = settings.getAll();
 
     require('./menu/mainmenu');
 
@@ -79,8 +85,7 @@ ipcMain.on(
                 case 'svg':
                     svg.optimize(data)
                         .then(function (result) {
-                            fs.writeFile(newFile, result.data, '', () => {
-                            });
+                            fs.writeFile(newFile, result.data, '', () => {});
                             event.sender.send('isShrinked', newFile);
                         })
                         .catch(function (error) {
@@ -121,9 +126,16 @@ const checkFileType = fileName => {
 
 
 const generateNewPath = pathName => {
-    let arrPath = pathName.split('.');
 
-    return arrPath[0] + '.min.' + arrPath[1];
+    let fullpath = path.parse(pathName);
+
+    if(settings.get('folderswitch') === false && typeof settings.get('savepath') !== 'undefined') {
+        fullpath.dir = settings.get('savepath')[0];
+    }
+
+    fullpath.base = fullpath.name + '.min' + fullpath.ext;
+
+    return path.format(fullpath);
 };
 
 

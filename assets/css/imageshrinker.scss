@@ -127,6 +127,7 @@ body {overflow: hidden;
   color: rgba($white,.95);
   transform: translate3d(-100%,0,0);
   transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1);
+  font-size: .675rem;
   &.is--open {
     transform: translate3d(0, 0, 0);
   }
@@ -138,6 +139,9 @@ body {overflow: hidden;
       content: " ";
 
     }
+  }
+  .column span {
+    line-height: 1rem;
   }
 }
 
@@ -183,4 +187,12 @@ body {overflow: hidden;
       opacity: 1;
     }
   }
+}
+
+.text-small {
+  font-size: .5rem;
+}
+.btn.btn-sm {
+  font-size: .5rem;
+
 }

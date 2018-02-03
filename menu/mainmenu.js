@@ -43,7 +43,7 @@ if (process.platform === 'darwin') {
     // Window menu
     template[2].submenu = [
         {role: 'minimize'},
-        {role: 'zoom'},
+        // {role: 'zoom'}, Todo: fix parallax
         {type: 'separator'},
         {role: 'front'},
     ];

@@ -405,13 +405,13 @@ body {
   text-rendering: optimizeLegibility; }
 
 a {
-  color: #65b6d9;
+  color: #0496d9;
   outline: none;
   text-decoration: none; }
   a:focus {
-    box-shadow: 0 0 0 0.1rem rgba(101, 182, 217, 0.2); }
+    box-shadow: 0 0 0 0.1rem rgba(4, 150, 217, 0.2); }
   a:focus, a:hover, a:active, a.active {
-    color: #51acd4;
+    color: #0485c0;
     text-decoration: underline; }
 
 h1,
@@ -524,9 +524,9 @@ dl dd {
   transition: all .2s ease;
   appearance: none;
   background: #fff;
-  border: 0.05rem solid #65b6d9;
+  border: 0.05rem solid #0496d9;
   border-radius: 0.1rem;
-  color: #65b6d9;
+  color: #0496d9;
   cursor: pointer;
   display: inline-block;
   font-size: 0.8rem;
@@ -540,14 +540,14 @@ dl dd {
   vertical-align: middle;
   white-space: nowrap; }
   .btn:focus {
-    box-shadow: 0 0 0 0.1rem rgba(101, 182, 217, 0.2); }
+    box-shadow: 0 0 0 0.1rem rgba(4, 150, 217, 0.2); }
   .btn:focus, .btn:hover {
-    background: #feffff;
-    border-color: #59b0d6;
+    background: #9fe0fd;
+    border-color: #048cca;
     text-decoration: none; }
   .btn:active, .btn.active {
-    background: #59b0d6;
-    border-color: #44a6d1;
+    background: #048cca;
+    border-color: #037ab1;
     color: #fff;
     text-decoration: none; }
     .btn:active.loading::after, .btn.active.loading::after {
@@ -558,16 +558,16 @@ dl dd {
     opacity: .5;
     pointer-events: none; }
   .btn.btn-primary {
-    background: #65b6d9;
-    border-color: #59b0d6;
+    background: #0496d9;
+    border-color: #048cca;
     color: #fff; }
     .btn.btn-primary:focus, .btn.btn-primary:hover {
-      background: #51acd4;
-      border-color: #44a6d1;
+      background: #0485c0;
+      border-color: #037ab1;
       color: #fff; }
     .btn.btn-primary:active, .btn.btn-primary.active {
-      background: #48a8d2;
-      border-color: #3ca3cf;
+      background: #037eb6;
+      border-color: #0373a7;
       color: #fff; }
     .btn.btn-primary.loading::after, .btn.btn-success.loading::after, .btn.btn-error.loading::after {
       border-bottom-color: #fff;
@@ -603,9 +603,9 @@ dl dd {
   .btn.btn-link {
     background: transparent;
     border-color: transparent;
-    color: #65b6d9; }
+    color: #0496d9; }
     .btn.btn-link:focus, .btn.btn-link:hover, .btn.btn-link:active, .btn.btn-link.active {
-      color: #51acd4; }
+      color: #0485c0; }
   .btn.btn-sm {
     font-size: 0.7rem;
     height: 1.4rem;
@@ -704,8 +704,8 @@ legend {
   position: relative;
   width: 100%; }
   .form-input:focus {
-    box-shadow: 0 0 0 0.1rem rgba(101, 182, 217, 0.2);
-    border-color: #65b6d9; }
+    box-shadow: 0 0 0 0.1rem rgba(4, 150, 217, 0.2);
+    border-color: #0496d9; }
   .form-input::placeholder {
     color: #acb3c2; }
   .form-input.input-sm {
@@ -755,8 +755,8 @@ textarea.form-input {
     background: #fff url("data:image/svg+xml;charset=utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%204%205'%3E%3Cpath%20fill='%23667189'%20d='M2%200L0%202h4zm0%205L0%203h4z'/%3E%3C/svg%3E") no-repeat right 0.35rem center/0.4rem 0.5rem;
     padding-right: 1.2rem; }
   .form-select:focus {
-    box-shadow: 0 0 0 0.1rem rgba(101, 182, 217, 0.2);
-    border-color: #65b6d9; }
+    box-shadow: 0 0 0 0.1rem rgba(4, 150, 217, 0.2);
+    border-color: #0496d9; }
   .form-select::-ms-expand {
     display: none; }
   .form-select.select-sm {
@@ -811,13 +811,13 @@ textarea.form-input {
     .form-checkbox input:focus + .form-icon,
     .form-radio input:focus + .form-icon,
     .form-switch input:focus + .form-icon {
-      box-shadow: 0 0 0 0.1rem rgba(101, 182, 217, 0.2);
-      border-color: #65b6d9; }
+      box-shadow: 0 0 0 0.1rem rgba(4, 150, 217, 0.2);
+      border-color: #0496d9; }
     .form-checkbox input:checked + .form-icon,
     .form-radio input:checked + .form-icon,
     .form-switch input:checked + .form-icon {
-      background: #65b6d9;
-      border-color: #65b6d9; }
+      background: #0496d9;
+      border-color: #0496d9; }
   .form-checkbox .form-icon,
   .form-radio .form-icon,
   .form-switch .form-icon {
@@ -865,8 +865,8 @@ textarea.form-input {
   transform: rotate(45deg);
   width: 8px; }
 .form-checkbox input:indeterminate + .form-icon {
-  background: #65b6d9;
-  border-color: #65b6d9; }
+  background: #0496d9;
+  border-color: #0496d9; }
   .form-checkbox input:indeterminate + .form-icon::before {
     background: #fff;
     content: "";
@@ -1033,6 +1033,33 @@ input:disabled + .form-icon, input.disabled + .form-icon {
   padding: 0.4rem 0; }
   .form-horizontal .form-group {
     display: flex; }
+
+.label {
+  border-radius: 0.1rem;
+  line-height: 1.2;
+  padding: .1rem .15rem;
+  background: #f0f1f4;
+  color: #5b657a;
+  display: inline-block; }
+  .label.label-rounded {
+    border-radius: 5rem;
+    padding-left: .4rem;
+    padding-right: .4rem; }
+  .label.label-primary {
+    background: #0496d9;
+    color: #fff; }
+  .label.label-secondary {
+    background: #9fe0fd;
+    color: #0496d9; }
+  .label.label-success {
+    background: #32b643;
+    color: #fff; }
+  .label.label-warning {
+    background: #ffb700;
+    color: #fff; }
+  .label.label-error {
+    background: #e85600;
+    color: #fff; }
 
 .container {
   margin-left: auto;
@@ -1472,16 +1499,16 @@ input:disabled + .form-icon, input.disabled + .form-icon {
     opacity: 1;
     transform: translateY(0); } }
 .text-primary {
-  color: #65b6d9; }
+  color: #0496d9; }
 
 a.text-primary:focus, a.text-primary:hover {
-  color: #51acd4; }
+  color: #0485c0; }
 
 .text-secondary {
-  color: #f2f9fc; }
+  color: #90dbfd; }
 
 a.text-secondary:focus, a.text-secondary:hover {
-  color: #deeff7; }
+  color: #77d2fc; }
 
 .text-gray {
   color: #acb3c2; }
@@ -1514,10 +1541,11 @@ a.text-error:focus, a.text-error:hover {
   color: #cf4d00; }
 
 .bg-primary {
-  background: #65b6d9; }
+  background: #0496d9;
+  color: #fff; }
 
 .bg-secondary {
-  background: #feffff; }
+  background: #9fe0fd; }
 
 .bg-dark {
   background: #454d5d;
@@ -1646,7 +1674,7 @@ a.text-error:focus, a.text-error:hover {
   position: relative; }
   .loading::after {
     animation: loading 500ms infinite linear;
-    border: 0.1rem solid #65b6d9;
+    border: 0.1rem solid #0496d9;
     border-radius: 50%;
     border-right-color: transparent;
     border-top-color: transparent;
