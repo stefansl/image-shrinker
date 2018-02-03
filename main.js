@@ -1,14 +1,14 @@
 /* eslint-disable indent */
-const {app, Menu, BrowserWindow, ipcMain, dialog} = require('electron');
+const {app, BrowserWindow, ipcMain, dialog} = require('electron');
 const fs = require('fs');
 const path = require('path');
-
 const url = require('url');
+
 const svgo = require('svgo');
 const execFile = require('child_process').execFile;
 const mozjpeg = require('mozjpeg');
 const pngquant = require('pngquant-bin');
-// const console = require('console'); // only for dev
+const console = require('console'); // only for dev
 
 let svg = new svgo();
 
@@ -17,6 +17,7 @@ let mainWindow;
 function createWindow() {
     // Create the browser window.
     mainWindow = new BrowserWindow({
+        titleBarStyle: 'hidden-inset',
         width: 300,
         height: 400,
         frame: true,
@@ -32,44 +33,13 @@ function createWindow() {
     }));
 
     // Open the DevTools.
-    // mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
 
     mainWindow.on('closed', () => {
         mainWindow = null;
     });
-    const template = [
 
-        {
-            role: 'window',
-            submenu: [
-                {role: 'minimize'},
-                {role: 'close'}
-            ]
-        }
-    ];
-
-    if (process.platform === 'darwin') {
-        template.unshift({
-            label: app.getName(),
-            submenu: [
-                {role: 'about'},
-                {role: 'preferences'},
-                {role: 'quit'}
-            ]
-        });
-
-
-        // Window menu
-        template[1].submenu = [
-            {role: 'minimize'},
-            {role: 'zoom'},
-            {type: 'separator'},
-            {role: 'front'},
-        ];
-    }
-
-    const menu = Menu.buildFromTemplate(template);
-    Menu.setApplicationMenu(menu);
+    require('./menu/mainmenu');
 }
 
 
@@ -90,7 +60,7 @@ app.on('activate', () => {
 
 // Main logic
 ipcMain.on(
-    'shrinkSvg', (event, fileName, filePath) => {
+    'shrinkImage', (event, fileName, filePath) => {
 
         fs.readFile(filePath, 'utf8', function (err, data) {
 
@@ -105,7 +75,8 @@ ipcMain.on(
                 case 'svg':
                     svg.optimize(data)
                         .then(function (result) {
-                            fs.writeFile(newFile, result.data, '', () => {});
+                            fs.writeFile(newFile, result.data, '', () => {
+                            });
                             event.sender.send('isShrinked', newFile);
                         })
                         .catch(function (error) {
@@ -135,10 +106,19 @@ ipcMain.on(
                         'message': 'Only SVG, JPG and PNG allowed'
                     });
             }
-
         });
     }
-);
+)
+    .on(
+        'openSettings',
+        (event) => {
+            console.log(event);
+            dialog.showMessageBox({
+                'type': 'error',
+                'message': 'Du Schwein'
+            });
+        }
+    );
 
 
 const checkFileType = fileName => {
@@ -151,3 +131,4 @@ const generateNewPath = pathName => {
 
     return arrPath[0] + '.min.' + arrPath[1];
 };
+
