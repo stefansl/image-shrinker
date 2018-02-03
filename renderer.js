@@ -193,8 +193,7 @@ window.onresize = () => {
     setTimeout(()=>{
         winX = window.innerWidth / 2;
         winY = window.innerHeight / 2;
-        console.log(window.innerWidth);
-    }, 1000);
+    }, 1400);
 };
 
 // Let's do some parallax stuff
