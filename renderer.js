@@ -1,8 +1,9 @@
 'use strict';
 
 const {ipcRenderer, shell} = require('electron');
+const {dialog} = require('electron').remote;
 const console = require('console');
-
+const path = require('path');
 
 let dragzone = document.getElementById('dragzone'),
     resultBox = document.getElementById('result'),
@@ -10,6 +11,25 @@ let dragzone = document.getElementById('dragzone'),
     btnCloseSettings = document.getElementById('btnCloseSettings'),
     menuSettings = document.getElementById('menuSettings'),
     switches = document.getElementsByTagName('input');
+
+dragzone.onclick = () => {
+    //ipcRenderer.send('chooseFilesInDialog');
+    dialog.showOpenDialog(
+        {
+            properties: ['openFile', 'multiSelections']
+        },
+        (item) => {
+            if (!item) {
+                return;
+            }
+            console.log(item);
+            for (let f of item) {
+                let filename = path.parse(f).base;
+                ipcRenderer.send('shrinkImage', filename, f);
+            }
+        }
+    );
+};
 
 document.ondragover = () => {
     dragzone.classList.add('drag-active');
@@ -28,7 +48,7 @@ document.ondragend = () => {
 
 document.ondrop = (e) => {
     e.preventDefault();
-
+    // console.log(e.dataTransfer.files);
     for (let f of e.dataTransfer.files) {
         ipcRenderer.send('shrinkImage', f.name, f.path, f.lastModified);
     }
