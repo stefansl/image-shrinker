@@ -3,17 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <title>Image Shrinker</title>
+    <link rel="stylesheet" href="assets/css/spectre.css">
+    <link rel="stylesheet" href="node_modules/spectre.css/dist/spectre-icons.min.css">
     <link rel="stylesheet" href="assets/css/imageshrinker.css">
 </head>
 <body>
-    <div id="dragzone" class="">
+<div class="wrapper">
+
+
+    <i class="icon icon-more-horiz icon-2x float-right" id="btnOpenSettings"></i>
+
+    <section id="dragzone" class="">
         <h1>Drag files here</h1>
         <strong>only SVG, JPG and PNG allowed</strong>
-    </div>
-    <div id="result"></div>
+    </section>
+    <section id="result"></section>
+
+    <!-- Settings pane -->
+    <section id="menuSettings">
+        <div class="container">
+            <h3>Settings</h3>
+
+            <div class="columns">
+                <div class="column col-9">
+                    Save shrinked files in same folder
+                </div>
+                <div class="column col-3 ">
+                    <label class="form-switch float-right">
+                        <input id="folderswitch" name="folderswitch" type="checkbox" checked="checked">
+                        <i class="form-icon"></i>
+                    </label>
+                </div>
+                <div id="wrapperSavePath" class="d-none">
+                    <div class="column col-12">
+                        <span>Choose folder</span>
+                    </div>
+                    <div class="column col-12 ">
+                        <button id="btnSavepath" class="btn btn-sm  btn-primary text-small">> Open</button>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="columns">
+                <div class="column col-9">
+                    Enable notifications
+                </div>
+                <div class="column col-3 ">
+                    <label class="form-switch float-right">
+                        <input id="notification" name="notification" type="checkbox" checked="checked">
+                        <i class="form-icon"></i>
+                    </label>
+
+                </div>
+            </div>
+
+            <div class="columns">
+                <div class="column col-9">
+                    Clear result list, when shrinking new images
+                </div>
+                <div class="column col-3 ">
+                    <label class="form-switch float-right">
+                        <input id="clearlist" name="clearlist" type="checkbox">
+                        <i class="form-icon"></i>
+                    </label>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <span>App by </span>
+            <a class="openInBrowser" href="https://clickpress.de">
+                <img src="assets/img/clickpress_logo_weiss.min.svg" width="90" height="30" alt="">
+            </a>
+        </div>
+
+        <i class="icon icon-cross icon-2x" id="btnCloseSettings"></i>
+    </section>
+</div>
+<div id="background">
+    <div id="layer"></div>
+</div>
 </body>
 <script>
-    // You can also require other files to run in this process
-    require('./renderer.js')
+    require('./renderer.js');
 </script>
 </html>

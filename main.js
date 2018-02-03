@@ -1,26 +1,32 @@
 /* eslint-disable indent */
-const {app, Menu, BrowserWindow, ipcMain, dialog} = require('electron');
+const {app, BrowserWindow, ipcMain, dialog} = require('electron');
 const fs = require('fs');
 const path = require('path');
-
 const url = require('url');
 const svgo = require('svgo');
+const settings = require('electron-settings');
 const execFile = require('child_process').execFile;
-const jpegtran = require('jpegtran-bin');
+const mozjpeg = require('mozjpeg');
 const pngquant = require('pngquant-bin');
 // const console = require('console'); // only for dev
 
 let svg = new svgo();
 
+let userSettings = {};
+
+let debug = 0;
 let mainWindow;
 
 function createWindow() {
+
     // Create the browser window.
     mainWindow = new BrowserWindow({
-        width: 300,
-        height: 400,
+        titleBarStyle: 'hidden-inset',
+        width: 340,
+        height: 550,
         frame: true,
         backgroundColor: '#F7F7F7',
+        resizable: true,
         icon: path.join(__dirname, 'assets/icons/png/64x64.png')
     });
 
@@ -32,44 +38,28 @@ function createWindow() {
     }));
 
     // Open the DevTools.
-    // mainWindow.webContents.openDevTools();
+    if (debug === 1) {
+        mainWindow.webContents.openDevTools();
+    }
 
     mainWindow.on('closed', () => {
         mainWindow = null;
     });
-    const template = [
 
-        {
-            role: 'window',
-            submenu: [
-                {role: 'minimize'},
-                {role: 'close'}
-            ]
-        }
-    ];
+    let defaultSettings = {
+        notification: true,
+        folderswitch: true,
+        clearlist: false
+    };
 
-    if (process.platform === 'darwin') {
-        template.unshift({
-            label: app.getName(),
-            submenu: [
-                {role: 'about'},
-                {role: 'preferences'},
-                {role: 'quit'}
-            ]
-        });
-
-
-        // Window menu
-        template[1].submenu = [
-            {role: 'minimize'},
-            {role: 'zoom'},
-            {type: 'separator'},
-            {role: 'front'},
-        ];
+    // set default settings at first launch
+    if (Object.keys(settings.getAll()).length === 0) {
+        settings.setAll(defaultSettings);
     }
 
-    const menu = Menu.buildFromTemplate(template);
-    Menu.setApplicationMenu(menu);
+    userSettings = settings.getAll();
+
+    require('./menu/mainmenu');
 }
 
 
@@ -90,7 +80,7 @@ app.on('activate', () => {
 
 // Main logic
 ipcMain.on(
-    'shrinkSvg', (event, fileName, filePath) => {
+    'shrinkImage', (event, fileName, filePath) => {
 
         fs.readFile(filePath, 'utf8', function (err, data) {
 
@@ -100,9 +90,9 @@ ipcMain.on(
 
             let newFile = generateNewPath(filePath);
 
-            switch (checkFileType(fileName)) {
+            switch (path.extname(fileName)) {
 
-                case 'svg':
+                case '.svg':
                     svg.optimize(data)
                         .then(function (result) {
                             fs.writeFile(newFile, result.data, '', () => {});
@@ -114,16 +104,15 @@ ipcMain.on(
 
                     break;
 
-                case 'jpg':
-                case 'jpeg':
-                    execFile(jpegtran, ['-outfile', newFile, filePath], () => {
-                        dialog(err);
+                case '.jpg':
+                case '.jpeg':
+                    execFile(mozjpeg, ['-outfile', newFile, filePath], () => {
                         event.sender.send('isShrinked', newFile);
                     });
 
                     break;
 
-                case 'png':
+                case '.png':
                     execFile(pngquant, ['-o', newFile, filePath], () => {
                         event.sender.send('isShrinked', newFile);
                     });
@@ -136,21 +125,23 @@ ipcMain.on(
                         'message': 'Only SVG, JPG and PNG allowed'
                     });
             }
-
         });
     }
 );
 
 
-const checkFileType = fileName => {
-    return fileName.split('.').pop();
-};
-
-
 const generateNewPath = pathName => {
-    let arrPath = pathName.split('.');
 
-    return arrPath[0] + '.min.' + arrPath[1];
+    let fullpath = path.parse(pathName);
+
+    if(settings.get('folderswitch') === false && typeof settings.get('savepath') !== 'undefined') {
+        fullpath.dir = settings.get('savepath')[0];
+    }
+
+    fullpath.base = fullpath.name + '.min' + fullpath.ext;
+
+    return path.format(fullpath);
 };
 
 
+module.exports = debug;

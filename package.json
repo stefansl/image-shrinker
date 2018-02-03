@@ -28,8 +28,10 @@
     "electron-packager": "^10.1.0"
   },
   "dependencies": {
-    "jpegtran-bin": "^3.2.0",
+    "electron-settings": "^3.1.4",
+    "mozjpeg": "^5.0.0",
     "pngquant-bin": "^3.1.1",
+    "spectre.css": "^0.5.0",
     "svgo": "^1.0.4"
   },
   "build": {
