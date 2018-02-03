@@ -32,6 +32,9 @@ body {
   font-weight: 400;
   color: #111; }
 
+#wrapper {
+  max-height: calc(100vh - 4rem); }
+
 #background {
   perspective: 8000px;
   width: 100vw;
@@ -50,7 +53,6 @@ body {
   cursor: pointer;
   opacity: .5;
   border: 2px dashed var(--main-bg-color);
-  margin-bottom: 2em;
   padding: 1em;
   text-align: center;
   color: var(--main-bg-color);
@@ -68,6 +70,10 @@ body {
     font-size: 1.6rem;
     margin-bottom: .5rem;
     font-weight: 700; }
+
+#result {
+  max-height: 190px;
+  overflow-y: scroll; }
 
 .resLine {
   border-bottom: 1px solid rgba(17, 17, 17, 0.3);

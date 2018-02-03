@@ -13,7 +13,6 @@ let dragzone = document.getElementById('dragzone'),
     switches = document.getElementsByTagName('input');
 
 dragzone.onclick = () => {
-    //ipcRenderer.send('chooseFilesInDialog');
     dialog.showOpenDialog(
         {
             properties: ['openFile', 'multiSelections']
@@ -22,7 +21,11 @@ dragzone.onclick = () => {
             if (!item) {
                 return;
             }
-            console.log(item);
+
+            if(setting.clearResultBox) {
+                resultBox.innerHTML = '';
+            }
+
             for (let f of item) {
                 let filename = path.parse(f).base;
                 ipcRenderer.send('shrinkImage', filename, f);
@@ -52,6 +55,11 @@ document.ondrop = (e) => {
     for (let f of e.dataTransfer.files) {
         ipcRenderer.send('shrinkImage', f.name, f.path, f.lastModified);
     }
+
+    if(setting.clearResultBox) {
+        resultBox.innerHTML = '';
+    }
+
     dragzone.classList.remove('drag-active');
 
     return false;
@@ -93,7 +101,7 @@ ipcRenderer
             });
 
             resContainer.appendChild(resElement);
-            resultBox.appendChild(resContainer);
+            resultBox.prepend(resContainer);
 
             // Notification
             new window.Notification('Image shrinked, pal!', {

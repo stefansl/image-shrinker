@@ -113,10 +113,6 @@ ipcMain.on(
         'openSettings',
         (event) => {
             console.log(event);
-            dialog.showMessageBox({
-                'type': 'error',
-                'message': 'Du Schwein'
-            });
         }
     );
 

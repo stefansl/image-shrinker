@@ -46,6 +46,10 @@ body {overflow: hidden;
   color: $black;
 }
 
+#wrapper {
+  max-height: calc(100vh - 4rem);
+}
+
 #background {
   perspective: 8000px;
   width: 100vw;
@@ -88,6 +92,11 @@ body {overflow: hidden;
     margin-bottom: .5rem;
     font-weight: 700;
   }
+}
+
+#result {
+  max-height: 190px;
+  overflow-y: scroll;
 }
 
 .resLine {
