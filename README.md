@@ -39,6 +39,10 @@ npm run pack-linux
 ## Credits
 A big THANK YOU goes out to you guys:
 * Electron: https://electronjs.org
+* pngquant: https://pngquant.org/
+* mozjpg: https://github.com/mozilla/mozjpeg
+* SVGO: https://github.com/svg/svgo
+* Settings framework: https://github.com/nathanbuchar/electron-settings
 * Poly background: http://alssndro.github.io/trianglify-background-generator
 * CSS: [Spectre Css](https://picturepan2.github.io/spectre/)
 * Font: [Mozillas Fira Sans](https://github.com/mozilla/Fira)
