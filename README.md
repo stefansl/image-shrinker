@@ -35,3 +35,11 @@ Generate your Linux package
 ```shell
 npm run pack-linux
 ```
+
+## Credits
+A big THANK YOU goes out to you guys:
+* Electron: https://electronjs.org
+* Poly background: http://alssndro.github.io/trianglify-background-generator
+* CSS: [Spectre Css](https://picturepan2.github.io/spectre/)
+* Font: [Mozillas Fira Sans](https://github.com/mozilla/Fira)
+
