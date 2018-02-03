@@ -96,8 +96,10 @@ body {
 }
 
 #result {
-  max-height: 190px;
+  max-height: 400px;
   overflow-y: scroll;
+  -webkit-mask-image: -webkit-linear-gradient(bottom, transparent 1%, white 20%, white 90%,transparent 99%);
+
 }
 
 .resLine {
