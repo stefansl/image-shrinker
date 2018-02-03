@@ -123,16 +123,23 @@ let bg = document.getElementById('background'),
     winY = window.innerHeight / 2;
 
 document.onmousemove = (e) => {
-    let transX = e.clientX - winX;
-    let transY = e.clientY - winY;
-    let tiltX = (transX / winY);
-    let tiltY = -(transY / winX);
-    let radius = Math.sqrt(Math.pow(tiltX, 2) + Math.pow(tiltY, 2));
-    let degree = (radius * 15);
+    let transX = e.clientX - winX,
+        transY = e.clientY - winY,
+        tiltX = (transX / winY),
+        tiltY = -(transY / winX),
+        radius = Math.sqrt(Math.pow(tiltX, 2) + Math.pow(tiltY, 2)),
+        transformX = Math.floor(tiltX * Math.PI),
+        transformY = Math.floor(tiltY * Math.PI),
+        degree = (radius * 15),
+        transform;
 
-    bg.style.transform = 'scale(1.15) rotate3d(' + tiltX + ', ' + tiltY + ', 0, ' + degree + 'deg)';
+    transform  = 'scale(1.15)';
+    transform += ' rotate3d(' + tiltX + ', ' + tiltY + ', 0, ' + degree + 'deg)';
+    transform += ' translate3d(' + transformX + 'px, ' + transformY + 'px, 0)';
+
+    bg.style.transform = transform;
 };
 
 document.onmouseleave = () => {
-    bg.style.transform = 'scale(1.1) rotate3d(0,0,0,0)';
+    bg.style.transform = '';
 };
