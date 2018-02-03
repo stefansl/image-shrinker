@@ -2,7 +2,7 @@
 
 const {ipcRenderer, shell} = require('electron');
 const {dialog} = require('electron').remote;
-const console = require('console');
+//const console = require('console');
 const path = require('path');
 
 let settings;
@@ -68,9 +68,13 @@ document.ondrop = (e) => {
     return false;
 };
 
-switches.change = (e) => {
-    console.log(e);
-};
+
+Array.from(switches).forEach((switchEl) => {
+    switchEl.onchange = (e) => {
+        console.log(e.target.name);
+        console.log(e.target.checked);
+    };
+});
 
 btnOpenSettings.onclick = (e) => {
     e.preventDefault();
