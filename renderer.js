@@ -224,7 +224,7 @@ document.onmouseleave = () => {
 /*
  * Open external links in browser
  */
-Array.from(openInBrowserLink).forEach(function(el) {
+Array.from(openInBrowserLink).forEach((el) => {
     el.onclick = (e) => {
         e.preventDefault();
         shell.openExternal(e.srcElement.offsetParent.lastElementChild.href);

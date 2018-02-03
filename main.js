@@ -82,7 +82,7 @@ app.on('activate', () => {
 ipcMain.on(
     'shrinkImage', (event, fileName, filePath) => {
 
-        fs.readFile(filePath, 'utf8', function (err, data) {
+        fs.readFile(filePath, 'utf8', (err, data) => {
 
             if (err) {
                 throw err;
@@ -95,7 +95,8 @@ ipcMain.on(
                 case '.svg':
                     svg.optimize(data)
                         .then(function (result) {
-                            fs.writeFile(newFile, result.data, '', () => {});
+                            fs.writeFile(newFile, result.data, '', () => {
+                            });
                             event.sender.send('isShrinked', newFile);
                         })
                         .catch(function (error) {
@@ -130,11 +131,11 @@ ipcMain.on(
 );
 
 
-const generateNewPath = pathName => {
+const generateNewPath = (pathName) => {
 
     let fullpath = path.parse(pathName);
 
-    if(settings.get('folderswitch') === false && typeof settings.get('savepath') !== 'undefined') {
+    if (settings.get('folderswitch') === false && typeof settings.get('savepath') !== 'undefined') {
         fullpath.dir = settings.get('savepath')[0];
     }
 
