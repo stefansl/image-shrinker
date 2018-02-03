@@ -119,4 +119,28 @@ body {
 .icon {
   cursor: pointer; }
 
+.copyright {
+  position: absolute;
+  bottom: 1rem;
+  left: 1.5rem;
+  display: table;
+  margin: 0 auto;
+  color: #fefefe; }
+  .copyright span {
+    display: table-cell;
+    padding-right: 0.75em;
+    vertical-align: middle;
+    font-size: 0.6em;
+    opacity: 0.4; }
+  .copyright img {
+    opacity: 0.4;
+    -webkit-transition: opacity 200ms cubic-bezier(0.79, 0.14, 0.15, 0.86);
+    -o-transition: opacity 200ms cubic-bezier(0.79, 0.14, 0.15, 0.86);
+    transition: opacity 200ms cubic-bezier(0.79, 0.14, 0.15, 0.86); }
+  .copyright a {
+    display: block;
+    line-height: 0; }
+    .copyright a:hover img {
+      opacity: 1; }
+
 /*# sourceMappingURL=imageshrinker.css.map */
