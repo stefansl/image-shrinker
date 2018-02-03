@@ -2,7 +2,7 @@
 
 const {ipcRenderer, shell} = require('electron');
 const {dialog} = require('electron').remote;
-const console = require('console');
+//const console = require('console');
 const path = require('path');
 
 let dragzone = document.getElementById('dragzone'),
@@ -10,7 +10,8 @@ let dragzone = document.getElementById('dragzone'),
     btnOpenSettings = document.getElementById('btnOpenSettings'),
     btnCloseSettings = document.getElementById('btnCloseSettings'),
     menuSettings = document.getElementById('menuSettings'),
-    switches = document.getElementsByTagName('input');
+    switches = document.getElementsByTagName('input'),
+    openInBrowserLink = document.getElementsByClassName('openInBrowser');
 
 dragzone.onclick = () => {
     dialog.showOpenDialog(
@@ -143,3 +144,16 @@ document.onmousemove = (e) => {
 document.onmouseleave = () => {
     bg.style.transform = '';
 };
+
+openInBrowserLink.onclick = (e) => {
+    e.preventDefault();
+    console.log(e.target.href);
+    //shell.openExternal(e.target.href);
+};
+
+Array.from(openInBrowserLink).forEach(function(el) {
+    el.onclick = (e) => {
+        e.preventDefault();
+        shell.openExternal(e.srcElement.offsetParent.lastElementChild.href);
+    };
+});
