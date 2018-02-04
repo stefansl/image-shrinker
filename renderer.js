@@ -163,10 +163,10 @@ ipcRenderer
             resElement.appendChild(resText);
 
             // Add click event
-            resElement.addEventListener('click', function (el) {
+            resElement.onclick = (el) => {
                 el.preventDefault();
                 shell.showItemInFolder(path);
-            });
+            };
 
             resContainer.appendChild(resElement);
             resultBox.prepend(resContainer);

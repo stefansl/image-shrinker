@@ -96,7 +96,7 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(17, 17, 17, 0.85);
+  background-color: rgba(17, 17, 17, 0.9);
   color: rgba(254, 254, 254, 0.95);
   transform: translate3d(-100%, 0, 0);
   transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1);
