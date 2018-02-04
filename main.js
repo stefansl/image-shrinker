@@ -8,6 +8,7 @@ const settings = require('electron-settings');
 const execFile = require('child_process').execFile;
 const mozjpeg = require('mozjpeg');
 const pngquant = require('pngquant-bin');
+const mkdirp = require('mkdirp');
 // const console = require('console'); // only for dev
 
 let svg = new svgo();
@@ -95,9 +96,13 @@ ipcMain.on(
                 case '.svg':
                     svg.optimize(data)
                         .then(function (result) {
-                            fs.writeFile(newFile, result.data, '', () => {
+                            fs.writeFile(newFile, result.data, (err) => {
+                                if (!err) event.sender.send('isShrinked', newFile);
+                                else dialog.showMessageBox({
+                                    'type': 'error',
+                                    'message': 'I\'m not able to write your new image. Sorry!'
+                                });
                             });
-                            event.sender.send('isShrinked', newFile);
                         })
                         .catch(function (error) {
                             dialog(error.message);
@@ -107,15 +112,23 @@ ipcMain.on(
 
                 case '.jpg':
                 case '.jpeg':
-                    execFile(mozjpeg, ['-outfile', newFile, filePath], () => {
-                        event.sender.send('isShrinked', newFile);
+                    execFile(mozjpeg, ['-outfile', newFile, filePath], (err) => {
+                        if (!err) event.sender.send('isShrinked', newFile);
+                        else dialog.showMessageBox({
+                            'type': 'error',
+                            'message': 'I\'m not able to write your new image. Sorry!'
+                        });
                     });
 
                     break;
 
                 case '.png':
-                    execFile(pngquant, ['-o', newFile, filePath], () => {
-                        event.sender.send('isShrinked', newFile);
+                    execFile(pngquant, ['-o', newFile, filePath], (err) => {
+                        if (!err) event.sender.send('isShrinked', newFile);
+                        else dialog.showMessageBox({
+                            'type': 'error',
+                            'message': 'I\'m not able to write your new image. Sorry!'
+                        });
                     });
 
                     break;
@@ -136,7 +149,16 @@ const generateNewPath = (pathName) => {
     let fullpath = path.parse(pathName);
 
     if (settings.get('folderswitch') === false && typeof settings.get('savepath') !== 'undefined') {
-        fullpath.dir = settings.get('savepath')[0];
+
+        let savepath = settings.get('savepath')[0];
+
+        if (!isDirSync(savepath)) {
+            mkdirp(savepath, function (err) {
+                if (err) console.error(err);
+            });
+        }
+
+        fullpath.dir = savepath;
     }
 
     fullpath.base = fullpath.name + '.min' + fullpath.ext;
@@ -144,5 +166,16 @@ const generateNewPath = (pathName) => {
     return path.format(fullpath);
 };
 
+
+// Check, if folder exists
+const isDirSync = (aPath) => {
+    try {
+        return fs.statSync(aPath).isDirectory();
+    } catch (e) {
+        if (e.code === 'ENOENT') {
+            return false;
+        }
+    }
+};
 
 module.exports = debug;
