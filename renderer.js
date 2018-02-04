@@ -35,6 +35,7 @@ if (userSetting.folderswitch === false) {
 }
 if (userSetting.savepath) btnSavepath.innerText = userSetting.savepath;
 
+
 /*
  * Open filepicker
  */
@@ -75,6 +76,7 @@ document.ondragend = () => {
     return false;
 };
 
+
 /*
  * Action on drag drop
  */
@@ -94,6 +96,7 @@ document.ondrop = (e) => {
     return false;
 };
 
+
 /*
  * Choose folder for saving shrinked images
  */
@@ -109,6 +112,7 @@ btnSavepath.onclick = () => {
         }
     );
 };
+
 
 /*
  * Save settings
@@ -126,6 +130,7 @@ Array.from(switches).forEach((switchEl) => {
     };
 });
 
+
 /*
  * Settings menu
  */
@@ -137,6 +142,7 @@ btnCloseSettings.onclick = (e) => {
     e.preventDefault();
     menuSettings.classList.remove('is--open');
 };
+
 
 /*
  * Renderer process
