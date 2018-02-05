@@ -123,7 +123,7 @@ ipcMain.on(
                     break;
 
                 case '.png':
-                    execFile(pngquant, ['-o', newFile, filePath], (err) => {
+                    execFile(pngquant, ['-fo', newFile, filePath], (err) => {
                         if (!err) event.sender.send('isShrinked', newFile);
                         else dialog.showMessageBox({
                             'type': 'error',
