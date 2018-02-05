@@ -157,6 +157,16 @@ body {
 
 #btnOpenSettings {
   z-index: 5;
+  &:hover {
+    color: rgba($black, .75);
+  }
+}
+
+#btnCloseSettings {
+  &:hover {
+    color: rgba($white, .75);
+  }
+
 }
 
 #btnOpenSettings, #btnCloseSettings {

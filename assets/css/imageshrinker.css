@@ -91,6 +91,7 @@ body {
 
 #menuSettings {
   position: absolute;
+  z-index: 10;
   padding: 3rem 1rem;
   top: 0;
   left: 0;
@@ -116,6 +117,14 @@ body {
     align-self: center; }
     #menuSettings .column span {
       line-height: 1rem; }
+
+#btnOpenSettings {
+  z-index: 5; }
+  #btnOpenSettings:hover {
+    color: rgba(17, 17, 17, 0.75); }
+
+#btnCloseSettings:hover {
+  color: rgba(254, 254, 254, 0.75); }
 
 #btnOpenSettings, #btnCloseSettings {
   position: absolute;

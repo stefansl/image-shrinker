@@ -15,7 +15,7 @@ let svg = new svgo();
 
 let userSettings = {};
 
-let debug = 0;
+let debug = 1;
 let mainWindow;
 
 function createWindow() {
