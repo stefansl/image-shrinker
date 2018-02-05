@@ -120,6 +120,7 @@ body {
 
 #menuSettings {
   position: absolute;
+  z-index: 10;
   padding: 3rem 1rem;
   top: 0;
   left: 0;
@@ -152,6 +153,10 @@ body {
       line-height: 1rem;
     }
   }
+}
+
+#btnOpenSettings {
+  z-index: 5;
 }
 
 #btnOpenSettings, #btnCloseSettings {
