@@ -98,7 +98,7 @@ body {
 #result {
   max-height: 400px;
   overflow-y: scroll;
-  -webkit-mask-image: -webkit-linear-gradient(bottom, transparent 1%, white 20%, white 90%,transparent 99%);
+  -webkit-mask-image: -webkit-linear-gradient(bottom, transparent 1%, white 20%, white 90%, transparent 99%);
 
 }
 
@@ -120,12 +120,13 @@ body {
 
 #menuSettings {
   position: absolute;
+  z-index: 10;
   padding: 3rem 1rem;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba($black, .85);
+  background-color: rgba($black, .9);
   color: rgba($white, .95);
   transform: translate3d(-100%, 0, 0);
   transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1);
@@ -152,6 +153,20 @@ body {
       line-height: 1rem;
     }
   }
+}
+
+#btnOpenSettings {
+  z-index: 5;
+  &:hover {
+    color: rgba($black, .50);
+  }
+}
+
+#btnCloseSettings {
+  &:hover {
+    color: rgba($white, .75);
+  }
+
 }
 
 #btnOpenSettings, #btnCloseSettings {

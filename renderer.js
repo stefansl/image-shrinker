@@ -35,6 +35,7 @@ if (userSetting.folderswitch === false) {
 }
 if (userSetting.savepath) btnSavepath.innerText = userSetting.savepath;
 
+
 /*
  * Open filepicker
  */
@@ -75,6 +76,7 @@ document.ondragend = () => {
     return false;
 };
 
+
 /*
  * Action on drag drop
  */
@@ -94,6 +96,7 @@ document.ondrop = (e) => {
     return false;
 };
 
+
 /*
  * Choose folder for saving shrinked images
  */
@@ -109,6 +112,7 @@ btnSavepath.onclick = () => {
         }
     );
 };
+
 
 /*
  * Save settings
@@ -126,6 +130,7 @@ Array.from(switches).forEach((switchEl) => {
     };
 });
 
+
 /*
  * Settings menu
  */
@@ -137,6 +142,7 @@ btnCloseSettings.onclick = (e) => {
     e.preventDefault();
     menuSettings.classList.remove('is--open');
 };
+
 
 /*
  * Renderer process
@@ -157,10 +163,10 @@ ipcRenderer
             resElement.appendChild(resText);
 
             // Add click event
-            resElement.addEventListener('click', function (el) {
+            resElement.onclick = (el) => {
                 el.preventDefault();
                 shell.showItemInFolder(path);
-            });
+            };
 
             resContainer.appendChild(resElement);
             resultBox.prepend(resContainer);
@@ -193,7 +199,7 @@ window.onresize = () => {
     setTimeout(()=>{
         winX = window.innerWidth / 2;
         winY = window.innerHeight / 2;
-    }, 1400);
+    }, 700);
 };
 
 // Let's do some parallax stuff
@@ -224,7 +230,7 @@ document.onmouseleave = () => {
 /*
  * Open external links in browser
  */
-Array.from(openInBrowserLink).forEach(function(el) {
+Array.from(openInBrowserLink).forEach((el) => {
     el.onclick = (e) => {
         e.preventDefault();
         shell.openExternal(e.srcElement.offsetParent.lastElementChild.href);

@@ -10,8 +10,8 @@ Drag your image file onto the Image Shrinker window and it will saved in the sam
 The original graphic will be not replaced.
 
 ## Download and Installation on MacOsX
-Download Image Shrinker here:
-https://github.com/stefansl/image-shrinker/releases/download/v1.2.0/Image.Shrinker.zip
+Download Image Shrinker here:  
+https://github.com/stefansl/image-shrinker/releases/download/v1.2.1/Image%20Shrinker-1.2.1.dmg
 
 Unpack and copy or drag the app into your MacOSX application folder.
 For uninstalling, just drop the app into the bin.

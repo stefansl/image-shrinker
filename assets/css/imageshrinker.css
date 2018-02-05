@@ -91,12 +91,13 @@ body {
 
 #menuSettings {
   position: absolute;
+  z-index: 10;
   padding: 3rem 1rem;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(17, 17, 17, 0.85);
+  background-color: rgba(17, 17, 17, 0.9);
   color: rgba(254, 254, 254, 0.95);
   transform: translate3d(-100%, 0, 0);
   transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1);
@@ -116,6 +117,14 @@ body {
     align-self: center; }
     #menuSettings .column span {
       line-height: 1rem; }
+
+#btnOpenSettings {
+  z-index: 5; }
+  #btnOpenSettings:hover {
+    color: rgba(17, 17, 17, 0.5); }
+
+#btnCloseSettings:hover {
+  color: rgba(254, 254, 254, 0.75); }
 
 #btnOpenSettings, #btnCloseSettings {
   position: absolute;
