@@ -121,7 +121,7 @@ body {
 #btnOpenSettings {
   z-index: 5; }
   #btnOpenSettings:hover {
-    color: rgba(17, 17, 17, 0.75); }
+    color: rgba(17, 17, 17, 0.5); }
 
 #btnCloseSettings:hover {
   color: rgba(254, 254, 254, 0.75); }
