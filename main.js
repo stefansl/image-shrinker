@@ -8,12 +8,12 @@ const settings = require('electron-settings');
 const execFile = require('child_process').execFile;
 const mozjpeg = require('mozjpeg');
 const pngquant = require('pngquant-bin');
-const mkdirp = require('mkdirp');
+const makeDir = require('make-dir');
 // const console = require('console'); // only for dev
 
 let svg = new svgo();
 
-let userSettings = {};
+// let userSettings = {};
 
 let debug = 0;
 let mainWindow;
@@ -57,8 +57,6 @@ function createWindow() {
     if (Object.keys(settings.getAll()).length === 0) {
         settings.setAll(defaultSettings);
     }
-
-    userSettings = settings.getAll();
 
     require('./menu/mainmenu');
 }
@@ -146,36 +144,17 @@ ipcMain.on(
 
 const generateNewPath = (pathName) => {
 
-    let fullpath = path.parse(pathName);
+    let objPath = path.parse(pathName);
 
     if (settings.get('folderswitch') === false && typeof settings.get('savepath') !== 'undefined') {
-
-        let savepath = settings.get('savepath')[0];
-
-        if (!isDirSync(savepath)) {
-            mkdirp(savepath, function (err) {
-                if (err) console.error(err);
-            });
-        }
-
-        fullpath.dir = savepath;
+        objPath.dir = settings.get('savepath')[0];
     }
 
-    fullpath.base = fullpath.name + '.min' + fullpath.ext;
+    makeDir.sync(objPath.dir);
+    objPath.base = objPath.name + '.min' + objPath.ext;
 
-    return path.format(fullpath);
+    return path.format(objPath);
 };
 
-
-// Check, if folder exists
-const isDirSync = (aPath) => {
-    try {
-        return fs.statSync(aPath).isDirectory();
-    } catch (e) {
-        if (e.code === 'ENOENT') {
-            return false;
-        }
-    }
-};
 
 module.exports = debug;
