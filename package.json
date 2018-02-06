@@ -28,7 +28,8 @@
     "pack-mac": "electron-packager . 'Image.Shrinker' --platform=darwin --arch=x64 --ignore=/^release/i --icon=assets/icons/mac/icon_image-shrinker.svg.icns --overwrite --prune=true --out=release-builds",
     "pack-linux": "electron-packager . 'Image.Shrinker' --platform=linux --arch=x64 --ignore=/^release/i --icon=assets/icons/png/512x512 --overwrite",
     "pack": "build --dir",
-    "dist": "build"
+    "dist": "build",
+    "test": "mocha"
   },
   "repository": "https://github.com/stefansl/image-shrinker",
   "keywords": [
@@ -46,9 +47,12 @@
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^1.8.2-beta.5",
+    "electron-builder": "latest",
     "electron-installer-dmg": "^0.2.1",
     "electron-packager": "^10.1.0",
-    "electron-builder": "latest"
+    "fs-extra": "^5.0.0",
+    "mocha": "^5.0.0",
+    "spectron": "^3.8.0"
   },
   "dependencies": {
     "electron-settings": "^3.1.4",
