@@ -4,6 +4,6 @@ node_js:
 before_install:
   - npm i -g npm@version-number
 install:
-    - npm install
+  - npm install
 script:
-    - ember test --server
+  - npm test
