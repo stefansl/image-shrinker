@@ -1,10 +1,15 @@
 const Application = require('spectron').Application;
 const assert = require('assert');
-const electronPath = require('electron');
+const electron = require('electron');
 const path = require('path');
 const makedir = require('make-dir');
 //const settings = require('electron-settings');
 const fs = require('fs-extra');
+
+const describe = global.describe;
+const it = global.it;
+const beforeEach = global.beforeEach;
+const afterEach = global.afterEach;
 
 //let userSettings = settings.getAll();
 let testPath = '~/Desktop/test/spectron/My Folder';
@@ -14,7 +19,7 @@ describe('Application launch', function () {
 
     beforeEach(() => {
         this.app = new Application({
-            path: electronPath,
+            path: 'dist/mac/Image Shrinker.app/Contents/MacOS/Image Shrinker',
             args: [path.join(__dirname, '..')]
         });
 
@@ -51,9 +56,8 @@ describe('Application launch', function () {
     });
 
     it('test saving in non-existent folders', ()=>{
-        settings.set('folderswitch', false);
-        settings.set('savepath', testPath);
-
+        //settings.set('folderswitch', false);
+        //settings.set('savepath', testPath);
     });
 
 
