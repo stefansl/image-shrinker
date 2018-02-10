@@ -156,9 +156,9 @@ const generateNewPath = (pathName) => {
     // Suffix setting
     let suffix;
     if (settings.get('suffix') === true) {
-        suffix = '.min' + fullpath.ext;
+        suffix = '.min' + objPath.ext;
     } else {
-        suffix = fullpath.ext;
+        suffix = objPath.ext;
     }
 
     objPath.base = objPath.name + suffix;
