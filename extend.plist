@@ -1,0 +1,18 @@
+<key>CFBundleDocumentTypes</key>
+<array>
+  <dict>
+    <key>CFBundleTypeExtensions</key>
+    <array>
+      <string>png</string>
+      <string>jpg</string>
+      <string>jpeg</string>
+      <string>svg</string>
+    </array>
+    <key>CFBundleTypeName</key>
+    <string>png</string>
+    <key>CFBundleTypeRole</key>
+    <string>Editor</string>
+    <key>CFBundleTypeIconFile</key>
+    <string>Image Shrinker.icns</string>
+  </dict>
+</array>

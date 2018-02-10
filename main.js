@@ -61,6 +61,12 @@ function createWindow() {
 
     require('./menu/mainmenu');
 }
+app.on('will-finish-launching', () => {
+    app.on('open-file', (event, filePath) => {
+        event.preventDefault();
+        processFile(filePath, path.basename(filePath));
+    });
+});
 
 
 app.on('ready', createWindow);
@@ -82,57 +88,61 @@ app.on('activate', () => {
 // Main logic
 ipcMain.on(
     'shrinkImage', (event, fileName, filePath) => {
-
-        let sizeOrig = getFileSize(filePath);
-
-        fs.readFile(filePath, 'utf8', (err, data) => {
-
-            if (err) {
-                throw err;
-            }
-
-            let newFile = generateNewPath(filePath);
-
-            switch (path.extname(fileName)) {
-
-                case '.svg':
-                    svg.optimize(data)
-                        .then(function (result) {
-                            fs.writeFile(newFile, result.data, (err) => {
-                                sendToRenderer(err, newFile, event, sizeOrig);
-                            });
-                        })
-                        .catch(function (error) {
-                            dialog(error.message);
-                        });
-
-                    break;
-
-                case '.jpg':
-                case '.jpeg':
-                    execFile(mozjpeg, ['-outfile', newFile, filePath], (err) => {
-                        sendToRenderer(err, newFile, event, sizeOrig);
-                    });
-
-                    break;
-
-                case '.png':
-                    execFile(pngquant, ['-fo', newFile, filePath], (err) => {
-                        sendToRenderer(err, newFile, event, sizeOrig);
-                    });
-
-                    break;
-
-                default:
-                    dialog.showMessageBox({
-                        'type': 'error',
-                        'message': 'Only SVG, JPG and PNG allowed'
-                    });
-            }
-        });
+        processFile(filePath, fileName);
     }
 );
 
+
+let processFile = (filePath, fileName) => {
+    let sizeOrig = getFileSize(filePath);
+
+    fs.readFile(filePath, 'utf8', (err, data) => {
+
+        if (err) {
+            throw err;
+        }
+
+        app.addRecentDocument(filePath);
+        let newFile = generateNewPath(filePath);
+
+        switch (path.extname(fileName)) {
+
+            case '.svg':
+                svg.optimize(data)
+                    .then(function (result) {
+                        fs.writeFile(newFile, result.data, (err) => {
+                            sendToRenderer(err, newFile, sizeOrig);
+                        });
+                    })
+                    .catch(function (error) {
+                        dialog(error.message);
+                    });
+
+                break;
+
+            case '.jpg':
+            case '.jpeg':
+                execFile(mozjpeg, ['-outfile', newFile, filePath], (err) => {
+                    sendToRenderer(err, newFile, sizeOrig);
+                });
+
+                break;
+
+            case '.png':
+                execFile(pngquant, ['-fo', newFile, filePath], (err) => {
+                    sendToRenderer(err, newFile, sizeOrig);
+                });
+
+                break;
+
+            default:
+                dialog.showMessageBox({
+                    'type': 'error',
+                    'message': 'Only SVG, JPG and PNG allowed'
+                });
+        }
+    });
+};
 
 const generateNewPath = (pathName) => {
 
@@ -170,10 +180,12 @@ let getFileSize = (filePath, mb) => {
 };
 
 
-let sendToRenderer = (err, newFile, event, sizeOrig) => {
+let sendToRenderer = (err, newFile, sizeOrig) => {
+
     if (!err) {
         let sizeShrinked = getFileSize(newFile);
-        event.sender.send('isShrinked', newFile, sizeOrig, sizeShrinked);
+
+        mainWindow.webContents.send('isShrinked', newFile, sizeOrig, sizeShrinked);
     }
     else {
         dialog.showMessageBox({

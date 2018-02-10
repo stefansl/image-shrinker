@@ -1,6 +1,6 @@
 {
   "name": "image-shrinker",
-  "version": "1.2.2",
+  "version": "1.3.0",
   "description": "GUI for minifying images",
   "main": "main.js",
   "title": "Image Shrinker",
@@ -24,8 +24,8 @@
   ],
   "scripts": {
     "start": "electron .",
-    "build": "electron-packager . 'Image.Shrinker' --platform=darwin --arch=x64 --ignore=/^release/i --icon=assets/icons/mac/icon_image-shrinker.svg.icns --overwrite --prune=true --out=release-builds",
-    "pack-mac": "electron-packager . 'Image.Shrinker' --platform=darwin --arch=x64 --ignore=/^release/i --icon=assets/icons/mac/icon_image-shrinker.svg.icns --overwrite --prune=true --out=release-builds",
+    "build": "electron-packager . 'Image.Shrinker' --extendInfo=extend.plist --platform=darwin --arch=x64 --ignore=/^release/i --icon=assets/icons/mac/icon_image-shrinker.svg.icns --overwrite --prune=true --out=release-builds",
+    "pack-mac": "electron-packager . 'Image.Shrinker' --extendInfo=extend.plist --platform=darwin --arch=x64 --ignore=/^release/i --icon=assets/icons/mac/icon_image-shrinker.svg.icns --overwrite --prune=true --out=release-builds",
     "pack-linux": "electron-packager . 'Image.Shrinker' --platform=linux --arch=x64 --ignore=/^release/i --icon=assets/icons/png/512x512 --overwrite",
     "pack": "build --dir",
     "dist": "build",
@@ -77,6 +77,14 @@
       "**/*",
       "!node-modules/*"
     ],
+    "fileAssociations": {
+      "ext": [
+              "png",
+              "jpg",
+              "jpeg",
+              "svg"
+      ]
+    },
     "dmg": {
       "background": "build/bg_dmg.tiff",
       "icon": "build/icon_dmg.icns",
