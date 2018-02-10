@@ -17,8 +17,8 @@ let dragzone = document.getElementById('dragzone'),
     wrapperSavePath = document.getElementById('wrapperSavePath'),
     folderswitch = document.getElementById('folderswitch'),
     clearlist = document.getElementById('clearlist'),
-    notification = document.getElementById('notification');
-
+    notification = document.getElementById('notification'),
+    suffix = document.getElementById('suffix');
 
 /*
  * Settings

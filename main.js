@@ -50,7 +50,8 @@ function createWindow() {
     let defaultSettings = {
         notification: true,
         folderswitch: true,
-        clearlist: false
+        clearlist: false,
+        suffix: true
     };
 
     // set default settings at first launch
@@ -151,7 +152,16 @@ const generateNewPath = (pathName) => {
     }
 
     makeDir.sync(objPath.dir);
-    objPath.base = objPath.name + '.min' + objPath.ext;
+
+    // Suffix setting
+    let suffix;
+    if (settings.get('suffix') === true) {
+        suffix = '.min' + fullpath.ext;
+    } else {
+        suffix = fullpath.ext;
+    }
+
+    objPath.base = objPath.name + suffix;
 
     return path.format(objPath);
 };
