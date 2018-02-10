@@ -149,12 +149,15 @@ btnCloseSettings.onclick = (e) => {
  */
 ipcRenderer
     .on(
-        'isShrinked', (event, path) => {
+        'isShrinked', (event, path, sizeBefore, sizeAfter) => {
+
+            let percent = Math.round(100 / sizeBefore * sizeAfter);
+
 
             // Create container
             let resContainer = document.createElement('div');
             resContainer.className = 'resLine';
-            resContainer.innerHTML = '<span>Your shrinked image is here:</span><br>';
+            resContainer.innerHTML = '<span>You saved ' + percent + '%. Your shrinked image is here:</span><br>';
 
             // Create link
             let resElement = document.createElement('a');

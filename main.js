@@ -78,9 +78,12 @@ app.on('activate', () => {
     }
 });
 
+
 // Main logic
 ipcMain.on(
     'shrinkImage', (event, fileName, filePath) => {
+
+        let sizeOrig = getFileSize(filePath);
 
         fs.readFile(filePath, 'utf8', (err, data) => {
 
@@ -96,11 +99,7 @@ ipcMain.on(
                     svg.optimize(data)
                         .then(function (result) {
                             fs.writeFile(newFile, result.data, (err) => {
-                                if (!err) event.sender.send('isShrinked', newFile);
-                                else dialog.showMessageBox({
-                                    'type': 'error',
-                                    'message': 'I\'m not able to write your new image. Sorry!'
-                                });
+                                sendToRenderer(err, newFile, event, sizeOrig);
                             });
                         })
                         .catch(function (error) {
@@ -112,22 +111,14 @@ ipcMain.on(
                 case '.jpg':
                 case '.jpeg':
                     execFile(mozjpeg, ['-outfile', newFile, filePath], (err) => {
-                        if (!err) event.sender.send('isShrinked', newFile);
-                        else dialog.showMessageBox({
-                            'type': 'error',
-                            'message': 'I\'m not able to write your new image. Sorry!'
-                        });
+                        sendToRenderer(err, newFile, event, sizeOrig);
                     });
 
                     break;
 
                 case '.png':
                     execFile(pngquant, ['-fo', newFile, filePath], (err) => {
-                        if (!err) event.sender.send('isShrinked', newFile);
-                        else dialog.showMessageBox({
-                            'type': 'error',
-                            'message': 'I\'m not able to write your new image. Sorry!'
-                        });
+                        sendToRenderer(err, newFile, event, sizeOrig);
                     });
 
                     break;
@@ -166,5 +157,30 @@ const generateNewPath = (pathName) => {
     return path.format(objPath);
 };
 
+
+let getFileSize = (filePath, mb) => {
+    const stats = fs.statSync(filePath);
+    let fileSize = stats.size;
+
+    if (mb) {
+        fileSize = fileSize / 1024;
+    }
+
+    return fileSize;
+};
+
+
+let sendToRenderer = (err, newFile, event, sizeOrig) => {
+    if (!err) {
+        let sizeShrinked = getFileSize(newFile);
+        event.sender.send('isShrinked', newFile, sizeOrig, sizeShrinked);
+    }
+    else {
+        dialog.showMessageBox({
+            'type': 'error',
+            'message': 'I\'m not able to write your new image. Sorry!'
+        });
+    }
+};
 
 module.exports = debug;
