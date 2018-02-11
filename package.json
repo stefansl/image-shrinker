@@ -79,10 +79,10 @@
     ],
     "fileAssociations": {
       "ext": [
-              "png",
-              "jpg",
-              "jpeg",
-              "svg"
+        "png",
+        "jpg",
+        "jpeg",
+        "svg"
       ]
     },
     "dmg": {
