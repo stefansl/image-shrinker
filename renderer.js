@@ -40,6 +40,7 @@ if (userSetting.savepath) btnSavepath.innerText = userSetting.savepath;
  * Open filepicker
  */
 dragzone.onclick = () => {
+
     dialog.showOpenDialog(
         {
             properties: ['openFile', 'multiSelections']
@@ -57,6 +58,9 @@ dragzone.onclick = () => {
                 let filename = path.parse(f).base;
                 ipcRenderer.send('shrinkImage', filename, f);
             }
+
+            // Add loader
+            dragzone.classList.add('is--processing');
         }
     );
 };
@@ -91,6 +95,7 @@ document.ondrop = (e) => {
         resultBox.innerHTML = '';
     }
 
+    dragzone.classList.add('is--processing');
     dragzone.classList.remove('drag-active');
 
     return false;
@@ -153,6 +158,8 @@ ipcRenderer
 
             let percent = Math.round(100 / sizeBefore * sizeAfter);
 
+            // Remove loader
+            dragzone.classList.remove('is--processing');
 
             // Create container
             let resContainer = document.createElement('div');

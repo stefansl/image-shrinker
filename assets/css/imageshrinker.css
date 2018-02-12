@@ -51,6 +51,7 @@ body {
 
 #dragzone {
   cursor: pointer;
+  position: relative;
   opacity: .5;
   border: 2px dashed var(--main-bg-color);
   padding: 1em;
@@ -60,6 +61,20 @@ body {
   transition: opacity .1s ease-out; }
   #dragzone.drag-active {
     opacity: .9; }
+  #dragzone::after {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    content: " ";
+    opacity: 0;
+    transition: opacity .4s ease-out;
+    left: 0;
+    top: 0; }
+  #dragzone.is--processing::after {
+    background: rgba(216, 101, 80, 0.5) url("../img/tail-spin.min.svg") no-repeat center center;
+    background-size: 15%;
+    opacity: 1; }
   #dragzone:hover {
     opacity: .75; }
   #dragzone strong {
@@ -163,5 +178,13 @@ body {
 
 .btn.btn-sm {
   font-size: .5rem; }
+
+#overlay {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10; }
 
 /*# sourceMappingURL=imageshrinker.css.map */
