@@ -3,9 +3,9 @@ const {app, BrowserWindow, ipcMain, dialog} = require('electron');
 const fs = require('fs');
 const path = require('path');
 const url = require('url');
-const svgo = require('svgo');
 const settings = require('electron-settings');
-const execFile = require('child_process').execFile;
+const svgo = require('svgo');
+const spawn = require('child_process').spawn;
 const mozjpeg = require('mozjpeg');
 const pngquant = require('pngquant-bin');
 const makeDir = require('make-dir');
@@ -15,7 +15,7 @@ let svg = new svgo();
 
 // let userSettings = {};
 
-let debug = 0;
+let debug = 1;
 let mainWindow;
 
 function createWindow() {
@@ -63,13 +63,13 @@ function createWindow() {
 
     require('./menu/mainmenu');
 }
+
 app.on('will-finish-launching', () => {
     app.on('open-file', (event, filePath) => {
         event.preventDefault();
         processFile(filePath, path.basename(filePath));
     });
 });
-
 
 app.on('ready', createWindow);
 
@@ -112,6 +112,7 @@ let processFile = (filePath, fileName) => {
             case '.svg':
                 svg.optimize(data)
                     .then(function (result) {
+
                         fs.writeFile(newFile, result.data, (err) => {
                             sendToRenderer(err, newFile, sizeOrig);
                         });
@@ -124,15 +125,29 @@ let processFile = (filePath, fileName) => {
 
             case '.jpg':
             case '.jpeg':
-                execFile(mozjpeg, ['-outfile', newFile, filePath], (err) => {
+                let jpg = spawn(mozjpeg, ['-outfile', newFile, filePath]);
+                jpg.stdout.on('data', function (data) {
+                    console.log('stdout: ' + data.toString());
+                });
+                jpg.on('close', function (code, signal) {
                     sendToRenderer(err, newFile, sizeOrig);
+                });
+                jpg.on('exit', function (code) {
+                    console.log('child process exited with code ' + code.toString());
                 });
 
                 break;
 
             case '.png':
-                execFile(pngquant, ['-fo', newFile, filePath], (err) => {
+                let png = spawn(pngquant, ['-fo', newFile, filePath]);
+                png.stdout.on('data', function (data) {
+                    console.log('stdout: ' + data.toString());
+                });
+                png.on('close', function (code, signal) {
                     sendToRenderer(err, newFile, sizeOrig);
+                });
+                png.on('exit', function (code) {
+                    console.log('child process exited with code ' + code.toString());
                 });
 
                 break;
