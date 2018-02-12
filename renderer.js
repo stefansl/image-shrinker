@@ -239,3 +239,21 @@ Array.from(openInBrowserLink).forEach((el) => {
         shell.openExternal(e.srcElement.offsetParent.lastElementChild.href);
     };
 });
+
+// TEST ResizeObserver
+const chromeVersion = process.versions.chrome.split('.',1)[0];
+if (chromeVersion > 64) {
+    const ro = new ResizeObserver( entries => {
+        for (const entry of entries) {
+            const cr = entry.contentRect;
+            console.log('Element:', entry.target);
+            console.log(`Element size: ${cr.width}px × ${cr.height}px`);
+            console.log(`Element padding: ${cr.top}px ; ${cr.left}px`);
+        }
+    });
+
+    // Observe one or multiple elements
+    ro.observe(document);
+}
+
+
