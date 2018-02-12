@@ -1,5 +1,5 @@
 /* eslint-disable indent */
-const {app, BrowserWindow, ipcMain, dialog} = require('electron');
+const {app, BrowserWindow, ipcMain, dialog, TouchBar} = require('electron');
 const fs = require('fs');
 const path = require('path');
 const url = require('url');
@@ -9,13 +9,14 @@ const spawn = require('child_process').spawn;
 const mozjpeg = require('mozjpeg');
 const pngquant = require('pngquant-bin');
 const makeDir = require('make-dir');
+const {TouchBarButton} = TouchBar;
 // const console = require('console'); // only for dev
 
 let svg = new svgo();
 
 // let userSettings = {};
 
-let debug = 1;
+let debug = 0;
 let mainWindow;
 
 function createWindow() {
@@ -60,9 +61,21 @@ function createWindow() {
     if (Object.keys(settings.getAll()).length === 0) {
         settings.setAll(defaultSettings);
     }
-
+    mainWindow.setTouchBar(touchBar);
     require('./menu/mainmenu');
 }
+
+
+let result = new TouchBarButton({
+    'label': 'Let me shrink some images!',
+    'backgroundColor': '#000000',
+    'icon': 'assets/icons/png/32x32.png',
+    'iconPosition': 'left',
+
+});
+const touchBar = new TouchBar([
+    result
+]);
 
 app.on('will-finish-launching', () => {
     app.on('open-file', (event, filePath) => {
@@ -96,6 +109,9 @@ ipcMain.on(
 
 
 let processFile = (filePath, fileName) => {
+
+    result.label = 'I am shrinking for you';
+
     let sizeOrig = getFileSize(filePath);
 
     fs.readFile(filePath, 'utf8', (err, data) => {
@@ -114,6 +130,7 @@ let processFile = (filePath, fileName) => {
                     .then(function (result) {
 
                         fs.writeFile(newFile, result.data, (err) => {
+                            result.label = 'Your shrinked image: ' + newFile;
                             sendToRenderer(err, newFile, sizeOrig);
                         });
                     })
@@ -130,6 +147,7 @@ let processFile = (filePath, fileName) => {
                     console.log('stdout: ' + data.toString());
                 });
                 jpg.on('close', function (code, signal) {
+                    result.label = 'Your shrinked image: ' + newFile;
                     sendToRenderer(err, newFile, sizeOrig);
                 });
                 jpg.on('exit', function (code) {
@@ -144,6 +162,7 @@ let processFile = (filePath, fileName) => {
                     console.log('stdout: ' + data.toString());
                 });
                 png.on('close', function (code, signal) {
+                    result.label = 'Your shrinked image: ' + newFile;
                     sendToRenderer(err, newFile, sizeOrig);
                 });
                 png.on('exit', function (code) {
