@@ -25,6 +25,8 @@ function createWindow() {
         titleBarStyle: 'hidden-inset',
         width: 340,
         height: 550,
+        minWidth: 340,
+        minHeight: 550,
         frame: true,
         backgroundColor: '#F7F7F7',
         resizable: true,
