@@ -1,8 +1,7 @@
-'use strict';
-
 const {ipcRenderer, shell} = require('electron');
 const settings = require('electron-settings');
 const {dialog} = require('electron').remote;
+const fs = require('fs');
 //const console = require('console');
 const path = require('path');
 
@@ -86,8 +85,17 @@ document.ondragend = () => {
  */
 document.ondrop = (e) => {
     e.preventDefault();
-    // console.log(e.dataTransfer.files);
+
+    let bla = () => {
+
+    };
     for (let f of e.dataTransfer.files) {
+        if (fs.statSync(f.path).isDirectory()) {
+            dragzone.classList.remove('drag-active');
+
+            return false;
+        }
+
         ipcRenderer.send('shrinkImage', f.name, f.path, f.lastModified);
     }
 
