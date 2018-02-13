@@ -143,14 +143,14 @@ let processFile = (filePath, fileName) => {
             case '.jpg':
             case '.jpeg':
                 let jpg = spawn(mozjpeg, ['-outfile', newFile, filePath]);
-                jpg.stdout.on('data', function (data) {
+                jpg.stdout.on('data', (data) => {
                     console.log('stdout: ' + data.toString());
                 });
-                jpg.on('close', function (code, signal) {
+                jpg.on('close', () =>  {
                     result.label = 'Your shrinked image: ' + newFile;
                     sendToRenderer(err, newFile, sizeOrig);
                 });
-                jpg.on('exit', function (code) {
+                jpg.on('exit', (code) => {
                     console.log('child process exited with code ' + code.toString());
                 });
 
@@ -158,14 +158,14 @@ let processFile = (filePath, fileName) => {
 
             case '.png':
                 let png = spawn(pngquant, ['-fo', newFile, filePath]);
-                png.stdout.on('data', function (data) {
+                png.stdout.on('data', (data) => {
                     console.log('stdout: ' + data.toString());
                 });
-                png.on('close', function (code, signal) {
+                png.on('close', () => {
                     result.label = 'Your shrinked image: ' + newFile;
                     sendToRenderer(err, newFile, sizeOrig);
                 });
-                png.on('exit', function (code) {
+                png.on('exit', (code) =>  {
                     console.log('child process exited with code ' + code.toString());
                 });
 
