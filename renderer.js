@@ -86,9 +86,6 @@ document.ondragend = () => {
 document.ondrop = (e) => {
     e.preventDefault();
 
-    let bla = () => {
-
-    };
     for (let f of e.dataTransfer.files) {
         if (fs.statSync(f.path).isDirectory()) {
             dragzone.classList.remove('drag-active');
