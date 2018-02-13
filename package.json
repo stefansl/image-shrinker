@@ -24,10 +24,11 @@
   ],
   "scripts": {
     "start": "electron .",
-    "build": "electron-packager . 'Image.Shrinker' --extendInfo=extend.plist --platform=darwin --arch=x64 --ignore=/^release/i --icon=assets/icons/mac/icon_image-shrinker.svg.icns --overwrite --prune=true --out=release-builds",
+    //"build": "electron-packager . 'Image.Shrinker' --extendInfo=extend.plist --platform=darwin --arch=x64 --ignore=/^release/i --icon=assets/icons/mac/icon_image-shrinker.svg.icns --overwrite --prune=true --out=release-builds",
     "pack-mac": "electron-packager . 'Image.Shrinker' --extendInfo=extend.plist --platform=darwin --arch=x64 --ignore=/^release/i --icon=assets/icons/mac/icon_image-shrinker.svg.icns --overwrite --prune=true --out=release-builds",
     "pack-linux": "electron-packager . 'Image.Shrinker' --platform=linux --arch=x64 --ignore=/^release/i --icon=assets/icons/png/512x512 --overwrite",
     "pack": "build --dir",
+    "release": "build --publish",
     "dist": "build",
     "test": "mocha"
   },
@@ -55,7 +56,9 @@
     "spectron": "latest"
   },
   "dependencies": {
+    "electron-log": "^2.2.14",
     "electron-settings": "latest",
+    "electron-updater": "^2.20.1",
     "make-dir": "latest",
     "mozjpeg": "latest",
     "pngquant-bin": "latest",
@@ -66,9 +69,7 @@
     "appId": "de.clickpress.image-shrinker",
     "mac": {
       "category": "public.app-category.developer-tools",
-      "target": [
-        "dmg"
-      ],
+      "target": [],
       "type": "distribution",
       "identity": "Jens Büttner und Stefan Schulz-Lauterbach (522K4UT79N)"
     },

@@ -2,7 +2,6 @@ const {ipcRenderer, shell} = require('electron');
 const settings = require('electron-settings');
 const {dialog} = require('electron').remote;
 const fs = require('fs');
-//const console = require('console');
 const path = require('path');
 
 let dragzone = document.getElementById('dragzone'),

@@ -1,5 +1,7 @@
 /* eslint-disable indent */
 const {app, BrowserWindow, ipcMain, dialog, TouchBar} = require('electron');
+const autoUpdater = require('electron-updater').autoUpdater;
+const log = require('electron-log');
 const fs = require('fs');
 const path = require('path');
 const url = require('url');
@@ -10,7 +12,10 @@ const mozjpeg = require('mozjpeg');
 const pngquant = require('pngquant-bin');
 const makeDir = require('make-dir');
 const {TouchBarButton} = TouchBar;
-// const console = require('console'); // only for dev
+
+autoUpdater.logger = log;
+autoUpdater.logger.transports.file.level = 'info';
+log.info('App starting...');
 
 let svg = new svgo();
 
@@ -84,7 +89,11 @@ app.on('will-finish-launching', () => {
     });
 });
 
-app.on('ready', createWindow);
+app.on('ready', () => {
+        createWindow();
+        autoUpdater.checkForUpdatesAndNotify();
+    }
+);
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
@@ -144,14 +153,14 @@ let processFile = (filePath, fileName) => {
             case '.jpeg':
                 let jpg = spawn(mozjpeg, ['-outfile', newFile, filePath]);
                 jpg.stdout.on('data', (data) => {
-                    console.log('stdout: ' + data.toString());
+                    log.info('stdout: ' + data.toString());
                 });
                 jpg.on('close', () =>  {
                     result.label = 'Your shrinked image: ' + newFile;
                     sendToRenderer(err, newFile, sizeOrig);
                 });
                 jpg.on('exit', (code) => {
-                    console.log('child process exited with code ' + code.toString());
+                    log.info('child process exited with code ' + code.toString());
                 });
 
                 break;
@@ -159,14 +168,14 @@ let processFile = (filePath, fileName) => {
             case '.png':
                 let png = spawn(pngquant, ['-fo', newFile, filePath]);
                 png.stdout.on('data', (data) => {
-                    console.log('stdout: ' + data.toString());
+                    log.info('stdout: ' + data.toString());
                 });
                 png.on('close', () => {
                     result.label = 'Your shrinked image: ' + newFile;
                     sendToRenderer(err, newFile, sizeOrig);
                 });
                 png.on('exit', (code) =>  {
-                    console.log('child process exited with code ' + code.toString());
+                    log.info('child process exited with code ' + code.toString());
                 });
 
                 break;
