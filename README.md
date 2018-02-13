@@ -1,7 +1,7 @@
 # Image Shrinker
 
 SVGO-GUI is not maintained anymore. So I decided to rebuild it with Electron.
-Image Shrinker (prev. SVG Shrinker) is a tool to minify images and graphics using [pngquant](https://pngquant.org/), [mozjpg](https://github.com/mozilla/mozjpeg) and [SVGgo](https://github.com/svg/svgo). 
+Image Shrinker (prev. SVG Shrinker) is a tool to minify images and graphics using [pngquant](https://pngquant.org/), [mozjpg](https://github.com/mozilla/mozjpeg) and [SVGO](https://github.com/svg/svgo). 
 
 ![Screenshot Imageshrinker](https://raw.githubusercontent.com/stefansl/image-shrinker/dev/assets/img/screen.min.png "Screenshot Image Shrinker")
 
