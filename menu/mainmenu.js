@@ -48,6 +48,7 @@ if (process.platform === 'darwin') {
         {role: 'front'},
     ];
 
+    //console.log(debug);
     // Todo: fix debug
     if (debug === 1) {
         template[2].submenu.push(

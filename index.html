@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="assets/css/imageshrinker.css">
 </head>
 <body>
+
 <div class="wrapper">
 
     <i class="icon icon-more-horiz icon-2x float-right d-block" id="btnOpenSettings"></i>
@@ -59,6 +60,19 @@
 
             <div class="columns">
                 <div class="column col-9">
+                    Add .min suffix to shrinked files
+                </div>
+                <div class="column col-3 ">
+                    <label class="form-switch float-right">
+                        <input id="suffix" name="suffix" type="checkbox" checked="checked">
+                        <i class="form-icon"></i>
+                    </label>
+
+                </div>
+            </div>
+
+            <div class="columns">
+                <div class="column col-9">
                     Clear result list, when shrinking new images
                 </div>
                 <div class="column col-3 ">
@@ -66,7 +80,6 @@
                         <input id="clearlist" name="clearlist" type="checkbox">
                         <i class="form-icon"></i>
                     </label>
-
                 </div>
             </div>
         </div>

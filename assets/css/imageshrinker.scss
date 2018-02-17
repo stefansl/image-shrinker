@@ -23,6 +23,7 @@
 $black: #111;
 $white: #fefefe;
 $primary-color: #46c2fe;
+$secondary-color: #d86550;
 
 :root {
   --main-bg-color: #111;
@@ -69,6 +70,7 @@ body {
 
 #dragzone {
   cursor: pointer;
+  position: relative;
   opacity: .5;
   border: 2px dashed var(--main-bg-color);
   padding: 1em;
@@ -78,6 +80,23 @@ body {
   transition: opacity .1s ease-out;
   &.drag-active {
     opacity: .9;
+  }
+  &::after {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    content: " ";
+    opacity: 0;
+    transition: all .4s ease-out;
+    background-color: transparent;
+    left: 0;
+    top: 0;
+  }
+  &.is--processing::after {
+    background: rgba($secondary-color,.5) url("../img/tail-spin.min.svg") no-repeat center center;
+    background-size: 15%;
+    opacity: 1;
   }
   &:hover {
     opacity: .75;
@@ -215,4 +234,14 @@ body {
 .btn.btn-sm {
   font-size: .5rem;
 
+}
+
+#overlay {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top:  0;
+  left: 0;
+  z-index: 10;
+  //background-color: rgba($white, .5);
 }

@@ -1,10 +1,9 @@
-'use strict';
-
 const {ipcRenderer, shell} = require('electron');
 const settings = require('electron-settings');
 const {dialog} = require('electron').remote;
-//const console = require('console');
+const fs = require('fs');
 const path = require('path');
+const log = require('electron-log');
 
 let dragzone = document.getElementById('dragzone'),
     resultBox = document.getElementById('result'),
@@ -18,7 +17,7 @@ let dragzone = document.getElementById('dragzone'),
     folderswitch = document.getElementById('folderswitch'),
     clearlist = document.getElementById('clearlist'),
     notification = document.getElementById('notification');
-
+    //suffix = document.getElementById('suffix');
 
 /*
  * Settings
@@ -40,6 +39,7 @@ if (userSetting.savepath) btnSavepath.innerText = userSetting.savepath;
  * Open filepicker
  */
 dragzone.onclick = () => {
+
     dialog.showOpenDialog(
         {
             properties: ['openFile', 'multiSelections']
@@ -57,6 +57,9 @@ dragzone.onclick = () => {
                 let filename = path.parse(f).base;
                 ipcRenderer.send('shrinkImage', filename, f);
             }
+
+            // Add loader
+            dragzone.classList.add('is--processing');
         }
     );
 };
@@ -82,8 +85,14 @@ document.ondragend = () => {
  */
 document.ondrop = (e) => {
     e.preventDefault();
-    // console.log(e.dataTransfer.files);
+
     for (let f of e.dataTransfer.files) {
+        if (fs.statSync(f.path).isDirectory()) {
+            dragzone.classList.remove('drag-active');
+
+            return false;
+        }
+
         ipcRenderer.send('shrinkImage', f.name, f.path, f.lastModified);
     }
 
@@ -91,6 +100,7 @@ document.ondrop = (e) => {
         resultBox.innerHTML = '';
     }
 
+    dragzone.classList.add('is--processing');
     dragzone.classList.remove('drag-active');
 
     return false;
@@ -149,12 +159,17 @@ btnCloseSettings.onclick = (e) => {
  */
 ipcRenderer
     .on(
-        'isShrinked', (event, path) => {
+        'isShrinked', (event, path, sizeBefore, sizeAfter) => {
+
+            let percent = Math.round(100 / sizeBefore * sizeAfter);
+
+            // Remove loader
+            dragzone.classList.remove('is--processing');
 
             // Create container
             let resContainer = document.createElement('div');
             resContainer.className = 'resLine';
-            resContainer.innerHTML = '<span>Your shrinked image is here:</span><br>';
+            resContainer.innerHTML = '<span>You saved ' + percent + '%. Your shrinked image is here:</span><br>';
 
             // Create link
             let resElement = document.createElement('a');
@@ -226,6 +241,12 @@ document.onmouseleave = () => {
     bg.style.transform = '';
 };
 
+// (opt) event, text as return value
+ipcRenderer.on('updateReady', () => {
+    // changes the text of the button
+    const container = document.getElementById('ready');
+    container.innerHTML = 'new version ready!';
+});
 
 /*
  * Open external links in browser
@@ -236,3 +257,24 @@ Array.from(openInBrowserLink).forEach((el) => {
         shell.openExternal(e.srcElement.offsetParent.lastElementChild.href);
     };
 });
+
+/*
+ * Testcase ResizeObserver
+ * will be included when electron implements Chrome 64
+ */
+const chromeVersion = process.versions.chrome.split('.',1)[0];
+if (chromeVersion > 64) {
+    const ro = new ResizeObserver( entries => {
+        for (const entry of entries) {
+            const cr = entry.contentRect;
+            log.info('Element:', entry.target);
+            log.info(`Element size: ${cr.width}px × ${cr.height}px`);
+            log.info(`Element padding: ${cr.top}px ; ${cr.left}px`);
+        }
+    });
+
+    // Observe one or multiple elements
+    ro.observe(document);
+}
+
+
