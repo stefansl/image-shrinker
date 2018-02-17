@@ -86,10 +86,7 @@ app.on('will-finish-launching', () => {
 
 app.on('ready', () => {
         createWindow();
-        autoUpdater.checkForUpdatesAndNotify()
-            .then((result) => {
-                log.info('Checking for update: ' + result);
-            });
+    autoUpdater.checkForUpdatesAndNotify();
     }
 );
 
