@@ -140,8 +140,7 @@ let processFile = (filePath, fileName) => {
         let newFile = generateNewPath(filePath);
 
         switch (path.extname(fileName)) {
-
-            case '.svg':
+            case '.svg': {
                 svg.optimize(data)
                     .then(function (result) {
 
@@ -153,11 +152,10 @@ let processFile = (filePath, fileName) => {
                     .catch(function (error) {
                         dialog(error.message);
                     });
-
                 break;
-
+            }
             case '.jpg':
-            case '.jpeg':
+            case '.jpeg': {
                 let jpg = spawn(mozjpeg, ['-outfile', newFile, filePath]);
                 jpg.stdout.on('data', (data) => {
                     log.info('stdout: ' + data.toString());
@@ -171,8 +169,8 @@ let processFile = (filePath, fileName) => {
                 });
 
                 break;
-
-            case '.png':
+            }
+            case '.png': {
                 let png = spawn(pngquant, ['-fo', newFile, filePath]);
                 png.stdout.on('data', (data) => {
                     log.info('stdout: ' + data.toString());
@@ -184,9 +182,8 @@ let processFile = (filePath, fileName) => {
                 png.on('exit', (code) =>  {
                     log.info('child process exited with code ' + code.toString());
                 });
-
                 break;
-
+            }
             default:
                 dialog.showMessageBox({
                     'type': 'error',
