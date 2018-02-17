@@ -65,16 +65,16 @@ function createWindow() {
     require('./menu/mainmenu');
 }
 
-
-let result = new TouchBarButton({
+let touchBarResult = new TouchBarButton({
     'label': 'Let me shrink some images!',
     'backgroundColor': '#000000',
     'icon': 'assets/icons/png/32x32.png',
     'iconPosition': 'left',
 
 });
+
 const touchBar = new TouchBar([
-    result
+    touchBarResult
 ]);
 
 app.on('will-finish-launching', () => {
@@ -126,7 +126,7 @@ ipcMain.on(
 
 let processFile = (filePath, fileName) => {
 
-    result.label = 'I am shrinking for you';
+    touchBarResult.label = 'I am shrinking for you';
 
     let sizeOrig = getFileSize(filePath);
 
@@ -143,7 +143,6 @@ let processFile = (filePath, fileName) => {
             case '.svg': {
                 svg.optimize(data)
                     .then(function (result) {
-
                         fs.writeFile(newFile, result.data, (err) => {
                             result.label = 'Your shrinked image: ' + newFile;
                             sendToRenderer(err, newFile, sizeOrig);
@@ -161,7 +160,7 @@ let processFile = (filePath, fileName) => {
                     log.info('stdout: ' + data.toString());
                 });
                 jpg.on('close', () =>  {
-                    result.label = 'Your shrinked image: ' + newFile;
+                    touchBarResult.label = 'Your shrinked image: ' + newFile;
                     sendToRenderer(err, newFile, sizeOrig);
                 });
                 jpg.on('exit', (code) => {
@@ -176,7 +175,7 @@ let processFile = (filePath, fileName) => {
                     log.info('stdout: ' + data.toString());
                 });
                 png.on('close', () => {
-                    result.label = 'Your shrinked image: ' + newFile;
+                    touchBarResult.label = 'Your shrinked image: ' + newFile;
                     sendToRenderer(err, newFile, sizeOrig);
                 });
                 png.on('exit', (code) =>  {
