@@ -3,6 +3,7 @@ const settings = require('electron-settings');
 const {dialog} = require('electron').remote;
 const fs = require('fs');
 const path = require('path');
+const log = require('electron-log');
 
 let dragzone = document.getElementById('dragzone'),
     resultBox = document.getElementById('result'),
@@ -240,6 +241,12 @@ document.onmouseleave = () => {
     bg.style.transform = '';
 };
 
+// (opt) event, text as return value
+ipcRenderer.on('updateReady', () => {
+    // changes the text of the button
+    const container = document.getElementById('ready');
+    container.innerHTML = 'new version ready!';
+});
 
 /*
  * Open external links in browser
@@ -251,15 +258,18 @@ Array.from(openInBrowserLink).forEach((el) => {
     };
 });
 
-// TEST ResizeObserver
+/*
+ * Testcase ResizeObserver
+ * will be included when electron implements Chrome 64
+ */
 const chromeVersion = process.versions.chrome.split('.',1)[0];
 if (chromeVersion > 64) {
     const ro = new ResizeObserver( entries => {
         for (const entry of entries) {
             const cr = entry.contentRect;
-            console.log('Element:', entry.target);
-            console.log(`Element size: ${cr.width}px × ${cr.height}px`);
-            console.log(`Element padding: ${cr.top}px ; ${cr.left}px`);
+            log.info('Element:', entry.target);
+            log.info(`Element size: ${cr.width}px × ${cr.height}px`);
+            log.info(`Element padding: ${cr.top}px ; ${cr.left}px`);
         }
     });
 

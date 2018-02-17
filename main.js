@@ -1,10 +1,9 @@
 /* eslint-disable indent */
 const {app, BrowserWindow, ipcMain, dialog, TouchBar} = require('electron');
-const autoUpdater = require('electron-updater').autoUpdater;
+const {autoUpdater} = require('electron-updater');
 const log = require('electron-log');
 const fs = require('fs');
 const path = require('path');
-const url = require('url');
 const settings = require('electron-settings');
 const svgo = require('svgo');
 const spawn = require('child_process').spawn;
@@ -40,11 +39,7 @@ function createWindow() {
     });
 
     // and load the index.html of the app.
-    mainWindow.loadURL(url.format({
-        pathname: path.join(__dirname, 'index.html'),
-        protocol: 'file:',
-        slashes: true
-    }));
+    mainWindow.loadURL(path.join('file://', __dirname, '/index.html'));
 
     // Open the DevTools.
     if (debug === 1) {
@@ -108,6 +103,18 @@ app.on('activate', () => {
     }
 });
 
+// when the update has been downloaded and is ready to be installed, notify the BrowserWindow
+autoUpdater.on('update-downloaded', (info) => {
+    log.info(info);
+    mainWindow.webContents.send('updateReady');
+});
+
+// when receiving a quitAndInstall signal, quit and install the new version ;)
+ipcMain.on('quitAndInstall', (event, arg) => {
+    log.info(event);
+    log.info(arg);
+    autoUpdater.quitAndInstall();
+});
 
 // Main logic
 ipcMain.on(
@@ -233,6 +240,7 @@ let sendToRenderer = (err, newFile, sizeOrig) => {
         mainWindow.webContents.send('isShrinked', newFile, sizeOrig, sizeShrinked);
     }
     else {
+        log.error(err);
         dialog.showMessageBox({
             'type': 'error',
             'message': 'I\'m not able to write your new image. Sorry!'
