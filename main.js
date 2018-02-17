@@ -86,7 +86,10 @@ app.on('will-finish-launching', () => {
 
 app.on('ready', () => {
         createWindow();
-        autoUpdater.checkForUpdatesAndNotify();
+        autoUpdater.checkForUpdatesAndNotify()
+            .then((result) => {
+                log.info('Checking for update: ' + result);
+            });
     }
 );
 
@@ -159,7 +162,7 @@ let processFile = (filePath, fileName) => {
                 jpg.stdout.on('data', (data) => {
                     log.info('stdout: ' + data.toString());
                 });
-                jpg.on('close', () =>  {
+                jpg.on('close', () => {
                     touchBarResult.label = 'Your shrinked image: ' + newFile;
                     sendToRenderer(err, newFile, sizeOrig);
                 });
@@ -178,7 +181,7 @@ let processFile = (filePath, fileName) => {
                     touchBarResult.label = 'Your shrinked image: ' + newFile;
                     sendToRenderer(err, newFile, sizeOrig);
                 });
-                png.on('exit', (code) =>  {
+                png.on('exit', (code) => {
                     log.info('child process exited with code ' + code.toString());
                 });
                 break;
