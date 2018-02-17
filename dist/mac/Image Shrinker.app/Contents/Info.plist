@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>BuildMachineOSBuild</key>
+    <string>16G1212</string>
+    <key>CFBundleDisplayName</key>
+    <string>Image Shrinker</string>
+    <key>CFBundleExecutable</key>
+    <string>Image Shrinker</string>
+    <key>CFBundleIconFile</key>
+    <string>Image Shrinker.icns</string>
+    <key>CFBundleIdentifier</key>
+    <string>de.clickpress.image-shrinker</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>Image Shrinker</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.3.0</string>
+    <key>CFBundleVersion</key>
+    <string>1.3.0</string>
+    <key>DTSDKBuild</key>
+    <string>14D125</string>
+    <key>DTSDKName</key>
+    <string>macosx10.1010.10</string>
+    <key>DTXcode</key>
+    <string>0821</string>
+    <key>DTXcodeBuild</key>
+    <string>8C1002</string>
+    <key>LSApplicationCategoryType</key>
+    <string>public.app-category.developer-tools</string>
+    <key>LSMinimumSystemVersion</key>
+    <string>10.9.0</string>
+    <key>NSHighResolutionCapable</key>
+    <true/>
+    <key>NSMainNibFile</key>
+    <string>MainMenu</string>
+    <key>NSPrincipalClass</key>
+    <string>AtomApplication</string>
+    <key>NSSupportsAutomaticGraphicsSwitching</key>
+    <true/>
+    <key>CFBundleDocumentTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleTypeExtensions</key>
+        <array>
+          <string>png</string>
+          <string>jpg</string>
+          <string>jpeg</string>
+          <string>svg</string>
+        </array>
+        <key>CFBundleTypeName</key>
+        <string>png</string>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+        <key>CFBundleTypeIconFile</key>
+        <string>Image Shrinker.icns</string>
+      </dict>
+    </array>
+    <key>NSHumanReadableCopyright</key>
+    <string>Copyright © 2018 Stefan Schulz-Lauterbach</string>
+    <key>AsarIntegrity</key>
+    <string>{"checksums":{"app.asar":"iNt7vWDN6KQhfpiYkpuXtTh8UO9zs85s5r01Ufvq6UewaQ8l8iY5i3XiqgahrUnsFNGzEnJtZuELzy1y1VSvUw==","electron.asar":"Ok8vOW9uGbsRe1NM8HcigcAchH2PJsYYcFRk++0CXXjbRH8840hEuUbbk4wtDukE+EXR7dvkA41lDFH66qzl2g=="}}</string>
+  </dict>
+</plist>

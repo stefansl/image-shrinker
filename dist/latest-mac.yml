@@ -1,0 +1,10 @@
+version: 1.3.0-dev
+files:
+  - url: image-shrinker-1.3.0-dev-mac.zip
+    sha512: O7l1ElcQudMyLY0UvuyHgdNht1nrnipaxuIL+ku22vlVzUHF6axbB6Zhi/SEBUJT+Ui9lDhi8+7zTXiGFcYU8Q==
+  - url: image-shrinker-1.3.0-dev.dmg
+    sha512: Fy7Uliyzj1PbKJ0HIPJRlheHIAelMOrTJu8eiqgmh+GvxpChDIKy+G8lPadJ+mFiSSs9OKF0GzwWNVnf4N61DA==
+    size: 57828626
+path: image-shrinker-1.3.0-dev-mac.zip
+sha512: O7l1ElcQudMyLY0UvuyHgdNht1nrnipaxuIL+ku22vlVzUHF6axbB6Zhi/SEBUJT+Ui9lDhi8+7zTXiGFcYU8Q==
+releaseDate: '2018-02-17T14:23:00.441Z'
