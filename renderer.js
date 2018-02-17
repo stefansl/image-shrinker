@@ -17,7 +17,6 @@ let dragzone = document.getElementById('dragzone'),
     folderswitch = document.getElementById('folderswitch'),
     clearlist = document.getElementById('clearlist'),
     notification = document.getElementById('notification');
-    //suffix = document.getElementById('suffix');
 
 /*
  * Settings
@@ -96,7 +95,7 @@ document.ondrop = (e) => {
         ipcRenderer.send('shrinkImage', f.name, f.path, f.lastModified);
     }
 
-    if(settings.get('clearlist')) {
+    if (settings.get('clearlist')) {
         resultBox.innerHTML = '';
     }
 
@@ -130,7 +129,7 @@ btnSavepath.onclick = () => {
 Array.from(switches).forEach((switchEl) => {
     switchEl.onchange = (e) => {
         settings.set(e.target.name, e.target.checked);
-        if(e.target.name === 'folderswitch') {
+        if (e.target.name === 'folderswitch') {
             if (e.target.checked === false) {
                 wrapperSavePath.classList.remove('d-none');
             } else {
@@ -211,7 +210,7 @@ let bg = document.getElementById('background'),
 
 // Fix window size on resize
 window.onresize = () => {
-    setTimeout(()=>{
+    setTimeout(() => {
         winX = window.innerWidth / 2;
         winY = window.innerHeight / 2;
     }, 700);
@@ -229,7 +228,7 @@ document.onmousemove = (e) => {
         degree = (radius * 15),
         transform;
 
-    transform  = 'scale(1.15)';
+    transform = 'scale(1.15)';
     transform += ' rotate3d(' + tiltX + ', ' + tiltY + ', 0, ' + degree + 'deg)';
     transform += ' translate3d(' + transformX + 'px, ' + transformY + 'px, 0)';
 
@@ -262,9 +261,9 @@ Array.from(openInBrowserLink).forEach((el) => {
  * Testcase ResizeObserver
  * will be included when electron implements Chrome 64
  */
-const chromeVersion = process.versions.chrome.split('.',1)[0];
+const chromeVersion = process.versions.chrome.split('.', 1)[0];
 if (chromeVersion > 64) {
-    const ro = new ResizeObserver( entries => {
+    const ro = new ResizeObserver(entries => {
         for (const entry of entries) {
             const cr = entry.contentRect;
             log.info('Element:', entry.target);
