@@ -5,8 +5,8 @@ release-builds
 /.gitignore
 /package-lock.json
 build/
-dist/
 script.sh
 /Mac_Distribution_Provisioning_Profiles_.provisionprofile
 !/build/
 /electron-builder.yml
+/dist/

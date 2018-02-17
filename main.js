@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const settings = require('electron-settings');
 const svgo = require('svgo');
-const spawn = require('child_process').spawn;
+const execFile = require('child_process').execFile;
 const mozjpeg = require('mozjpeg');
 const pngquant = require('pngquant-bin');
 const makeDir = require('make-dir');
@@ -158,31 +158,17 @@ let processFile = (filePath, fileName) => {
             }
             case '.jpg':
             case '.jpeg': {
-                let jpg = spawn(mozjpeg, ['-outfile', newFile, filePath]);
-                jpg.stdout.on('data', (data) => {
-                    log.info('stdout: ' + data.toString());
-                });
-                jpg.on('close', () => {
+                execFile(mozjpeg, ['-outfile', newFile, filePath], (err) => {
                     touchBarResult.label = 'Your shrinked image: ' + newFile;
                     sendToRenderer(err, newFile, sizeOrig);
-                });
-                jpg.on('exit', (code) => {
-                    log.info('child process exited with code ' + code.toString());
                 });
 
                 break;
             }
             case '.png': {
-                let png = spawn(pngquant, ['-fo', newFile, filePath]);
-                png.stdout.on('data', (data) => {
-                    log.info('stdout: ' + data.toString());
-                });
-                png.on('close', () => {
+                execFile(pngquant, ['-fo', newFile, filePath], (err) => {
                     touchBarResult.label = 'Your shrinked image: ' + newFile;
                     sendToRenderer(err, newFile, sizeOrig);
-                });
-                png.on('exit', (code) => {
-                    log.info('child process exited with code ' + code.toString());
                 });
                 break;
             }
