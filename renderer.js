@@ -160,7 +160,7 @@ ipcRenderer
     .on(
         'isShrinked', (event, path, sizeBefore, sizeAfter) => {
 
-            let percent = Math.round(100 / sizeBefore * sizeAfter);
+            let percent = Math.round(100 / sizeBefore * (sizeBefore - sizeAfter));
 
             // Remove loader
             dragzone.classList.remove('is--processing');
