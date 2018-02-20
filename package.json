@@ -47,7 +47,7 @@
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "latest",
-    "electron-builder": "^19.56.2",
+    "electron-builder": "latest",
     "electron-installer-dmg": "latest",
     "electron-packager": "^11.0.1",
     "fs-extra": "latest",
@@ -57,11 +57,11 @@
   "dependencies": {
     "electron-log": "^2.2.14",
     "electron-settings": "latest",
-    "electron-updater": "^2.20.2",
-    "make-dir": "latest",
+    "electron-updater": "^2.21.0",
+    "make-dir": "^1.2.0",
     "mozjpeg": "latest",
     "pngquant-bin": "latest",
-    "spectre.css": "latest",
+    "spectre.css": "^0.5.1",
     "svgo": "latest"
   },
   "build": {
