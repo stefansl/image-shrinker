@@ -99,9 +99,9 @@ app.on('will-finish-launching', () => {
 
 app.on('ready', () => {
         createWindow();
-    if (settings.get('updatecheck') === true) {
-        autoUpdater.checkForUpdatesAndNotify();
-    }
+        if (settings.get('updatecheck') === true) {
+            autoUpdater.checkForUpdatesAndNotify();
+        }
     }
 );
 
