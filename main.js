@@ -143,10 +143,16 @@ ipcMain.on(
 
 let processFile = (filePath, fileName) => {
 
+    // Focus window on drag
+    mainWindow.focus();
+
+    // Change Touchbar
     touchBarResult.label = 'I am shrinking for you';
 
+    // Get filesize
     let sizeOrig = getFileSize(filePath);
 
+    // Process image(s)
     fs.readFile(filePath, 'utf8', (err, data) => {
 
         if (err) {
