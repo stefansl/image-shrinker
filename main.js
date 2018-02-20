@@ -1,4 +1,3 @@
-/* eslint-disable indent */
 const {app, BrowserWindow, ipcMain, dialog, TouchBar} = require('electron');
 const {autoUpdater} = require('electron-updater');
 const log = require('electron-log');
@@ -17,13 +16,11 @@ autoUpdater.logger.transports.file.level = 'info';
 log.info('App starting...');
 
 let svg = new svgo();
-
-// let userSettings = {};
-
 let debug = 0;
 let mainWindow;
 
-function createWindow() {
+
+const createWindow = () => {
 
     // Create the browser window.
     mainWindow = new BrowserWindow({
@@ -58,13 +55,10 @@ function createWindow() {
         updatecheck: true
     };
 
-
     // set default settings at first launch
     if (Object.keys(settings.getAll()).length === 0) {
         settings.setAll(defaultSettings);
     }
-
-    //settings.delete('')
 
     // set missing settings
     let settingsAll = settings.getAll();
@@ -76,8 +70,10 @@ function createWindow() {
 
     mainWindow.setTouchBar(touchBar);
     require('./menu/mainmenu');
-}
+};
 
+
+// Touchbar support
 let touchBarResult = new TouchBarButton({
     'label': 'Let me shrink some images!',
     'backgroundColor': '#000000',
@@ -90,6 +86,7 @@ const touchBar = new TouchBar([
     touchBarResult
 ]);
 
+
 app.on('will-finish-launching', () => {
     app.on('open-file', (event, filePath) => {
         event.preventDefault();
@@ -97,13 +94,14 @@ app.on('will-finish-launching', () => {
     });
 });
 
+
 app.on('ready', () => {
-        createWindow();
-        if (settings.get('updatecheck') === true) {
-            autoUpdater.checkForUpdatesAndNotify();
-        }
+    createWindow();
+    if (settings.get('updatecheck') === true) {
+        autoUpdater.checkForUpdatesAndNotify();
     }
-);
+});
+
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
@@ -112,11 +110,13 @@ app.on('window-all-closed', () => {
     }
 });
 
+
 app.on('activate', () => {
     if (mainWindow === null) {
         createWindow();
     }
 });
+
 
 // when the update has been downloaded and is ready to be installed, notify the BrowserWindow
 autoUpdater.on('update-downloaded', (info) => {
@@ -124,12 +124,14 @@ autoUpdater.on('update-downloaded', (info) => {
     mainWindow.webContents.send('updateReady');
 });
 
+
 // when receiving a quitAndInstall signal, quit and install the new version ;)
 ipcMain.on('quitAndInstall', (event, arg) => {
     log.info(event);
     log.info(arg);
     autoUpdater.quitAndInstall();
 });
+
 
 // Main logic
 ipcMain.on(
@@ -155,43 +157,44 @@ let processFile = (filePath, fileName) => {
         let newFile = generateNewPath(filePath);
 
         switch (path.extname(fileName)) {
-            case '.svg': {
-                svg.optimize(data)
-                    .then(function (result) {
-                        fs.writeFile(newFile, result.data, (err) => {
-                            result.label = 'Your shrinked image: ' + newFile;
-                            sendToRenderer(err, newFile, sizeOrig);
-                        });
-                    })
-                    .catch(function (error) {
-                        dialog(error.message);
+        case '.svg': {
+            svg.optimize(data)
+                .then(function (result) {
+                    fs.writeFile(newFile, result.data, (err) => {
+                        result.label = 'Your shrinked image: ' + newFile;
+                        sendToRenderer(err, newFile, sizeOrig);
                     });
-                break;
-            }
-            case '.jpg':
-            case '.jpeg': {
-                execFile(mozjpeg, ['-outfile', newFile, filePath], (err) => {
-                    touchBarResult.label = 'Your shrinked image: ' + newFile;
-                    sendToRenderer(err, newFile, sizeOrig);
+                })
+                .catch(function (error) {
+                    dialog(error.message);
                 });
+            break;
+        }
+        case '.jpg':
+        case '.jpeg': {
+            execFile(mozjpeg, ['-outfile', newFile, filePath], (err) => {
+                touchBarResult.label = 'Your shrinked image: ' + newFile;
+                sendToRenderer(err, newFile, sizeOrig);
+            });
 
-                break;
-            }
-            case '.png': {
-                execFile(pngquant, ['-fo', newFile, filePath], (err) => {
-                    touchBarResult.label = 'Your shrinked image: ' + newFile;
-                    sendToRenderer(err, newFile, sizeOrig);
-                });
-                break;
-            }
-            default:
-                dialog.showMessageBox({
-                    'type': 'error',
-                    'message': 'Only SVG, JPG and PNG allowed'
-                });
+            break;
+        }
+        case '.png': {
+            execFile(pngquant, ['-fo', newFile, filePath], (err) => {
+                touchBarResult.label = 'Your shrinked image: ' + newFile;
+                sendToRenderer(err, newFile, sizeOrig);
+            });
+            break;
+        }
+        default:
+            dialog.showMessageBox({
+                'type': 'error',
+                'message': 'Only SVG, JPG and PNG allowed'
+            });
         }
     });
 };
+
 
 const generateNewPath = (pathName) => {
 
