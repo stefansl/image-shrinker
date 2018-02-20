@@ -44,8 +44,7 @@ describe('Application launch', function () {
     it('openSettings', () => {
         return this.app.client.waitUntilWindowLoaded()
             .browserWindow.getBounds()
-            .click('#btnOpenSettings')
-            ;
+            .click('#btnOpenSettings');
     });
 
     it('deleting folder, if it exists', () => {
