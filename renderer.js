@@ -16,6 +16,7 @@ let dragzone = document.getElementById('dragzone'),
     wrapperSavePath = document.getElementById('wrapperSavePath'),
     folderswitch = document.getElementById('folderswitch'),
     clearlist = document.getElementById('clearlist'),
+    updatecheck = document.getElementById('updatecheck'),
     notification = document.getElementById('notification');
 
 /*
@@ -24,6 +25,7 @@ let dragzone = document.getElementById('dragzone'),
 let userSetting = settings.getAll();
 notification.checked = userSetting.notification;
 clearlist.checked = userSetting.clearlist;
+updatecheck.checked = userSetting.updatecheck;
 
 if (userSetting.folderswitch === false) {
     folderswitch.checked = false;

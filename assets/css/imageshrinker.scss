@@ -154,7 +154,7 @@ body {
     transform: translate3d(0, 0, 0);
   }
   li {
-    padding: 1rem;
+    padding: .5rem 1rem;
     border-bottom: 1px solid rgba($white, .2);
     &:after {
       clear: both;
@@ -164,7 +164,7 @@ body {
   }
   .columns {
     border-bottom: 1px solid rgba($white, .1);
-    padding: 1rem 0;
+    padding: .5rem 0;
   }
   .column {
     align-self: center;

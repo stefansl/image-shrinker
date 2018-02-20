@@ -54,13 +54,26 @@ function createWindow() {
         notification: true,
         folderswitch: true,
         clearlist: false,
-        suffix: true
+        suffix: true,
+        updatecheck: true
     };
+
 
     // set default settings at first launch
     if (Object.keys(settings.getAll()).length === 0) {
         settings.setAll(defaultSettings);
     }
+
+    //settings.delete('')
+
+    // set missing settings
+    let settingsAll = settings.getAll();
+    Object.keys(defaultSettings).forEach(function (key) {
+        if (!settingsAll.hasOwnProperty(key)) {
+            settings.set(key, defaultSettings[key]);
+        }
+    });
+
     mainWindow.setTouchBar(touchBar);
     require('./menu/mainmenu');
 }
@@ -86,7 +99,10 @@ app.on('will-finish-launching', () => {
 
 app.on('ready', () => {
         createWindow();
-    autoUpdater.checkForUpdatesAndNotify();
+    log.info(settings.get('updatecheck'));
+    if (settings.get('updatecheck') === true) {
+        autoUpdater.checkForUpdatesAndNotify();
+    }
     }
 );
 
