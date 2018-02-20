@@ -33,8 +33,7 @@ if (userSetting.folderswitch === false) {
 } else {
     folderswitch.checked = true;
 }
-
-btnSavepath.innerText = userSetting.savepath || '> Open';
+if (userSetting.savepath) btnSavepath.innerText = userSetting.savepath;
 
 
 /*
