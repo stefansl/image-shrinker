@@ -99,7 +99,6 @@ app.on('will-finish-launching', () => {
 
 app.on('ready', () => {
         createWindow();
-    log.info(settings.get('updatecheck'));
     if (settings.get('updatecheck') === true) {
         autoUpdater.checkForUpdatesAndNotify();
     }

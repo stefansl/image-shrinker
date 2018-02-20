@@ -94,7 +94,7 @@ body {
     top: 0;
   }
   &.is--processing::after {
-    background: rgba($secondary-color,.5) url("../img/tail-spin.min.svg") no-repeat center center;
+    background: rgba($secondary-color, .5) url("../img/tail-spin.min.svg") no-repeat center center;
     background-size: 15%;
     opacity: 1;
   }
@@ -240,7 +240,7 @@ body {
   width: 100vw;
   height: 100vh;
   position: absolute;
-  top:  0;
+  top: 0;
   left: 0;
   z-index: 10;
   //background-color: rgba($white, .5);
