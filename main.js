@@ -191,6 +191,7 @@ let processFile = (filePath, fileName) => {
             break;
         }
         default:
+            mainWindow.webContents.send('error');
             dialog.showMessageBox({
                 'type': 'error',
                 'message': 'Only SVG, JPG and PNG allowed'
@@ -245,6 +246,7 @@ let sendToRenderer = (err, newFile, sizeOrig) => {
     }
     else {
         log.error(err);
+        mainWindow.webContents.send('error');
         dialog.showMessageBox({
             'type': 'error',
             'message': 'I\'m not able to write your new image. Sorry!'

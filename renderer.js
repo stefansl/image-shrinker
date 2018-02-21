@@ -200,7 +200,12 @@ ipcRenderer
         'openSettings', () => {
             menuSettings.classList.add('is--open');
         }
-    );
+    ).on(
+        'error', () => {
+            // Remove loader
+            dragzone.classList.remove('is--processing');
+    }
+);
 
 
 /*
