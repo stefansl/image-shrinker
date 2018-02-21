@@ -1,3 +1,4 @@
+<plist>
 <key>CFBundleDocumentTypes</key>
 <array>
   <dict>
@@ -16,3 +17,4 @@
     <string>Image Shrinker.icns</string>
   </dict>
 </array>
+</plist>
