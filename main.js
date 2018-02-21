@@ -19,7 +19,6 @@ let svg = new svgo();
 let debug = 0;
 let mainWindow;
 
-
 const createWindow = () => {
 
     // Create the browser window.
@@ -77,9 +76,8 @@ const createWindow = () => {
 let touchBarResult = new TouchBarButton({
     'label': 'Let me shrink some images!',
     'backgroundColor': '#000000',
-    'icon': 'assets/icons/png/32x32.png',
+    'icon': path.join(__dirname, 'build/18x18@2.png'),
     'iconPosition': 'left',
-
 });
 
 const touchBar = new TouchBar([
