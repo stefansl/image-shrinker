@@ -76,7 +76,7 @@ const createWindow = () => {
 let touchBarResult = new TouchBarButton({
     'label': 'Let me shrink some images!',
     'backgroundColor': '#000000',
-    'icon': path.join(__dirname, 'build/18x18@2.png'),
+    'icon': path.join(__dirname, 'build/18x18@2x.png'),
     'iconPosition': 'left',
 });
 
