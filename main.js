@@ -62,7 +62,7 @@ const createWindow = () => {
 
     // set missing settings
     let settingsAll = settings.getAll();
-    Object.keys(defaultSettings).forEach(function (key) {
+    Object.keys(defaultSettings).forEach((key) => {
         if (!settingsAll.hasOwnProperty(key)) {
             settings.set(key, defaultSettings[key]);
         }
@@ -165,13 +165,13 @@ let processFile = (filePath, fileName) => {
         switch (path.extname(fileName)) {
         case '.svg': {
             svg.optimize(data)
-                .then(function (result) {
+                .then((result) => {
                     fs.writeFile(newFile, result.data, (err) => {
                         result.label = 'Your shrinked image: ' + newFile;
                         sendToRenderer(err, newFile, sizeOrig);
                     });
                 })
-                .catch(function (error) {
+                .catch((error) => {
                     dialog(error.message);
                 });
             break;
