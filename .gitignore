@@ -10,3 +10,5 @@ script.sh
 !/build/
 /electron-builder.yml
 /dist/
+/assets/css/imageshrinker.css.map
+/assets/css/spectre.css.map

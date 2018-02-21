@@ -121,15 +121,14 @@ body {
   #menuSettings.is--open {
     transform: translate3d(0, 0, 0); }
   #menuSettings li {
-      padding: .5rem 1rem;
+    padding: .5rem 1rem;
     border-bottom: 1px solid rgba(254, 254, 254, 0.2); }
     #menuSettings li:after {
       clear: both;
       content: " "; }
   #menuSettings .columns {
     border-bottom: 1px solid rgba(254, 254, 254, 0.1);
-      padding: .5rem 0;
-  }
+    padding: .5rem 0; }
   #menuSettings .column {
     align-self: center; }
     #menuSettings .column span {

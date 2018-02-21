@@ -569,7 +569,7 @@ dl dd {
       background: #037eb6;
       border-color: #0373a7;
       color: #fff; }
-    .btn.btn-primary.loading::after, .btn.btn-success.loading::after, .btn.btn-error.loading::after {
+    .btn.btn-primary.loading::after {
       border-bottom-color: #fff;
       border-left-color: #fff; }
   .btn.btn-success {
@@ -586,6 +586,9 @@ dl dd {
       background: #2a9a39;
       border-color: #278e34;
       color: #fff; }
+    .btn.btn-success.loading::after {
+      border-bottom-color: #fff;
+      border-left-color: #fff; }
   .btn.btn-error {
     background: #e85600;
     border-color: #d95000;
@@ -600,6 +603,9 @@ dl dd {
       background: #c44900;
       border-color: #b54300;
       color: #fff; }
+    .btn.btn-error.loading::after {
+      border-bottom-color: #fff;
+      border-left-color: #fff; }
   .btn.btn-link {
     background: transparent;
     border-color: transparent;
@@ -778,7 +784,8 @@ textarea.form-input {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 0.8rem; }
+    width: 0.8rem;
+    z-index: 2; }
 
 .has-icon-left .form-icon {
   left: 0.05rem; }
@@ -1032,7 +1039,8 @@ input:disabled + .form-icon, input.disabled + .form-icon {
 .form-horizontal {
   padding: 0.4rem 0; }
   .form-horizontal .form-group {
-    display: flex; }
+    display: flex;
+    flex-wrap: wrap; }
 
 .label {
   border-radius: 0.1rem;
@@ -1439,53 +1447,6 @@ input:disabled + .form-icon, input.disabled + .form-icon {
 
   .show-xs {
     display: block !important; } }
-.tooltip {
-  position: relative; }
-  .tooltip::after {
-    background: rgba(69, 77, 93, 0.9);
-    border-radius: 0.1rem;
-    bottom: 100%;
-    color: #fff;
-    content: attr(data-tooltip);
-    display: block;
-    font-size: 0.7rem;
-    left: 50%;
-    max-width: 320px;
-    opacity: 0;
-    overflow: hidden;
-    padding: 0.2rem 0.4rem;
-    pointer-events: none;
-    position: absolute;
-    text-overflow: ellipsis;
-    transform: translate(-50%, 0.4rem);
-    transition: all .2s ease;
-    white-space: pre;
-    z-index: 300; }
-  .tooltip:focus::after, .tooltip:hover::after {
-    opacity: 1;
-    transform: translate(-50%, -0.2rem); }
-  .tooltip[disabled], .tooltip.disabled {
-    pointer-events: auto; }
-  .tooltip.tooltip-right::after {
-    bottom: 50%;
-    left: 100%;
-    transform: translate(-0.2rem, 50%); }
-  .tooltip.tooltip-right:focus::after, .tooltip.tooltip-right:hover::after {
-    transform: translate(0.2rem, 50%); }
-  .tooltip.tooltip-bottom::after {
-    bottom: auto;
-    top: 100%;
-    transform: translate(-50%, -0.4rem); }
-  .tooltip.tooltip-bottom:focus::after, .tooltip.tooltip-bottom:hover::after {
-    transform: translate(-50%, 0.2rem); }
-  .tooltip.tooltip-left::after {
-    bottom: 50%;
-    left: auto;
-    right: 100%;
-    transform: translate(0.4rem, 50%); }
-  .tooltip.tooltip-left:focus::after, .tooltip.tooltip-left:hover::after {
-    transform: translate(-0.2rem, 50%); }
-
 @keyframes loading {
   0% {
     transform: rotate(0deg); }
