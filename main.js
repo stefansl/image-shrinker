@@ -76,14 +76,19 @@ const createWindow = () => {
 let touchBarResult = new TouchBarButton({
     'label': 'Let me shrink some images!',
     'backgroundColor': '#000000',
+});
+let touchBarIcon = new TouchBarButton({
+    'backgroundColor': '#000000',
     'icon': path.join(__dirname, 'build/18x18@2x.png'),
-    'iconPosition': 'left',
+    'iconPosition': 'center',
 });
 
 const touchBar = new TouchBar([
     touchBarResult
 ]);
 
+// Add Touchbar icon
+touchBar.escapeItem = touchBarIcon;
 
 app.on('will-finish-launching', () => {
     app.on('open-file', (event, filePath) => {
