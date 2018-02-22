@@ -76,7 +76,8 @@
     "asar": true,
     "files": [
       "**/*",
-      "!node-modules/*"
+      "!node-modules/*",
+      "!release-builds/*"
     ],
     "fileAssociations": {
       "ext": [
