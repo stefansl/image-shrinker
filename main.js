@@ -19,7 +19,6 @@ let svg = new svgo();
 let debug = 0;
 let mainWindow;
 
-
 const createWindow = () => {
 
     // Create the browser window.
@@ -62,7 +61,7 @@ const createWindow = () => {
 
     // set missing settings
     let settingsAll = settings.getAll();
-    Object.keys(defaultSettings).forEach(function (key) {
+    Object.keys(defaultSettings).forEach((key) => {
         if (!settingsAll.hasOwnProperty(key)) {
             settings.set(key, defaultSettings[key]);
         }
@@ -77,15 +76,19 @@ const createWindow = () => {
 let touchBarResult = new TouchBarButton({
     'label': 'Let me shrink some images!',
     'backgroundColor': '#000000',
-    'icon': 'assets/icons/png/32x32.png',
-    'iconPosition': 'left',
-
+});
+let touchBarIcon = new TouchBarButton({
+    'backgroundColor': '#000000',
+    'icon': path.join(__dirname, 'build/18x18@2x.png'),
+    'iconPosition': 'center',
 });
 
 const touchBar = new TouchBar([
     touchBarResult
 ]);
 
+// Add Touchbar icon
+touchBar.escapeItem = touchBarIcon;
 
 app.on('will-finish-launching', () => {
     app.on('open-file', (event, filePath) => {
@@ -143,10 +146,16 @@ ipcMain.on(
 
 let processFile = (filePath, fileName) => {
 
+    // Focus window on drag
+    mainWindow.focus();
+
+    // Change Touchbar
     touchBarResult.label = 'I am shrinking for you';
 
+    // Get filesize
     let sizeOrig = getFileSize(filePath);
 
+    // Process image(s)
     fs.readFile(filePath, 'utf8', (err, data) => {
 
         if (err) {
@@ -159,13 +168,13 @@ let processFile = (filePath, fileName) => {
         switch (path.extname(fileName)) {
         case '.svg': {
             svg.optimize(data)
-                .then(function (result) {
+                .then((result) => {
                     fs.writeFile(newFile, result.data, (err) => {
                         result.label = 'Your shrinked image: ' + newFile;
                         sendToRenderer(err, newFile, sizeOrig);
                     });
                 })
-                .catch(function (error) {
+                .catch((error) => {
                     dialog(error.message);
                 });
             break;
@@ -187,6 +196,7 @@ let processFile = (filePath, fileName) => {
             break;
         }
         default:
+            mainWindow.webContents.send('error');
             dialog.showMessageBox({
                 'type': 'error',
                 'message': 'Only SVG, JPG and PNG allowed'
@@ -241,6 +251,7 @@ let sendToRenderer = (err, newFile, sizeOrig) => {
     }
     else {
         log.error(err);
+        mainWindow.webContents.send('error');
         dialog.showMessageBox({
             'type': 'error',
             'message': 'I\'m not able to write your new image. Sorry!'

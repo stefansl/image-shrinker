@@ -20,6 +20,19 @@ let dragzone = document.getElementById('dragzone'),
     notification = document.getElementById('notification');
 
 /*
+ * Cut path from beginning, if necessary
+ * return string
+ */
+const cutFolderName = (path) => {
+    let length = path.length;
+    if (length >= 48) {
+        path = '... ' + path.substr(length - 48);
+    }
+
+    return path;
+};
+
+/*
  * Settings
  */
 let userSetting = settings.getAll();
@@ -33,7 +46,8 @@ if (userSetting.folderswitch === false) {
 } else {
     folderswitch.checked = true;
 }
-if (userSetting.savepath) btnSavepath.innerText = userSetting.savepath;
+
+if (userSetting.savepath) btnSavepath.innerText = cutFolderName(userSetting.savepath[0]);
 
 
 /*
@@ -117,7 +131,7 @@ btnSavepath.onclick = () => {
             properties: ['openDirectory']
         }, (path) => {
             if (typeof path !== 'undefined') {
-                btnSavepath.innerText = path;
+                btnSavepath.innerText = cutFolderName(path[0]);
                 settings.set('savepath', path);
             }
         }
@@ -200,7 +214,11 @@ ipcRenderer
         'openSettings', () => {
             menuSettings.classList.add('is--open');
         }
-    );
+    ).on(
+        'error', () => {
+            // Remove loader
+            dragzone.classList.remove('is--processing');
+        });
 
 
 /*
@@ -258,6 +276,7 @@ Array.from(openInBrowserLink).forEach((el) => {
         shell.openExternal(e.srcElement.offsetParent.lastElementChild.href);
     };
 });
+
 
 /*
  * Testcase ResizeObserver
