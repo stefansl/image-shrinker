@@ -47,7 +47,7 @@
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "latest",
-    "electron-builder": "^20.0.9",
+    "electron-builder": "^20.1.1",
     "electron-installer-dmg": "latest",
     "electron-packager": "^11.0.1",
     "fs-extra": "latest",
