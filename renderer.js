@@ -33,7 +33,7 @@ if (userSetting.folderswitch === false) {
 } else {
     folderswitch.checked = true;
 }
-if (userSetting.savepath) btnSavepath.innerText = userSetting.savepath;
+if (userSetting.savepath) btnSavepath.innerText = userSetting.savepath[0].substring(userSetting.savepath[0].length, 20);
 
 
 /*
@@ -117,7 +117,7 @@ btnSavepath.onclick = () => {
             properties: ['openDirectory']
         }, (path) => {
             if (typeof path !== 'undefined') {
-                btnSavepath.innerText = path;
+                btnSavepath.innerText = path.substring(path.length, 20);
                 settings.set('savepath', path);
             }
         }
@@ -204,8 +204,7 @@ ipcRenderer
         'error', () => {
             // Remove loader
             dragzone.classList.remove('is--processing');
-    }
-);
+        });
 
 
 /*
