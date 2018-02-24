@@ -147,7 +147,7 @@ ipcMain.on(
 let processFile = (filePath, fileName) => {
 
     // Focus window on drag
-    if (mainWindow) mainWindow.focus();
+    mainWindow || mainWindow.focus();
 
     // Change Touchbar
     touchBarResult.label = 'I am shrinking for you';
