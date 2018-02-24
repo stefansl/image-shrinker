@@ -19,18 +19,6 @@ let dragzone = document.getElementById('dragzone'),
     updatecheck = document.getElementById('updatecheck'),
     notification = document.getElementById('notification');
 
-/*
- * Cut path from beginning, if necessary
- * return string
- */
-const cutFolderName = (path) => {
-    let length = path.length;
-    if (length >= 48) {
-        path = '... ' + path.substr(length - 48);
-    }
-
-    return path;
-};
 
 /*
  * Settings
@@ -276,6 +264,20 @@ Array.from(openInBrowserLink).forEach((el) => {
         shell.openExternal(e.srcElement.offsetParent.lastElementChild.href);
     };
 });
+
+
+/*
+ * Cut path from beginning, if necessary
+ * return string
+ */
+function cutFolderName(path)  {
+    let length = path.length;
+    if (length >= 48) {
+        path = '... ' + path.substr(length - 48);
+    }
+
+    return path;
+}
 
 
 /*
