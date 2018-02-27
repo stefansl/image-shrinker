@@ -190,7 +190,7 @@ ipcRenderer
             resultBox.prepend(resContainer);
 
             // Notification
-            if (settings.get('notification') === true) {
+            if (settings.get('notification')) {
                 new window.Notification('Image shrinked, pal!', {
                     body: path,
                     silent: true
@@ -270,14 +270,14 @@ Array.from(openInBrowserLink).forEach((el) => {
  * Cut path from beginning, if necessary
  * return string
  */
-function cutFolderName(path)  {
+const cutFolderName = path =>  {
     let length = path.length;
     if (length >= 48) {
         path = '... ' + path.substr(length - 48);
     }
 
     return path;
-}
+};
 
 
 /*
