@@ -38,9 +38,7 @@ const createWindow = () => {
     mainWindow.loadURL(path.join('file://', __dirname, '/index.html'));
 
     // Open the DevTools.
-    if (debug === 1) {
-        mainWindow.webContents.openDevTools();
-    }
+    debug || mainWindow.webContents.openDevTools();
 
     mainWindow.on('closed', () => {
         mainWindow = null;
