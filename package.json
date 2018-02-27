@@ -1,6 +1,6 @@
 {
   "name": "image-shrinker",
-  "version": "1.3.3",
+  "version": "1.3.4",
   "description": "GUI for minifying images",
   "main": "main.js",
   "title": "Image Shrinker",
