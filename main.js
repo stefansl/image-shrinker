@@ -1,4 +1,4 @@
-const {app, BrowserWindow, ipcMain, dialog, TouchBar} = require('electron');
+const {app, nativeImage, BrowserWindow, ipcMain, dialog, TouchBar} = require('electron');
 const {autoUpdater} = require('electron-updater');
 const log = require('electron-log');
 const fs = require('fs');
@@ -79,9 +79,10 @@ let touchBarResult = new TouchBarButton({
 });
 let touchBarIcon = new TouchBarButton({
     'backgroundColor': '#000000',
-    'icon': path.join(__dirname, 'build/18x18@2x.png'),
+    'icon': nativeImage.createFromPath(path.join(__dirname, 'build/18x18@2x.png')),
     'iconPosition': 'center',
 });
+
 
 const touchBar = new TouchBar([
     touchBarResult
