@@ -1,4 +1,4 @@
-const {app, BrowserWindow, ipcMain, dialog, TouchBar} = require('electron');
+const {app, nativeImage, BrowserWindow, ipcMain, dialog, TouchBar} = require('electron');
 const {autoUpdater} = require('electron-updater');
 const log = require('electron-log');
 const fs = require('fs');
@@ -38,9 +38,7 @@ const createWindow = () => {
     mainWindow.loadURL(path.join('file://', __dirname, '/index.html'));
 
     // Open the DevTools.
-    if (debug === 1) {
-        mainWindow.webContents.openDevTools();
-    }
+    debug || mainWindow.webContents.openDevTools();
 
     mainWindow.on('closed', () => {
         mainWindow = null;
@@ -79,9 +77,10 @@ let touchBarResult = new TouchBarButton({
 });
 let touchBarIcon = new TouchBarButton({
     'backgroundColor': '#000000',
-    'icon': path.join(__dirname, 'build/18x18@2x.png'),
+    'icon': nativeImage.createFromPath(path.join(__dirname, 'build/18x18@2x.png')),
     'iconPosition': 'center',
 });
+
 
 const touchBar = new TouchBar([
     touchBarResult
@@ -147,7 +146,7 @@ ipcMain.on(
 let processFile = (filePath, fileName) => {
 
     // Focus window on drag
-    if (mainWindow) mainWindow.focus();
+    mainWindow || mainWindow.focus();
 
     // Change Touchbar
     touchBarResult.label = 'I am shrinking for you';
@@ -217,14 +216,8 @@ const generateNewPath = (pathName) => {
     makeDir.sync(objPath.dir);
 
     // Suffix setting
-    let suffix;
-    if (settings.get('suffix') === true) {
-        suffix = '.min' + objPath.ext;
-    } else {
-        suffix = objPath.ext;
-    }
-
-    objPath.base = objPath.name + suffix;
+    let suffix = settings.get('suffix') ? '.min' : '';
+    objPath.base = objPath.name + suffix + objPath.ext;
 
     return path.format(objPath);
 };

@@ -13,12 +13,6 @@
   src: local("Fira Sans Bold Italic"), local("FiraSans-BoldItalic"), url(../fonts/FiraSans-BoldItalic.woff2) format("woff2");
   font-weight: 700;
   font-style: italic; }
-:root {
-  --main-bg-color: #111;
-  --main-color: #F3FFE2;
-  --secondary-color: #7ec049;
-  --third-color: #5dc7e6; }
-
 * {
   box-sizing: border-box; }
 
@@ -26,52 +20,52 @@ html {
   -webkit-app-region: drag; }
 
 body {
-  overflow: hidden;
-  padding: 2rem .5rem;
+  color: #111;
   font-family: 'Fira Sans', sans-serif;
   font-weight: 400;
-  color: #111; }
+  overflow: hidden;
+  padding: 2rem .5rem; }
 
 #wrapper {
   max-height: calc(100vh - 4rem); }
 
 #background {
-  perspective: 8000px;
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
   background-image: url("../img/bg_poly.min.svg");
   background-size: 120% 120%;
-  transition: transform 0.7s ease-out;
+  height: 100vh;
+  left: 0;
+  position: absolute;
+  top: 0;
   transform: scale(1.1);
+  transition: transform 0.7s ease-out;
+  width: 100vw;
+  z-index: -1;
+  perspective: 8000px;
   transform-style: preserve-3d; }
 
 #dragzone {
+  border: 2px dashed #111;
+  color: #111;
   cursor: pointer;
-  position: relative;
-  opacity: .5;
-  border: 2px dashed var(--main-bg-color);
-  padding: 1em;
-  text-align: center;
-  color: var(--main-bg-color);
   font-style: italic;
+  opacity: .5;
+  padding: 1em;
+  position: relative;
+  text-align: center;
   transition: opacity .1s ease-out; }
   #dragzone.drag-active {
     opacity: .9; }
   #dragzone::after {
-    display: block;
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    content: " ";
-    opacity: 0;
-    transition: all .4s ease-out;
     background-color: transparent;
+    content: " ";
+    display: block;
+    height: 100%;
     left: 0;
-    top: 0; }
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    transition: all .4s ease-out;
+    width: 100%; }
   #dragzone.is--processing::after {
     background: rgba(216, 101, 80, 0.5) url("../img/tail-spin.min.svg") no-repeat center center;
     background-size: 15%;
@@ -79,55 +73,55 @@ body {
   #dragzone:hover {
     opacity: .75; }
   #dragzone strong {
-    font-weight: 400;
-    font-style: italic; }
+    font-style: italic;
+    font-weight: 400; }
   #dragzone h1 {
-    margin: 0;
     font-size: 1.6rem;
-    margin-bottom: .5rem;
-    font-weight: 700; }
+    font-weight: 700;
+    margin: 0;
+    margin-bottom: .5rem; }
 
 #result {
   max-height: 400px;
   overflow-y: scroll;
-  -webkit-mask-image: -webkit-linear-gradient(bottom, transparent 1%, white 20%, white 90%, transparent 99%); }
+  -webkit-mask-image: -webkit-linear-gradient(bottom, transparent 1%, #fff 20%, #fff 90%, transparent 99%); }
 
 .resLine {
   border-bottom: 1px solid rgba(17, 17, 17, 0.3);
   padding: 1rem .25rem; }
   .resLine span {
     color: rgba(17, 17, 17, 0.7);
-    font-weight: 400;
-    font-size: 8px; }
+    font-size: 8px;
+    font-weight: 400; }
   .resLine a {
-    font-style: italic;
-    font-size: 10px;
+    color: rgba(17, 17, 17, 0.9);
     display: block;
-    color: rgba(17, 17, 17, 0.9); }
+    font-size: 10px;
+    font-style: italic; }
 
 #menuSettings {
-  position: absolute;
-  z-index: 10;
-  padding: 3rem 1rem;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
   background-color: rgba(17, 17, 17, 0.9);
-  color: rgba(254, 254, 254, 0.95);
+  color: rgba(255, 255, 255, 0.95);
+  font-size: .675rem;
+  height: 100vh;
+  left: 0;
+  padding: 3rem 1rem;
+  position: absolute;
+  top: 0;
   transform: translate3d(-100%, 0, 0);
   transition: transform 450ms cubic-bezier(0.23, 1, 0.32, 1);
-  font-size: .675rem; }
+  width: 100vw;
+  z-index: 10; }
   #menuSettings.is--open {
     transform: translate3d(0, 0, 0); }
   #menuSettings li {
-    padding: .5rem 1rem;
-    border-bottom: 1px solid rgba(254, 254, 254, 0.2); }
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    padding: .5rem 1rem; }
     #menuSettings li:after {
       clear: both;
       content: " "; }
   #menuSettings .columns {
-    border-bottom: 1px solid rgba(254, 254, 254, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     padding: .5rem 0; }
   #menuSettings .column {
     align-self: center; }
@@ -140,34 +134,34 @@ body {
     color: rgba(17, 17, 17, 0.5); }
 
 #btnCloseSettings:hover {
-  color: rgba(254, 254, 254, 0.75); }
+  color: rgba(255, 255, 255, 0.75); }
 
 #btnOpenSettings, #btnCloseSettings {
+  bottom: 1rem;
   position: absolute;
-  right: 1rem;
-  bottom: 1rem; }
+  right: 1rem; }
 
 .icon {
   cursor: pointer; }
 
 .copyright {
-  position: absolute;
   bottom: 1rem;
-  left: 1.5rem;
+  color: #fff;
   display: table;
+  left: 1.5rem;
   margin: 0 auto;
-  color: #fefefe; }
+  position: absolute; }
   .copyright span {
     display: table-cell;
-    padding-right: 0.75em;
-    vertical-align: middle;
     font-size: 0.6em;
-    opacity: 0.4; }
+    opacity: 0.4;
+    padding-right: 0.75em;
+    vertical-align: middle; }
   .copyright img {
     opacity: 0.4;
-    -webkit-transition: opacity 200ms cubic-bezier(0.79, 0.14, 0.15, 0.86);
+    transition: opacity 200ms cubic-bezier(0.79, 0.14, 0.15, 0.86);
     -o-transition: opacity 200ms cubic-bezier(0.79, 0.14, 0.15, 0.86);
-    transition: opacity 200ms cubic-bezier(0.79, 0.14, 0.15, 0.86); }
+    -webkit-transition: opacity 200ms cubic-bezier(0.79, 0.14, 0.15, 0.86); }
   .copyright a {
     display: block;
     line-height: 0; }
@@ -181,11 +175,11 @@ body {
   font-size: .5rem; }
 
 #overlay {
-  width: 100vw;
   height: 100vh;
+  left: 0;
   position: absolute;
   top: 0;
-  left: 0;
+  width: 100vw;
   z-index: 10; }
 
 #btnSavepath {
