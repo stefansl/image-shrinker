@@ -16,7 +16,7 @@ autoUpdater.logger.transports.file.level = 'info';
 log.info('App starting...');
 
 let svg = new svgo();
-let debug = 0;
+let debug = 1;
 let mainWindow;
 
 const createWindow = () => {
@@ -38,7 +38,7 @@ const createWindow = () => {
     mainWindow.loadURL(path.join('file://', __dirname, '/index.html'));
 
     // Open the DevTools.
-    debug || mainWindow.webContents.openDevTools();
+    debug === 1 || mainWindow.webContents.openDevTools();
 
     mainWindow.on('closed', () => {
         mainWindow = null;
