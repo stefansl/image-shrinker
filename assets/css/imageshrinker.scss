@@ -203,8 +203,6 @@ body {
   img {
     opacity: 0.4;
     transition: opacity 200ms cubic-bezier(.79, .14, .15, .86);
-    -o-transition: opacity 200ms cubic-bezier(.79, .14, .15, .86);
-    -webkit-transition: opacity 200ms cubic-bezier(.79, .14, .15, .86);
   }
   a {
     display: block;
