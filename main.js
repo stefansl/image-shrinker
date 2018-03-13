@@ -11,14 +11,23 @@ const pngquant = require('pngquant-bin');
 const makeDir = require('make-dir');
 const {TouchBarButton} = TouchBar;
 
+/**
+ * Start logging in os log
+ */
 autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
 log.info('App starting...');
 
+/**
+ * Init vars
+ */
 let svg = new svgo();
 let debug = 1;
 let mainWindow;
 
+/**
+ * Create the browser window
+ */
 const createWindow = () => {
 
     // Create the browser window.
@@ -75,6 +84,7 @@ let touchBarResult = new TouchBarButton({
     'label': 'Let me shrink some images!',
     'backgroundColor': '#000000',
 });
+
 let touchBarIcon = new TouchBarButton({
     'backgroundColor': '#000000',
     'icon': nativeImage.createFromPath(path.join(__dirname, 'build/18x18@2x.png')),
@@ -143,6 +153,11 @@ ipcMain.on(
 );
 
 
+/**
+ * Shrinking the image
+ * @param  {string} filePath Filepath
+ * @param  {string} fileName Filename
+ */
 let processFile = (filePath, fileName) => {
 
     // Focus window on drag
@@ -204,7 +219,11 @@ let processFile = (filePath, fileName) => {
     });
 };
 
-
+/**
+ * Generate new path to shrinked file
+ * @param  {string} pathName Filepath
+ * @return {object}         filepath object
+ */
 const generateNewPath = (pathName) => {
 
     let objPath = path.parse(pathName);
@@ -222,7 +241,12 @@ const generateNewPath = (pathName) => {
     return path.format(objPath);
 };
 
-
+/**
+ * Calculate filesize
+ * @param  {string} filePath Filepath
+ * @param  {boolean} mb     If true return as MB
+ * @return {number}         filesize in MB or KB
+ */
 let getFileSize = (filePath, mb) => {
     const stats = fs.statSync(filePath);
     let fileSize = stats.size;
@@ -234,7 +258,12 @@ let getFileSize = (filePath, mb) => {
     return fileSize;
 };
 
-
+/**
+ * Send data to renderer script
+ * @param  {string} err      Error message
+ * @param  {string} newFile  New filename
+ * @param  {number}  sizeOrig Original filesize
+ */
 let sendToRenderer = (err, newFile, sizeOrig) => {
 
     if (!err) {
