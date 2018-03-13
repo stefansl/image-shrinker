@@ -81,7 +81,7 @@ const createWindow = () => {
 };
 
 
-// Touchbar support
+/**  Touchbar support */
 let touchBarResult = new TouchBarButton({
     'label': 'Let me shrink some images!',
     'backgroundColor': '#000000',
