@@ -116,7 +116,7 @@ document.ondrop = (e) => {
 btnSavepath.onclick = () => {
     dialog.showOpenDialog(
         {
-            properties: ['openDirectory']
+            properties: ['openDirectory', 'createDirectory']
         }, (path) => {
             if (typeof path !== 'undefined') {
                 btnSavepath.innerText = cutFolderName(path[0]);
