@@ -161,16 +161,16 @@ ipcMain.on(
  */
 let processFile = (filePath, fileName) => {
 
-    // Focus window on drag
+    /**  Focus window on drag */
     mainWindow || mainWindow.focus();
 
-    // Change Touchbar
+    /** Change Touchbar */
     touchBarResult.label = 'I am shrinking for you';
 
-    // Get filesize
+    /** Get filesize */
     let sizeOrig = getFileSize(filePath);
 
-    // Process image(s)
+    /** Process image(s) */
     fs.readFile(filePath, 'utf8', (err, data) => {
 
         if (err) {
@@ -235,7 +235,7 @@ const generateNewPath = (pathName) => {
 
     makeDir.sync(objPath.dir);
 
-    // Suffix setting
+    /**  Suffix setting */
     let suffix = settings.get('suffix') ? '.min' : '';
     objPath.base = objPath.name + suffix + objPath.ext;
 
