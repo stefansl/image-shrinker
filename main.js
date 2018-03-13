@@ -30,7 +30,7 @@ let mainWindow;
  */
 const createWindow = () => {
 
-    /**  Create the browser window. */
+    /** Create the browser window. */
     mainWindow = new BrowserWindow({
         titleBarStyle: 'hidden-inset',
         width: 340,
@@ -43,10 +43,10 @@ const createWindow = () => {
         icon: path.join(__dirname, 'assets/icons/png/64x64.png')
     });
 
-    /**  and load the index.html of the app. */
+    /** and load the index.html of the app. */
     mainWindow.loadURL(path.join('file://', __dirname, '/index.html'));
 
-    /**  Open the DevTools. */
+    /** Open the DevTools. */
     debug === 1 || mainWindow.webContents.openDevTools();
 
     /** Window closed */
@@ -63,12 +63,12 @@ const createWindow = () => {
         updatecheck: true
     };
 
-    /**  set default settings at first launch */
+    /** set default settings at first launch */
     if (Object.keys(settings.getAll()).length === 0) {
         settings.setAll(defaultSettings);
     }
 
-    /**  set missing settings */
+    /** set missing settings */
     let settingsAll = settings.getAll();
     Object.keys(defaultSettings).forEach((key) => {
         if (!settingsAll.hasOwnProperty(key)) {
@@ -81,7 +81,7 @@ const createWindow = () => {
 };
 
 
-/**  Touchbar support */
+/** Touchbar support */
 let touchBarResult = new TouchBarButton({
     'label': 'Let me shrink some images!',
     'backgroundColor': '#000000',
@@ -97,7 +97,7 @@ const touchBar = new TouchBar([
     touchBarResult
 ]);
 
-/**  Add Touchbar icon */
+/** Add Touchbar icon */
 touchBar.escapeItem = touchBarIcon;
 
 app.on('will-finish-launching', () => {
@@ -108,7 +108,7 @@ app.on('will-finish-launching', () => {
 });
 
 /** Start app */
- app.on('ready', () => {
+app.on('ready', () => {
     createWindow();
     if (settings.get('updatecheck') === true) {
         autoUpdater.checkForUpdatesAndNotify();
@@ -116,7 +116,7 @@ app.on('will-finish-launching', () => {
 });
 
 
-/**  Quit when all windows are closed. */
+/** Quit when all windows are closed. */
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
         app.quit();
@@ -131,14 +131,14 @@ app.on('activate', () => {
 });
 
 
-/**  when the update has been downloaded and is ready to be installed, notify the BrowserWindow */
+/** when the update has been downloaded and is ready to be installed, notify the BrowserWindow */
 autoUpdater.on('update-downloaded', (info) => {
     log.info(info);
     mainWindow.webContents.send('updateReady');
 });
 
 
-/**  when receiving a quitAndInstall signal, quit and install the new version ;) */
+/** when receiving a quitAndInstall signal, quit and install the new version ;) */
 ipcMain.on('quitAndInstall', (event, arg) => {
     log.info(event);
     log.info(arg);
@@ -146,7 +146,7 @@ ipcMain.on('quitAndInstall', (event, arg) => {
 });
 
 
-/**  Main logic */
+/** Main logic */
 ipcMain.on(
     'shrinkImage', (event, fileName, filePath) => {
         processFile(filePath, fileName);
@@ -161,7 +161,7 @@ ipcMain.on(
  */
 let processFile = (filePath, fileName) => {
 
-    /**  Focus window on drag */
+    /** Focus window on drag */
     mainWindow || mainWindow.focus();
 
     /** Change Touchbar */
@@ -235,7 +235,7 @@ const generateNewPath = (pathName) => {
 
     makeDir.sync(objPath.dir);
 
-    /**  Suffix setting */
+    /** Suffix setting */
     let suffix = settings.get('suffix') ? '.min' : '';
     objPath.base = objPath.name + suffix + objPath.ext;
 
