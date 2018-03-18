@@ -46,8 +46,8 @@
   "author": "Stefan Schulz-Lauterbach",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^1.8.3",
-    "electron-builder": "^20.5.0",
+    "electron": "^1.8.4",
+    "electron-builder": "^20.6.0",
     "electron-installer-dmg": "latest",
     "electron-packager": "^11.1.0",
     "fs-extra": "latest",
@@ -55,14 +55,14 @@
     "spectron": "latest"
   },
   "dependencies": {
-    "ajv": "^6.2.1",
+    "ajv": "^6.3.0",
     "electron-log": "^2.2.14",
     "electron-settings": "latest",
     "electron-updater": "^2.21.1",
     "less": "^3.0.1",
     "make-dir": "^1.2.0",
     "mozjpeg": "latest",
-    "pngquant-bin": "latest",
+    "pngquant-bin": "^4.0.0",
     "spectre.css": "^0.5.1",
     "svgo": "^1.0.5"
   },
