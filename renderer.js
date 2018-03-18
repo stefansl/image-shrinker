@@ -147,13 +147,23 @@ Array.from(switches).forEach((switchEl) => {
 /*
  * Settings menu
  */
+// Open
 btnOpenSettings.onclick = (e) => {
     e.preventDefault();
     menuSettings.classList.add('is--open');
 };
+
+// Close on pressing close icon
 btnCloseSettings.onclick = (e) => {
     e.preventDefault();
     menuSettings.classList.remove('is--open');
+};
+
+// Close on pressing ESC
+document.onkeyup = (e) => {
+    if (e.keyCode === 27) {
+        menuSettings.classList.remove('is--open');
+    }
 };
 
 
