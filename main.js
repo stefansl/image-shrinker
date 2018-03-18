@@ -22,7 +22,7 @@ log.info('App starting...');
  * Init vars
  */
 let svg = new svgo();
-let debug = 1;
+let debug = 0;
 let mainWindow;
 
 /**
@@ -47,7 +47,7 @@ const createWindow = () => {
     mainWindow.loadURL(path.join('file://', __dirname, '/index.html'));
 
     /** Open the DevTools. */
-    debug === 1 || mainWindow.webContents.openDevTools();
+    debug === 0 || mainWindow.webContents.openDevTools();
 
     /** Window closed */
     mainWindow.on('closed', () => {
