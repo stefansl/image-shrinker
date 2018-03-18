@@ -59,7 +59,6 @@
     "electron-log": "^2.2.14",
     "electron-settings": "latest",
     "electron-updater": "^2.21.1",
-    "less": "^3.0.1",
     "make-dir": "^1.2.0",
     "mozjpeg": "latest",
     "pngquant-bin": "^4.0.0",
