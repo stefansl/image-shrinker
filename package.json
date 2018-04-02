@@ -1,6 +1,6 @@
 {
   "name": "image-shrinker",
-  "version": "1.3.3",
+  "version": "1.3.5",
   "description": "GUI for minifying images",
   "main": "main.js",
   "title": "Image Shrinker",
@@ -46,23 +46,22 @@
   "author": "Stefan Schulz-Lauterbach",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "latest",
-    "electron-builder": "^20.2.0",
+    "electron": "^1.8.4",
+    "electron-builder": "^20.8.2",
     "electron-installer-dmg": "latest",
-    "electron-packager": "^11.0.1",
+    "electron-packager": "^11.2.0",
     "fs-extra": "latest",
-    "mocha": "^5.0.1",
+    "mocha": "^5.0.5",
     "spectron": "latest"
   },
   "dependencies": {
-    "ajv": "^6.2.0",
+    "ajv": "^6.4.0",
     "electron-log": "^2.2.14",
     "electron-settings": "latest",
-    "electron-updater": "^2.21.0",
-    "less": "^3.0.1",
+    "electron-updater": "^2.21.6",
     "make-dir": "^1.2.0",
     "mozjpeg": "latest",
-    "pngquant-bin": "latest",
+    "pngquant-bin": "^4.0.0",
     "spectre.css": "^0.5.1",
     "svgo": "^1.0.5"
   },
