@@ -1,5 +1,4 @@
 const {app, Menu} = require('electron');
-const {debug} = require('../main');
 
 const template = [
     {
@@ -48,9 +47,7 @@ if (process.platform === 'darwin') {
         {role: 'front'},
     ];
 
-    //console.log(debug);
-    // Todo: fix debug
-    if (debug === 1) {
+    if (global.debug.devTools === 1) {
         template[2].submenu.push(
             {type: 'separator'},
             {

@@ -22,8 +22,10 @@ log.info('App starting...');
  * Init vars
  */
 let svg = new svgo();
-let debug = 0;
 let mainWindow;
+global.debug = {
+    devTools: 0
+};
 
 /**
  * Create the browser window
@@ -47,7 +49,7 @@ const createWindow = () => {
     mainWindow.loadURL(path.join('file://', __dirname, '/index.html'));
 
     /** Open the DevTools. */
-    debug === 0 || mainWindow.webContents.openDevTools();
+    debug.devTools === 0 || mainWindow.webContents.openDevTools();
 
     /** Window closed */
     mainWindow.on('closed', () => {
@@ -281,5 +283,3 @@ let sendToRenderer = (err, newFile, sizeOrig) => {
         });
     }
 };
-
-module.exports = debug;
