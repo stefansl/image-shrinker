@@ -24,8 +24,8 @@
   ],
   "scripts": {
     "start": "electron .",
-    "pack-mac": "electron-packager . 'Image.Shrinker' --extendInfo=extend.plist --platform=darwin --arch=x64 --ignore=/^release/i --icon=assets/icons/mac/icon_image-shrinker.svg.icns --overwrite --prune=true --out=release-builds",
-    "pack-linux": "electron-packager . 'Image.Shrinker' --platform=linux --arch=x64 --ignore=/^release/i --icon=assets/icons/png/512x512 --overwrite",
+    "pack-mac": "electron-packager . 'Image Shrinker' --extendInfo=extend.plist --platform=darwin --arch=x64 --ignore=/^release/i --icon=assets/icons/mac/icon_image-shrinker.svg.icns --overwrite --prune=true --out=release-builds",
+    "pack-linux": "electron-packager . 'Image Shrinker' --platform=linux --arch=x64 --ignore=/^release/i --icon=assets/icons/png/512x512 --overwrite",
     "pack": "build --dir",
     "publish": "build -p always",
     "dist": "electron-builder --publish always",
