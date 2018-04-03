@@ -10,7 +10,7 @@ The original graphic will be not replaced.
 
 ## Download and Installation on macOS
 Download Image Shrinker here:  
-https://github.com/stefansl/image-shrinker/releases/download/v1.3.5/image-shrinker-1.3.5.dmg
+https://github.com/stefansl/image-shrinker/releases/download/v1.3.6/image-shrinker-1.3.6.dmg
 
 Unpack and copy or drag the app into your macOS application folder.
 For uninstalling, just drop the app into the bin.
@@ -25,7 +25,7 @@ Install dependencies
 $ cd image-shrinker
 $ npm install
 ```
-Generate your MacOS package
+Generate your macOS package
 ```shell
 npm run pack-mac
 ```
