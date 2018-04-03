@@ -49,7 +49,7 @@ const createWindow = () => {
     mainWindow.loadURL(path.join('file://', __dirname, '/index.html'));
 
     /** Open the DevTools. */
-    debug.devTools === 0 || mainWindow.webContents.openDevTools();
+    global.debug.devTools === 0 || mainWindow.webContents.openDevTools();
 
     /** Window closed */
     mainWindow.on('closed', () => {
