@@ -52,7 +52,6 @@
     "fs-extra": "latest"
   },
   "dependencies": {
-    "ajv": "^6.4.0",
     "electron-log": "latest",
     "electron-settings": "latest",
     "electron-updater": "^2.21.8",
