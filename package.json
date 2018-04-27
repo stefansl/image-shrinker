@@ -28,8 +28,7 @@
     "pack-linux": "electron-packager . 'Image Shrinker' --platform=linux --arch=x64 --ignore=/^release/i --icon=assets/icons/png/512x512 --overwrite",
     "pack": "build --dir",
     "publish": "build -p always",
-    "dist": "electron-builder --publish always",
-    "test": "mocha"
+    "dist": "electron-builder --publish always"
   },
   "repository": "https://github.com/stefansl/image-shrinker",
   "keywords": [
@@ -50,9 +49,7 @@
     "electron-builder": "^20.10.0",
     "electron-installer-dmg": "latest",
     "electron-packager": "^12.0.1",
-    "fs-extra": "latest",
-    "mocha": "^5.1.1",
-    "spectron": "latest"
+    "fs-extra": "latest"
   },
   "dependencies": {
     "ajv": "^6.4.0",
