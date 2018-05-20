@@ -5,7 +5,7 @@ Image Shrinker (prev. SVG Shrinker) is a tool to minify images and graphics usin
 ![Screenrecording Imageshrinker](https://thumbs.gfycat.com/GiganticGrandKittiwake-size_restricted.gif)
 
 ## How to use
-Drag your image file onto the Image Shrinker window and it will saved in the same folder as reduced image.
+Drag your image file onto the Image Shrinker window and it will saved in the same or in a predefined folder as reduced image.
 The original graphic will be not replaced.
 
 ## Download and Installation on macOS
