@@ -1,4 +1,4 @@
-const {app, nativeImage, BrowserWindow, ipcMain, dialog, TouchBar} = require('electron');
+const {app, nativeImage, BrowserWindow, ipcMain, dialog, shell, TouchBar} = require('electron');
 const {autoUpdater} = require('electron-updater');
 const log = require('electron-log');
 const fs = require('fs');
@@ -87,12 +87,15 @@ const createWindow = () => {
 let touchBarResult = new TouchBarButton({
     'label': 'Let me shrink some images!',
     'backgroundColor': '#000000',
+    'click': ()=> {
+        //shell.showItemInFolder(settings.get('savepath'));
+    }
 });
 
 let touchBarIcon = new TouchBarButton({
-    'backgroundColor': '#000000',
-    'icon': nativeImage.createFromPath(path.join(__dirname, 'build/18x18@2x.png')),
-    'iconPosition': 'center',
+    backgroundColor: '#000000',
+    icon: nativeImage.createFromPath(path.join(__dirname, 'build/18x18@2x.png')),
+    iconPosition: 'center'
 });
 
 const touchBar = new TouchBar([
@@ -187,7 +190,7 @@ let processFile = (filePath, fileName) => {
             svg.optimize(data)
                 .then((result) => {
                     fs.writeFile(newFile, result.data, (err) => {
-                        result.label = 'Your shrinked image: ' + newFile;
+                        touchBarResult.label = 'Your shrinked image: ' + newFile;
                         sendToRenderer(err, newFile, sizeOrig);
                     });
                 })
@@ -200,6 +203,7 @@ let processFile = (filePath, fileName) => {
         case '.jpeg': {
             execFile(mozjpeg, ['-outfile', newFile, filePath], (err) => {
                 touchBarResult.label = 'Your shrinked image: ' + newFile;
+
                 sendToRenderer(err, newFile, sizeOrig);
             });
 
