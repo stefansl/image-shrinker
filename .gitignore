@@ -7,6 +7,7 @@ release-builds
 build/
 script.sh
 /Mac_Distribution_Provisioning_Profiles_.provisionprofile
+Image Shrinker-linux-x64/
 !/build/
 /electron-builder.yml
 /dist/
