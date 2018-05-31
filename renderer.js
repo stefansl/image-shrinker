@@ -212,11 +212,10 @@ ipcRenderer
         'openSettings', () => {
             menuSettings.classList.add('is--open');
         }
-    ).on(
-        'error', () => {
-            // Remove loader
-            dragzone.classList.remove('is--processing');
-        });
+    ).on('error', () => {
+        // Remove loader
+        dragzone.classList.remove('is--processing');
+    });
 
 
 /*
@@ -280,7 +279,7 @@ Array.from(openInBrowserLink).forEach((el) => {
  * Cut path from beginning, if necessary
  * return string
  */
-function cutFolderName (path) {
+function cutFolderName(path) {
     let length = path.length;
     if (length >= 48) {
         path = '... ' + path.substr(length - 48);
