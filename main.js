@@ -24,7 +24,7 @@ log.info('App starting...');
 let svg = new svgo();
 let mainWindow;
 global.debug = {
-    devTools: 0
+    devTools: 1
 };
 
 /**
@@ -88,7 +88,7 @@ let touchBarResult = new TouchBarButton({
     'label': 'Let me shrink some images!',
     'backgroundColor': '#000000',
     'click': ()=> {
-        //shell.showItemInFolder(settings.get('savepath'));
+        shell.showItemInFolder(settings.get('savepath')[0]);
     }
 });
 
