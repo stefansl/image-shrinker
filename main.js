@@ -51,6 +51,10 @@ const createWindow = () => {
     /** Open the DevTools. */
     global.debug.devTools === 0 || mainWindow.webContents.openDevTools();
 
+    /** Disable windows alt-menu  **/
+    mainWindow.setMenu(null)
+    
+    npm install&&electron-packager . Image-Shrinker --asar=true --platform=win32 --arch=ia32 --ignore=/^release/i --overwrite --icon=assets\icons\ico\512x512@2x.ico
     /** Window closed */
     mainWindow.on('closed', () => {
         mainWindow = null;
