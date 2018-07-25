@@ -53,8 +53,7 @@ const createWindow = () => {
 
     /** Disable windows alt-menu  **/
     mainWindow.setMenu(null)
-    
-    npm install&&electron-packager . Image-Shrinker --asar=true --platform=win32 --arch=ia32 --ignore=/^release/i --overwrite --icon=assets\icons\ico\512x512@2x.ico
+
     /** Window closed */
     mainWindow.on('closed', () => {
         mainWindow = null;
