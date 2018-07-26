@@ -46,7 +46,10 @@ if (process.platform === 'darwin') {
         {type: 'separator'},
         {role: 'front'},
     ];
-
+    
+    const menu = Menu.buildFromTemplate(template);
+    Menu.setApplicationMenu(menu);
+    
     if (global.debug.devTools === 1) {
         template[2].submenu.push(
             {type: 'separator'},
@@ -60,6 +63,3 @@ if (process.platform === 'darwin') {
         );
     }
 }
-
-const menu = Menu.buildFromTemplate(template);
-Menu.setApplicationMenu(menu);
