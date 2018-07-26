@@ -2,6 +2,7 @@
 
 Image Shrinker (prev. SVG Shrinker) is a tool to minify images and graphics using the best available libraries for image processing: [pngquant](https://pngquant.org/), [mozjpg](https://github.com/mozilla/mozjpeg) and [SVGO](https://github.com/svg/svgo). Built with web technologies in [Electron](https://electronjs.org)
 
+![af3d94ab-eb67-4e77-bad7-3ade0bcf346a min](https://user-images.githubusercontent.com/28905212/43267321-8e7e4e9e-90e5-11e8-9591-6debf086982a.gif)
 ![Screenrecording Imageshrinker](https://user-images.githubusercontent.com/1564251/40296606-61863e56-5cdd-11e8-9f43-3a74c48d21a0.gif)
 
 ## How to use
