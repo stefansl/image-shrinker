@@ -1,5 +1,5 @@
-const {app, nativeImage, BrowserWindow, ipcMain, dialog, shell, TouchBar} = require('electron');
-const {autoUpdater} = require('electron-updater');
+const { app, nativeImage, BrowserWindow, ipcMain, dialog, shell, TouchBar } = require('electron');
+const { autoUpdater } = require('electron-updater');
 const log = require('electron-log');
 const fs = require('fs');
 const path = require('path');
@@ -9,7 +9,8 @@ const execFile = require('child_process').execFile;
 const mozjpeg = require('mozjpeg');
 const pngquant = require('pngquant-bin');
 const makeDir = require('make-dir');
-const {TouchBarButton} = TouchBar;
+const { TouchBarButton } = TouchBar;
+const gifsicle = require('gifsicle');
 
 /**
  * Start logging in os log
@@ -42,6 +43,11 @@ const createWindow = () => {
         frame: true,
         backgroundColor: '#F7F7F7',
         resizable: true,
+        autoHideMenuBar: true,
+        useContentSize: true,
+        show: false,
+        resizable: false,
+        maximizable: false,
         icon: path.join(__dirname, 'assets/icons/png/64x64.png')
     });
 
@@ -49,7 +55,14 @@ const createWindow = () => {
     mainWindow.loadURL(path.join('file://', __dirname, '/index.html'));
 
     /** Open the DevTools. */
-    global.debug.devTools === 0 || mainWindow.webContents.openDevTools();
+    // global.debug.devTools === 0 || mainWindow.webContents.openDevTools();
+
+    /**  show the window **/
+
+    mainWindow.on('ready-to-show', () => {
+        console.timeEnd('ready-to-show')
+        mainWindow.show()
+    })
 
     /** Disable windows alt-menu  **/
     mainWindow.setMenu(null)
@@ -90,7 +103,7 @@ const createWindow = () => {
 let touchBarResult = new TouchBarButton({
     'label': 'Let me shrink some images!',
     'backgroundColor': '#000000',
-    'click': ()=> {
+    'click': () => {
         shell.showItemInFolder(settings.get('savepath')[0]);
     }
 });
@@ -189,42 +202,49 @@ let processFile = (filePath, fileName) => {
         let newFile = generateNewPath(filePath);
 
         switch (path.extname(fileName)) {
-        case '.svg': {
-            svg.optimize(data)
-                .then((result) => {
-                    fs.writeFile(newFile, result.data, (err) => {
-                        touchBarResult.label = 'Your shrinked image: ' + newFile;
-                        sendToRenderer(err, newFile, sizeOrig);
+            case '.svg': {
+                svg.optimize(data)
+                    .then((result) => {
+                        fs.writeFile(newFile, result.data, (err) => {
+                            touchBarResult.label = 'Your shrinked image: ' + newFile;
+                            sendToRenderer(err, newFile, sizeOrig);
+                        });
+                    })
+                    .catch((error) => {
+                        dialog(error.message);
                     });
-                })
-                .catch((error) => {
-                    dialog(error.message);
+                break;
+            }
+            case '.jpg':
+            case '.jpeg': {
+                execFile(mozjpeg, ['-outfile', newFile, filePath], (err) => {
+                    touchBarResult.label = 'Your shrinked image: ' + newFile;
+
+                    sendToRenderer(err, newFile, sizeOrig);
                 });
-            break;
-        }
-        case '.jpg':
-        case '.jpeg': {
-            execFile(mozjpeg, ['-outfile', newFile, filePath], (err) => {
-                touchBarResult.label = 'Your shrinked image: ' + newFile;
 
-                sendToRenderer(err, newFile, sizeOrig);
-            });
-
-            break;
-        }
-        case '.png': {
-            execFile(pngquant, ['-fo', newFile, filePath], (err) => {
-                touchBarResult.label = 'Your shrinked image: ' + newFile;
-                sendToRenderer(err, newFile, sizeOrig);
-            });
-            break;
-        }
-        default:
-            mainWindow.webContents.send('error');
-            dialog.showMessageBox({
-                'type': 'error',
-                'message': 'Only SVG, JPG and PNG allowed'
-            });
+                break;
+            }
+            case '.png': {
+                execFile(pngquant, ['-fo', newFile, filePath], (err) => {
+                    touchBarResult.label = 'Your shrinked image: ' + newFile;
+                    sendToRenderer(err, newFile, sizeOrig);
+                });
+                break;
+            }
+            case '.gif': {
+                execFile(gifsicle, ['-o', newFile, filePath, '-O=2', '-i'], err => {
+                    touchBarResult.label = 'Your shrinked image: ' + newFile;
+                    sendToRenderer(err, newFile, sizeOrig);
+                });
+                break;
+            }
+            default:
+                mainWindow.webContents.send('error');
+                dialog.showMessageBox({
+                    'type': 'error',
+                    'message': 'Only SVG, JPG, GIF and PNG allowed'
+                });
         }
     });
 };
