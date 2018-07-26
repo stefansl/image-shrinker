@@ -10,6 +10,7 @@ const mozjpeg = require('mozjpeg');
 const pngquant = require('pngquant-bin');
 const makeDir = require('make-dir');
 const {TouchBarButton} = TouchBar;
+const gifsicle = require('gifsicle');
 
 /**
  * Start logging in os log
@@ -216,11 +217,18 @@ let processFile = (filePath, fileName) => {
             });
             break;
         }
+        case '.gif': {
+                execFile(gifsicle, ['-o', newFile, filePath, '-O=2', '-i'], err => {
+                    touchBarResult.label = 'Your shrinked image: ' + newFile;
+                    sendToRenderer(err, newFile, sizeOrig);
+                });
+                break;
+            }
         default:
             mainWindow.webContents.send('error');
             dialog.showMessageBox({
                 'type': 'error',
-                'message': 'Only SVG, JPG and PNG allowed'
+                'message': 'Only SVG, JPG, GIF and PNG allowed'
             });
         }
     });
