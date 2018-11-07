@@ -25,7 +25,7 @@ log.info('App starting...');
 let svg = new svgo();
 let mainWindow;
 global.debug = {
-    devTools: 1
+    devTools: 0
 };
 
 /**
@@ -86,9 +86,9 @@ const createWindow = () => {
 
 /** Touchbar support */
 let touchBarResult = new TouchBarButton({
-    'label': 'Let me shrink some images!',
-    'backgroundColor': '#000000',
-    'click': ()=> {
+    label: 'Let me shrink some images!',
+    backgroundColor: '#000000',
+    click: ()=> {
         shell.showItemInFolder(settings.get('savepath')[0]);
     }
 });
