@@ -43,9 +43,17 @@ const createWindow = () => {
         frame: true,
         backgroundColor: '#F7F7F7',
         resizable: true,
+        show: false,
         icon: path.join(__dirname, 'assets/icons/png/64x64.png')
     });
-
+    
+    /** show it when it's ready */
+    
+    mainWindow.on('ready-to-show', () => {
+        console.timeEnd('ready-to-show')
+        mainWindow.show()
+    })
+    
     /** and load the index.html of the app. */
     mainWindow.loadURL(path.join('file://', __dirname, '/index.html'));
 
