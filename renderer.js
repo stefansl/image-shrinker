@@ -161,7 +161,7 @@ btnCloseSettings.onclick = (e) => {
 
 // Close on pressing ESC
 document.onkeyup = (e) => {
-    if (e.keyCode === 27) {
+    if (e.key === 27) {
         menuSettings.classList.remove('is--open');
     }
 };
