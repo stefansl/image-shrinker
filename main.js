@@ -35,12 +35,12 @@ const createWindow = () => {
 
     /** Create the browser window. */
     mainWindow = new BrowserWindow({
-        titleBarStyle: 'hidden-inset',
+        titleBarStyle: 'hiddenInset',
         width: 340,
         height: 550,
         minWidth: 340,
         minHeight: 550,
-        frame: true,
+        frame: false,
         backgroundColor: '#F7F7F7',
         resizable: true,
         show: false,
