@@ -48,11 +48,9 @@ const createWindow = () => {
     });
     
     /** show it when it's ready */
-    
     mainWindow.on('ready-to-show', () => {
-        console.timeEnd('ready-to-show')
-        mainWindow.show()
-    })
+        mainWindow.show();
+    });
     
     /** and load the index.html of the app. */
     mainWindow.loadURL(path.join('file://', __dirname, '/index.html'));
@@ -194,7 +192,7 @@ let processFile = (filePath, fileName) => {
         app.addRecentDocument(filePath);
         let newFile = generateNewPath(filePath);
 
-        switch (path.extname(fileName)) {
+        switch (path.extname(fileName).toLowerCase()) {
         case '.svg': {
             svg.optimize(data)
                 .then((result) => {
