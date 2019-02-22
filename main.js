@@ -25,7 +25,7 @@ log.info('App starting...');
 let svg = new svgo();
 let mainWindow;
 global.debug = {
-    devTools: 0
+    devTools: 1
 };
 
 /**
@@ -44,7 +44,10 @@ const createWindow = () => {
         backgroundColor: '#F7F7F7',
         resizable: true,
         show: false,
-        icon: path.join(__dirname, 'assets/icons/png/64x64.png')
+        icon: path.join(__dirname, 'assets/icons/png/64x64.png'),
+        webPreferences: {
+            nodeIntegration: true
+        }
     });
     
     /** show it when it's ready */
@@ -69,7 +72,8 @@ const createWindow = () => {
         folderswitch: true,
         clearlist: false,
         suffix: true,
-        updatecheck: true
+        updatecheck: true,
+
     };
 
     /** set default settings at first launch */
@@ -95,7 +99,22 @@ let touchBarResult = new TouchBarButton({
     label: 'Let me shrink some images!',
     backgroundColor: '#000000',
     click: ()=> {
-        shell.showItemInFolder(settings.get('savepath')[0]);
+        dialog.showOpenDialog(
+            {
+                properties: ['openFile', 'multiSelections'],
+
+            },
+            (items) => {
+                if (!items) {
+                    return;
+                }
+
+                for (let filePath of items) {
+                    processFile(filePath, path.basename(filePath));
+                }
+            }
+        );
+
     }
 });
 

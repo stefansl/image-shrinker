@@ -305,7 +305,7 @@ if (chromeVersion > 64) {
     });
 
     // Observe one or multiple elements
-    ro.observe(document);
+    ro.observe(document.body);
 }
 
 
