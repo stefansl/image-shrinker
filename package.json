@@ -46,18 +46,18 @@
   "author": "Stefan Schulz-Lauterbach",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^4.2.4",
-    "electron-builder": "^20.43.0",
-    "electron-installer-dmg": "^2.0.0",
-    "electron-packager": "^13.1.1",
-    "fs-extra": "^8.0.0",
-    "prettier": "^1.17.1",
-    "prettier-eslint": "^8.8.2"
+    "electron": "^4.2.6",
+    "electron-builder": "^20.44.4",
+    "electron-installer-dmg": "^3.0.0",
+    "electron-packager": "^14.0.1",
+    "fs-extra": "^8.1.0",
+    "prettier": "^1.18.2",
+    "prettier-eslint": "^9.0.0"
   },
   "dependencies": {
     "electron-log": "^3.0.6",
     "electron-settings": "^3.2.0",
-    "electron-updater": "^4.0.0",
+    "electron-updater": "^4.0.14",
     "gifsicle": "^4.0.1",
     "make-dir": "^3.0.0",
     "mozjpeg": "^6.0.1",
