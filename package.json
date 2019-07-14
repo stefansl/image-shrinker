@@ -57,7 +57,7 @@
   "dependencies": {
     "electron-log": "^3.0.6",
     "electron-settings": "^3.2.0",
-    "electron-updater": "^4.0.14",
+    "electron-updater": "^4.1.2",
     "gifsicle": "^4.0.1",
     "make-dir": "^3.0.0",
     "mozjpeg": "^6.0.1",
