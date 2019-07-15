@@ -63,7 +63,7 @@
     "mozjpeg": "^6.0.1",
     "pngquant-bin": "^5.0.2",
     "spectre.css": "^0.5.8",
-    "svgo": "^1.2.2"
+    "svgo": "^1.3.0"
   },
   "build": {
     "appId": "de.clickpress.image-shrinker",
