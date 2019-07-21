@@ -26,7 +26,7 @@ log.info('App starting...');
 let svg = new svgo();
 let mainWindow;
 global.debug = {
-    devTools: 1
+    devTools: 0
 };
 
 /**
