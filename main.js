@@ -152,7 +152,10 @@ app.on('will-finish-launching', () => {
 app.on('ready', () => {
     createWindow();
     if (settings.get('updatecheck') === true) {
-        autoUpdater.checkForUpdatesAndNotify();
+        autoUpdater.checkForUpdatesAndNotify()
+            .catch((error)=> {
+                log.error(error);
+            });
     }
 });
 
