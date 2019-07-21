@@ -86,14 +86,13 @@ document.ondragend = () => {
 document.ondrop = e => {
     e.preventDefault();
 
-    for (let f of e.dataTransfer.files) {
-        if (fs.statSync(f.path).isDirectory()) {
-            dragzone.classList.remove('drag-active');
-
-            return false;
+    let items = event.dataTransfer.items;
+    for (let i=0; i<items.length; i++) {
+        // webkitGetAsEntry is where the magic happens
+        let item = items[i].webkitGetAsEntry();
+        if (item) {
+            traverseFileTree(item);
         }
-
-        ipcRenderer.send('shrinkImage', f.name, f.path, f.lastModified);
     }
 
     if (settings.get('clearlist')) {
@@ -265,6 +264,33 @@ Array.from(openInBrowserLink).forEach(el => {
         shell.openExternal(e.srcElement.offsetParent.lastElementChild.href);
     };
 });
+
+/**
+ * Traverse down the folders and exclude files in `exclude` array
+ */
+function traverseFileTree(item, path) {
+    const exclude = ['.DS_Store'];
+    path = path || "";
+    if (item.isFile) {
+        // Get file
+        item.file(function(f) {
+            if (fs.statSync(f.path).isDirectory() || exclude.includes(f.name)) {
+                dragzone.classList.remove('drag-active');
+
+                return false;
+            }
+            ipcRenderer.send('shrinkImage', f.name, f.path, f.lastModified);
+        });
+    } else if (item.isDirectory) {
+        // Get folder contents
+        var dirReader = item.createReader();
+        dirReader.readEntries(function(entries) {
+            for (var i=0; i<entries.length; i++) {
+                traverseFileTree(entries[i], path + item.name + "/");
+            }
+        });
+    }
+}
 
 /*
  * Cut path from beginning, if necessary
