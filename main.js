@@ -1,5 +1,6 @@
-const {app, nativeImage, BrowserWindow, ipcMain, dialog, shell, TouchBar} = require('electron');
-const {autoUpdater} = require('electron-updater');
+const { app, nativeImage, BrowserWindow, ipcMain, dialog, TouchBar } = require(
+    'electron');
+const { autoUpdater } = require('electron-updater');
 const log = require('electron-log');
 const fs = require('fs');
 const path = require('path');
@@ -9,7 +10,7 @@ const execFile = require('child_process').execFile;
 const mozjpeg = require('mozjpeg');
 const pngquant = require('pngquant-bin');
 const makeDir = require('make-dir');
-const {TouchBarButton} = TouchBar;
+const { TouchBarButton } = TouchBar;
 const gifsicle = require('gifsicle');
 
 /**
@@ -25,7 +26,7 @@ log.info('App starting...');
 let svg = new svgo();
 let mainWindow;
 global.debug = {
-    devTools: 0
+    devTools: 1
 };
 
 /**
@@ -49,25 +50,24 @@ const createWindow = () => {
             nodeIntegration: true
         }
     });
-    
+
     /** show it when it's ready */
     mainWindow.on('ready-to-show', () => {
         mainWindow.show();
     });
 
     /** and load the index.html of the app. */
-    mainWindow.loadURL(path.join('file://', __dirname, '/index.html'))
-        .then(
-            () => {
-                /** Open the DevTools. */
-                global.debug.devTools === 0 ||
-                mainWindow.webContents.openDevTools();
-            }
-        ).catch(
-            (error) => {
-                log.error(error);
-            }
-        );
+    mainWindow.loadURL(path.join('file://', __dirname, '/index.html')).then(
+        () => {
+            /** Open the DevTools. */
+            global.debug.devTools === 0 ||
+            mainWindow.webContents.openDevTools();
+        }
+    ).catch(
+        (error) => {
+            log.error(error);
+        }
+    );
 
     /** Open the DevTools. */
     global.debug.devTools === 0 || mainWindow.webContents.openDevTools();
@@ -83,19 +83,21 @@ const createWindow = () => {
         folderswitch: true,
         clearlist: false,
         suffix: true,
-        updatecheck: true,
+        updatecheck: true
 
     };
 
     /** set default settings at first launch */
-    if (Object.keys(settings.getAll()).length === 0) {
+    if (Object.keys(settings.getAll()).length === 0)
+    {
         settings.setAll(defaultSettings);
     }
 
     /** set missing settings */
     let settingsAll = settings.getAll();
     Object.keys(defaultSettings).forEach((key) => {
-        if (!settingsAll.hasOwnProperty(key)) {
+        if (!settingsAll.hasOwnProperty(key))
+        {
             settings.set(key, defaultSettings[key]);
         }
     });
@@ -104,22 +106,20 @@ const createWindow = () => {
     require('./menu/mainmenu');
 };
 
-
 /** Touchbar support */
 let touchBarResult = new TouchBarButton({
     label: 'Let me shrink some images!',
     backgroundColor: '#000000',
-    click: ()=> {
-        dialog.showOpenDialog(
-            {
-                properties: ['openFile', 'multiSelections'],
-            },
+    click: () => {
+        dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] },
             (items) => {
-                if (!items) {
+                if (!items)
+                {
                     return;
                 }
 
-                for (let filePath of items) {
+                for (let filePath of items)
+                {
                     processFile(filePath, path.basename(filePath));
                 }
             }
@@ -134,9 +134,11 @@ let touchBarIcon = new TouchBarButton({
     iconPosition: 'center'
 });
 
-const touchBar = new TouchBar([
-    touchBarResult
-]);
+const touchBar = new TouchBar({
+    items: [
+        touchBarResult
+    ]
+});
 
 /** Add Touchbar icon */
 touchBar.escapeItem = touchBarIcon;
@@ -151,36 +153,34 @@ app.on('will-finish-launching', () => {
 /** Start app */
 app.on('ready', () => {
     createWindow();
-    if (settings.get('updatecheck') === true) {
-        autoUpdater.checkForUpdatesAndNotify()
-            .catch((error)=> {
-                log.error(error);
-            });
+    if (settings.get('updatecheck') === true)
+    {
+        autoUpdater.checkForUpdatesAndNotify().catch((error) => {
+            log.error(error);
+        });
     }
 });
 
-
 /** Quit when all windows are closed. */
 app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
+    if (process.platform !== 'darwin')
+    {
         app.quit();
     }
 });
 
-
 app.on('activate', () => {
-    if (mainWindow === null) {
+    if (mainWindow === null)
+    {
         createWindow();
     }
 });
-
 
 /** when the update has been downloaded and is ready to be installed, notify the BrowserWindow */
 autoUpdater.on('update-downloaded', (info) => {
     log.info(info);
     mainWindow.webContents.send('updateReady');
 });
-
 
 /** when receiving a quitAndInstall signal, quit and install the new version ;) */
 ipcMain.on('quitAndInstall', (event, arg) => {
@@ -189,14 +189,12 @@ ipcMain.on('quitAndInstall', (event, arg) => {
     autoUpdater.quitAndInstall();
 });
 
-
 /** Main logic */
 ipcMain.on(
     'shrinkImage', (event, fileName, filePath) => {
         processFile(filePath, fileName);
     }
 );
-
 
 /**
  * Shrinking the image
@@ -212,62 +210,71 @@ let processFile = (filePath, fileName) => {
     touchBarResult.label = 'I am shrinking for you';
 
     /** Get filesize */
-    let sizeOrig = getFileSize(filePath);
+    let sizeOrig = getFileSize(filePath, false);
 
     /** Process image(s) */
     fs.readFile(filePath, 'utf8', (err, data) => {
 
-        if (err) {
+        if (err)
+        {
             throw err;
         }
 
         app.addRecentDocument(filePath);
         let newFile = generateNewPath(filePath);
 
-        switch (path.extname(fileName).toLowerCase()) {
-        case '.svg': {
-            svg.optimize(data)
-                .then((result) => {
+        switch (path.extname(fileName).toLowerCase())
+        {
+            case '.svg':
+            {
+                svg.optimize(data).then((result) => {
                     fs.writeFile(newFile, result.data, (err) => {
-                        touchBarResult.label = 'Your shrinked image: ' + newFile;
+                        touchBarResult.label = 'Your shrinked image: ' +
+                            newFile;
+                        log.info('asdasd  ' + typeof err);
+
                         sendToRenderer(err, newFile, sizeOrig);
                     });
-                })
-                .catch((error) => {
+                }).catch((error) => {
                     dialog(error.message);
                 });
-            break;
-        }
-        case '.jpg':
-        case '.jpeg': {
-            execFile(mozjpeg, ['-outfile', newFile, filePath], (err) => {
-                touchBarResult.label = 'Your shrinked image: ' + newFile;
+                break;
+            }
+            case '.jpg':
+            case '.jpeg':
+            {
+                execFile(mozjpeg, ['-outfile', newFile, filePath], (err) => {
+                    touchBarResult.label = 'Your shrinked image: ' + newFile;
 
-                sendToRenderer(err, newFile, sizeOrig);
-            });
+                    sendToRenderer(err, newFile, sizeOrig);
+                });
 
-            break;
-        }
-        case '.png': {
-            execFile(pngquant, ['-fo', newFile, filePath], (err) => {
-                touchBarResult.label = 'Your shrinked image: ' + newFile;
-                sendToRenderer(err, newFile, sizeOrig);
-            });
-            break;
-        }
-        case '.gif': {
-            execFile(gifsicle, ['-o', newFile, filePath, '-O=2', '-i'], err => {
-                touchBarResult.label = 'Your shrinked image: ' + newFile;
-                sendToRenderer(err, newFile, sizeOrig);
-            });
-            break;
-        }
-        default:
-            mainWindow.webContents.send('error');
-            dialog.showMessageBox({
-                'type': 'error',
-                'message': 'Only PNG SVG, JPG and GIF allowed'
-            });
+                break;
+            }
+            case '.png':
+            {
+                execFile(pngquant, ['-fo', newFile, filePath], (err) => {
+                    touchBarResult.label = 'Your shrinked image: ' + newFile;
+                    sendToRenderer(err, newFile, sizeOrig);
+                });
+                break;
+            }
+            case '.gif':
+            {
+                execFile(gifsicle, ['-o', newFile, filePath, '-O=2', '-i'],
+                    err => {
+                        touchBarResult.label = 'Your shrinked image: ' +
+                            newFile;
+                        sendToRenderer(err, newFile, sizeOrig);
+                    });
+                break;
+            }
+            default:
+                mainWindow.webContents.send('error');
+                dialog.showMessageBox({
+                    'type': 'error',
+                    'message': 'Only PNG SVG, JPG and GIF allowed'
+                });
         }
     });
 };
@@ -281,7 +288,9 @@ const generateNewPath = (pathName) => {
 
     let objPath = path.parse(pathName);
 
-    if (settings.get('folderswitch') === false && typeof settings.get('savepath') !== 'undefined') {
+    if (settings.get('folderswitch') === false &&
+        typeof settings.get('savepath') !== 'undefined')
+    {
         objPath.dir = settings.get('savepath')[0];
     }
 
@@ -304,7 +313,8 @@ let getFileSize = (filePath, mb) => {
     const stats = fs.statSync(filePath);
     let fileSize = stats.size;
 
-    if (mb) {
+    if (mb)
+    {
         fileSize = fileSize / 1024;
     }
 
@@ -313,18 +323,20 @@ let getFileSize = (filePath, mb) => {
 
 /**
  * Send data to renderer script
- * @param  {string} err      Error message
+ * @param  {object} err      Error message
  * @param  {string} newFile  New filename
  * @param  {number}  sizeOrig Original filesize
  */
 let sendToRenderer = (err, newFile, sizeOrig) => {
 
-    if (!err) {
-        let sizeShrinked = getFileSize(newFile);
+    if (!err)
+    {
+        let sizeShrinked = getFileSize(newFile, false);
 
-        mainWindow.webContents.send('isShrinked', newFile, sizeOrig, sizeShrinked);
-    }
-    else {
+        mainWindow.webContents.send('isShrinked', newFile, sizeOrig,
+            sizeShrinked);
+    } else
+    {
         log.error(err);
         mainWindow.webContents.send('error');
         dialog.showMessageBox({

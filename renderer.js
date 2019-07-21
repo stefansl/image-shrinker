@@ -34,6 +34,9 @@ if (userSetting.folderswitch === false) {
     folderswitch.checked = true;
 }
 
+/**
+ * @param {{savepath:string}} userSetting
+ */
 if (userSetting.savepath)
     btnSavepath.innerText = cutFolderName(userSetting.savepath[0]);
 
@@ -86,7 +89,7 @@ document.ondragend = () => {
 document.ondrop = e => {
     e.preventDefault();
 
-    let items = event.dataTransfer.items;
+    let items = e.dataTransfer.items;
     for (let i=0; i<items.length; i++) {
         // webkitGetAsEntry is where the magic happens
         let item = items[i].webkitGetAsEntry();
@@ -258,11 +261,14 @@ ipcRenderer.on('updateReady', () => {
 /*
  * Open external links in browser
  */
-Array.from(openInBrowserLink).forEach(el => {
-    el.onclick = e => {
-        e.preventDefault();
-        shell.openExternal(e.srcElement.offsetParent.lastElementChild.href);
-    };
+Array.from(openInBrowserLink).forEach((el) => {
+    el.addEventListener('click', (event) => {
+        event.preventDefault();
+        shell.openExternal(event.srcElement.offsetParent.lastElementChild.href)
+            .catch((error) => {
+                log.error(error);
+            });
+    });
 });
 
 /**
@@ -270,7 +276,7 @@ Array.from(openInBrowserLink).forEach(el => {
  */
 function traverseFileTree(item, path) {
     const exclude = ['.DS_Store'];
-    path = path || "";
+    path = path || '';
     if (item.isFile) {
         // Get file
         item.file(function(f) {
@@ -283,10 +289,10 @@ function traverseFileTree(item, path) {
         });
     } else if (item.isDirectory) {
         // Get folder contents
-        var dirReader = item.createReader();
+        let dirReader = item.createReader();
         dirReader.readEntries(function(entries) {
-            for (var i=0; i<entries.length; i++) {
-                traverseFileTree(entries[i], path + item.name + "/");
+            for (let i in entries) {
+                traverseFileTree(entries[i], path + item.name + '/');
             }
         });
     }
@@ -314,9 +320,9 @@ if (chromeVersion > 64) {
     const ro = new ResizeObserver(entries => {
         for (const entry of entries) {
             const cr = entry.contentRect;
-            log.info('Element:', entry.target);
-            log.info(`Element size: ${cr.width}px × ${cr.height}px`);
-            log.info(`Element padding: ${cr.top}px ; ${cr.left}px`);
+            //log.info('Element:', entry.target);
+            //log.info(`Element size: ${cr.width}px × ${cr.height}px`);
+            //log.info(`Element padding: ${cr.top}px ; ${cr.left}px`);
         }
     });
 
