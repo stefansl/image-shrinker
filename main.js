@@ -54,9 +54,20 @@ const createWindow = () => {
     mainWindow.on('ready-to-show', () => {
         mainWindow.show();
     });
-    
+
     /** and load the index.html of the app. */
-    mainWindow.loadURL(path.join('file://', __dirname, '/index.html'));
+    mainWindow.loadURL(path.join('file://', __dirname, '/index.html'))
+        .then(
+            () => {
+                /** Open the DevTools. */
+                global.debug.devTools === 0 ||
+                mainWindow.webContents.openDevTools();
+            }
+        ).catch(
+            (error) => {
+                log.error(error);
+            }
+        );
 
     /** Open the DevTools. */
     global.debug.devTools === 0 || mainWindow.webContents.openDevTools();
@@ -102,7 +113,6 @@ let touchBarResult = new TouchBarButton({
         dialog.showOpenDialog(
             {
                 properties: ['openFile', 'multiSelections'],
-
             },
             (items) => {
                 if (!items) {
