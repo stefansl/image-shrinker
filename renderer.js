@@ -27,10 +27,12 @@ notification.checked = userSetting.notification;
 clearlist.checked = userSetting.clearlist;
 updatecheck.checked = userSetting.updatecheck;
 
-if (userSetting.folderswitch === false) {
+if (userSetting.folderswitch === false)
+{
     folderswitch.checked = false;
     wrapperSavePath.classList.remove('d-none');
-} else {
+} else
+{
     folderswitch.checked = true;
 }
 
@@ -49,15 +51,18 @@ dragzone.onclick = () => {
             properties: ['openFile', 'multiSelections']
         },
         item => {
-            if (!item) {
+            if (!item)
+            {
                 return;
             }
 
-            if (settings.get('clearlist') === true) {
+            if (settings.get('clearlist') === true)
+            {
                 resultBox.innerHTML = '';
             }
 
-            for (let f of item) {
+            for (let f of item)
+            {
                 let filename = path.parse(f).base;
                 ipcRenderer.send('shrinkImage', filename, f);
             }
@@ -90,15 +95,18 @@ document.ondrop = e => {
     e.preventDefault();
 
     let items = e.dataTransfer.items;
-    for (let i=0; i<items.length; i++) {
+    for (let i = 0; i < items.length; i++)
+    {
         // webkitGetAsEntry is where the magic happens
         let item = items[i].webkitGetAsEntry();
-        if (item) {
+        if (item)
+        {
             traverseFileTree(item);
         }
     }
 
-    if (settings.get('clearlist')) {
+    if (settings.get('clearlist'))
+    {
         resultBox.innerHTML = '';
     }
 
@@ -117,7 +125,8 @@ btnSavepath.onclick = () => {
             properties: ['openDirectory', 'createDirectory']
         },
         path => {
-            if (typeof path !== 'undefined') {
+            if (typeof path !== 'undefined')
+            {
                 btnSavepath.innerText = cutFolderName(path[0]);
                 settings.set('savepath', path);
             }
@@ -131,10 +140,13 @@ btnSavepath.onclick = () => {
 Array.from(switches).forEach(switchEl => {
     switchEl.onchange = e => {
         settings.set(e.target.name, e.target.checked);
-        if (e.target.name === 'folderswitch') {
-            if (e.target.checked === false) {
+        if (e.target.name === 'folderswitch')
+        {
+            if (e.target.checked === false)
+            {
                 wrapperSavePath.classList.remove('d-none');
-            } else {
+            } else
+            {
                 wrapperSavePath.classList.add('d-none');
             }
         }
@@ -158,7 +170,8 @@ btnCloseSettings.onclick = e => {
 
 // Close on pressing ESC
 document.onkeyup = e => {
-    if (e.key === 27) {
+    if (e.key === 27)
+    {
         menuSettings.classList.remove('is--open');
     }
 };
@@ -166,51 +179,49 @@ document.onkeyup = e => {
 /*
  * Renderer process
  */
-ipcRenderer
-    .on('isShrinked', (event, path, sizeBefore, sizeAfter) => {
-        let percent = Math.round((100 / sizeBefore) * (sizeBefore - sizeAfter));
+ipcRenderer.on('isShrinked', (event, path, sizeBefore, sizeAfter) => {
+    let percent = Math.round((100 / sizeBefore) * (sizeBefore - sizeAfter));
 
-        // Remove loader
-        dragzone.classList.remove('is--processing');
-
-        // Create container
-        let resContainer = document.createElement('div');
-        resContainer.className = 'resLine';
-        resContainer.innerHTML =
-      '<span>You saved ' +
-      percent +
-      '%. Your shrinked image is here:</span><br>';
-
-        // Create link
-        let resElement = document.createElement('a');
-        resElement.setAttribute('href', '#');
-        let resText = document.createTextNode(path);
-        resElement.appendChild(resText);
-
-        // Add click event
-        resElement.onclick = el => {
-            el.preventDefault();
-            shell.showItemInFolder(path);
-        };
-
-        resContainer.appendChild(resElement);
-        resultBox.prepend(resContainer);
-
-        // Notification
-        if (settings.get('notification')) {
-            new window.Notification('Image shrinked, pal!', {
-                body: path,
-                silent: true
-            });
-        }
-    })
-    .on('openSettings', () => {
-        menuSettings.classList.add('is--open');
-    })
-    .on('error', () => {
     // Remove loader
-        dragzone.classList.remove('is--processing');
-    });
+    dragzone.classList.remove('is--processing');
+
+    // Create container
+    let resContainer = document.createElement('div');
+    resContainer.className = 'resLine';
+    resContainer.innerHTML =
+        '<span>You saved ' +
+        percent +
+        '%. Your shrinked image is here:</span><br>';
+
+    // Create link
+    let resElement = document.createElement('a');
+    resElement.setAttribute('href', '#');
+    let resText = document.createTextNode(path);
+    resElement.appendChild(resText);
+
+    // Add click event
+    resElement.onclick = el => {
+        el.preventDefault();
+        shell.showItemInFolder(path);
+    };
+
+    resContainer.appendChild(resElement);
+    resultBox.prepend(resContainer);
+
+    // Notification
+    if (settings.get('notification'))
+    {
+        new window.Notification('Image shrinked, pal!', {
+            body: path,
+            silent: true
+        });
+    }
+}).on('openSettings', () => {
+    menuSettings.classList.add('is--open');
+}).on('error', () => {
+    // Remove loader
+    dragzone.classList.remove('is--processing');
+});
 
 /*
  * Parallax background
@@ -255,7 +266,7 @@ document.onmouseleave = () => {
 ipcRenderer.on('updateReady', () => {
     // changes the text of the button
     const container = document.getElementById('ready');
-    container.innerHTML = 'new version ready!';
+    container.innerHTML = 'new version available!';
 });
 
 /*
@@ -264,34 +275,38 @@ ipcRenderer.on('updateReady', () => {
 Array.from(openInBrowserLink).forEach((el) => {
     el.addEventListener('click', (event) => {
         event.preventDefault();
-        shell.openExternal(event.srcElement.offsetParent.lastElementChild.href)
-            .catch((error) => {
-                log.error(error);
-            });
+        shell.openExternal(event.srcElement.offsetParent.lastElementChild.href).catch((error) => {
+            log.error(error);
+        });
     });
 });
 
 /**
  * Traverse down the folders and exclude files in `exclude` array
  */
-function traverseFileTree(item, path) {
+function traverseFileTree(item, path)
+{
     const exclude = ['.DS_Store'];
     path = path || '';
-    if (item.isFile) {
+    if (item.isFile)
+    {
         // Get file
         item.file(function(f) {
-            if (fs.statSync(f.path).isDirectory() || exclude.includes(f.name)) {
+            if (fs.statSync(f.path).isDirectory() || exclude.includes(f.name))
+            {
                 dragzone.classList.remove('drag-active');
 
                 return false;
             }
             ipcRenderer.send('shrinkImage', f.name, f.path, f.lastModified);
         });
-    } else if (item.isDirectory) {
+    } else if (item.isDirectory)
+    {
         // Get folder contents
         let dirReader = item.createReader();
         dirReader.readEntries(function(entries) {
-            for (let i in entries) {
+            for (let i in entries)
+            {
                 traverseFileTree(entries[i], path + item.name + '/');
             }
         });
@@ -302,30 +317,13 @@ function traverseFileTree(item, path) {
  * Cut path from beginning, if necessary
  * return string
  */
-function cutFolderName(path) {
+function cutFolderName(path)
+{
     let length = path.length;
-    if (length >= 48) {
+    if (length >= 48)
+    {
         path = '... ' + path.substr(length - 48);
     }
 
     return path;
-}
-
-/*
- * Testcase ResizeObserver
- * will be included when electron implements Chrome 64
- */
-const chromeVersion = process.versions.chrome.split('.', 1)[0];
-if (chromeVersion > 64) {
-    const ro = new ResizeObserver(entries => {
-        for (const entry of entries) {
-            const cr = entry.contentRect;
-            //log.info('Element:', entry.target);
-            //log.info(`Element size: ${cr.width}px × ${cr.height}px`);
-            //log.info(`Element padding: ${cr.top}px ; ${cr.left}px`);
-        }
-    });
-
-    // Observe one or multiple elements
-    ro.observe(document.body);
 }
