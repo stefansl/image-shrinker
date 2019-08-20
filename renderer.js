@@ -49,28 +49,31 @@ dragzone.onclick = () => {
     dialog.showOpenDialog(
         {
             properties: ['openFile', 'multiSelections']
-        },
-        item => {
-            if (!item)
-            {
-                return;
-            }
+        }).then(result => {
 
-            if (settings.get('clearlist') === true)
-            {
-                resultBox.innerHTML = '';
-            }
-
-            for (let f of item)
-            {
-                let filename = path.parse(f).base;
-                ipcRenderer.send('shrinkImage', filename, f);
-            }
-
-            // Add loader
-            dragzone.classList.add('is--processing');
+        if (result.canceled)
+        {
+            return;
         }
-    );
+
+        // Add loader
+        dragzone.classList.add('is--processing');
+
+        if (settings.get('clearlist') === true)
+        {
+            resultBox.innerHTML = '';
+        }
+
+        for (let f of result.filePaths)
+        {
+            let filename = path.parse(f).base;
+            ipcRenderer.send('shrinkImage', filename, f);
+        }
+
+    }).catch(err => {
+        log.error(err);
+    });
+
 };
 
 document.ondragover = () => {
@@ -123,16 +126,17 @@ btnSavepath.onclick = () => {
     dialog.showOpenDialog(
         {
             properties: ['openDirectory', 'createDirectory']
-        },
-        path => {
-            if (typeof path !== 'undefined')
-            {
-                btnSavepath.innerText = cutFolderName(path[0]);
-                settings.set('savepath', path);
-            }
+        }).then(result => {
+        if(result.filePaths)
+        {
+            btnSavepath.innerText = cutFolderName(result.filePaths[0]);
+            settings.set('savepath', result.filePaths);
         }
-    );
+    }).catch(err => {
+        log.error(err);
+    });
 };
+
 
 /*
  * Save settings
