@@ -111,20 +111,20 @@ let touchBarResult = new TouchBarButton({
     label: 'Let me shrink some images!',
     backgroundColor: '#000000',
     click: () => {
-        dialog.showOpenDialog({ properties: ['openFile', 'multiSelections'] },
-            (items) => {
-                if (!items)
-                {
-                    return;
-                }
-
-                for (let filePath of items)
-                {
-                    processFile(filePath, path.basename(filePath));
-                }
+        dialog.showOpenDialog({
+            properties: ['openFile', 'multiSelections']
+        }).then(result => {
+            if (result.canceled)
+            {
+                return;
             }
-        );
-
+            for (let filePath of result.filePaths)
+            {
+                processFile(filePath, path.basename(filePath));
+            }
+        }).catch(err => {
+            log.error(err);
+        });
     }
 });
 
