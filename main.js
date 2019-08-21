@@ -333,8 +333,12 @@ let sendToRenderer = (err, newFile, sizeOrig) => {
     {
         let sizeShrinked = getFileSize(newFile, false);
 
-        mainWindow.webContents.send('isShrinked', newFile, sizeOrig,
-            sizeShrinked);
+        mainWindow.webContents.send(
+            'isShrinked',
+            newFile,
+            sizeOrig,
+            sizeShrinked
+        );
     } else
     {
         log.error(err);
