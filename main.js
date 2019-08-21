@@ -130,7 +130,7 @@ let touchBarResult = new TouchBarButton({
 
 let touchBarIcon = new TouchBarButton({
     backgroundColor: '#000000',
-    'icon': nativeImage.createFromPath(path.join(__dirname, 'build/16x16.png')),
+    'icon': nativeImage.createFromPath(path.join(__dirname, 'assets/icons/png/16x16.png')),
     iconPosition: 'center'
 });
 
