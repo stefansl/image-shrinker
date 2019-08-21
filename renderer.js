@@ -127,7 +127,7 @@ btnSavepath.onclick = () => {
         {
             properties: ['openDirectory', 'createDirectory']
         }).then(result => {
-        if(result.filePaths)
+        if (result.filePaths)
         {
             btnSavepath.innerText = cutFolderName(result.filePaths[0]);
             settings.set('savepath', result.filePaths);
@@ -136,7 +136,6 @@ btnSavepath.onclick = () => {
         log.error(err);
     });
 };
-
 
 /*
  * Save settings
@@ -279,7 +278,7 @@ ipcRenderer.on('updateReady', () => {
 Array.from(openInBrowserLink).forEach((el) => {
     el.addEventListener('click', (event) => {
         event.preventDefault();
-        shell.openExternal(event.srcElement.offsetParent.lastElementChild.href).catch((error) => {
+        shell.openExternal(el.getAttribute('href')).catch((error) => {
             log.error(error);
         });
     });
