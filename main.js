@@ -247,8 +247,15 @@ let processFile = (filePath, fileName) => {
             case '.jpg':
             case '.jpeg':
             {
-                execFile(mozjpeg, ['-outfile', newFile, filePath], (error) => {
+                execFile(mozjpeg, ['-outfile', newFile, filePath], (error, stdout, stderr) => {
                     touchBarResult.label = 'Your shrinked image: ' + newFile;
+
+                    if(error) {
+                        throw(error);
+                    }
+
+                    console.log(stdout);
+                    console.log(stderr);
 
                     !error ? sendToRenderer(newFile, sizeOrig, filePathCopy) : errorHandler(error);
 
