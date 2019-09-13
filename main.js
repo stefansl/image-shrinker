@@ -212,6 +212,12 @@ let processFile = (filePath, fileName) => {
     /** Get filesize */
     let sizeOrig = getFileSize(filePath, false);
 
+    /** Add backup file. Just in case of ... **/
+    let filePathCopy = filePath + '.tmp';
+    fs.copyFile(filePath, filePathCopy, (err) => {
+        if (err) throw err;
+    });
+
     /** Process image(s) */
     fs.readFile(filePath, 'utf8', (err, data) => {
 
@@ -228,12 +234,10 @@ let processFile = (filePath, fileName) => {
             case '.svg':
             {
                 svg.optimize(data).then((result) => {
-                    fs.writeFile(newFile, result.data, (err) => {
-                        touchBarResult.label = 'Your shrinked image: ' +
-                            newFile;
-                        log.info('asdasd  ' + typeof err);
+                    fs.writeFile(newFile, result.data, (error) => {
+                        touchBarResult.label = 'Your shrinked image: ' + newFile;
 
-                        sendToRenderer(err, newFile, sizeOrig);
+                        !error ? sendToRenderer(newFile, sizeOrig, filePathCopy) : errorHandler(error);
                     });
                 }).catch((error) => {
                     dialog(error.message);
@@ -243,29 +247,32 @@ let processFile = (filePath, fileName) => {
             case '.jpg':
             case '.jpeg':
             {
-                execFile(mozjpeg, ['-outfile', newFile, filePath], (err) => {
+                execFile(mozjpeg, ['-outfile', newFile, filePath], (error) => {
                     touchBarResult.label = 'Your shrinked image: ' + newFile;
 
-                    sendToRenderer(err, newFile, sizeOrig);
+                    !error ? sendToRenderer(newFile, sizeOrig, filePathCopy) : errorHandler(error);
+
                 });
 
                 break;
             }
             case '.png':
             {
-                execFile(pngquant, ['-fo', newFile, filePath], (err) => {
+                execFile(pngquant, ['-fo', newFile, filePath], (error) => {
                     touchBarResult.label = 'Your shrinked image: ' + newFile;
-                    sendToRenderer(err, newFile, sizeOrig);
+
+                    !error ? sendToRenderer(newFile, sizeOrig, filePathCopy) : errorHandler(error);
                 });
                 break;
             }
             case '.gif':
             {
                 execFile(gifsicle, ['-o', newFile, filePath, '-O=2', '-i'],
-                    err => {
+                    error => {
                         touchBarResult.label = 'Your shrinked image: ' +
                             newFile;
-                        sendToRenderer(err, newFile, sizeOrig);
+
+                        !error ? sendToRenderer(newFile, sizeOrig, filePathCopy) : errorHandler(error);
                     });
                 break;
             }
@@ -323,29 +330,36 @@ let getFileSize = (filePath, mb) => {
 
 /**
  * Send data to renderer script
- * @param  {object} err      Error message
+ *
  * @param  {string} newFile  New filename
  * @param  {number}  sizeOrig Original filesize
+ * @param  {string} filePathCopy  Backupfile
  */
-let sendToRenderer = (err, newFile, sizeOrig) => {
+const sendToRenderer = (newFile, sizeOrig, filePathCopy) => {
 
-    if (!err)
-    {
-        let sizeShrinked = getFileSize(newFile, false);
+    let sizeShrinked = getFileSize(newFile, false);
 
-        mainWindow.webContents.send(
-            'isShrinked',
-            newFile,
-            sizeOrig,
-            sizeShrinked
-        );
-    } else
-    {
-        log.error(err);
-        mainWindow.webContents.send('error');
-        dialog.showMessageBox({
-            'type': 'error',
-            'message': 'I\'m not able to write your new image. Sorry!'
-        });
-    }
+    /** Remove backup file **/
+    fs.unlinkSync(filePathCopy);
+
+    mainWindow.webContents.send(
+        'isShrinked',
+        newFile,
+        sizeOrig,
+        sizeShrinked
+    );
+};
+
+/**
+ * ErrorHandling
+ *
+ * @param  {string} error
+ */
+const errorHandler = (error) => {
+    log.error(error);
+    mainWindow.webContents.send('error');
+    dialog.showMessageBox({
+        'type': 'error',
+        'message': 'I\'m not able to write your new image. Sorry!'
+    });
 };
