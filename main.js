@@ -84,7 +84,6 @@ const createWindow = () => {
         clearlist: false,
         suffix: true,
         updatecheck: true
-
     };
 
     /** set default settings at first launch */
@@ -243,7 +242,23 @@ let processFile = (filePath, fileName) => {
             case '.jpg':
             case '.jpeg':
             {
-                execFile(mozjpeg, ['-outfile', newFile, filePath], (err) => {
+                // Create temp file from original
+                let origFile;
+
+                if (!settings.get('suffix')) {
+                    origFile = newFile + '.tmp';
+                    fs.copyFileSync(filePath, origFile);
+                }else {
+                    origFile = filePath;
+                }
+
+                //
+                execFile(mozjpeg, ['-outfile', newFile, origFile], (err) => {
+                    if (!settings.get('suffix'))
+                    {
+                        fs.unlinkSync(origFile);
+                    }
+
                     touchBarResult.label = 'Your shrinked image: ' + newFile;
 
                     sendToRenderer(err, newFile, sizeOrig);
