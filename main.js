@@ -17,6 +17,7 @@ const gifsicle = require('gifsicle');
  * Start logging in os log
  */
 autoUpdater.logger = log;
+
 autoUpdater.logger.transports.file.level = 'info';
 log.info('App starting...');
 
@@ -83,7 +84,8 @@ const createWindow = () => {
         folderswitch: true,
         clearlist: false,
         suffix: true,
-        updatecheck: true
+        updatecheck: true,
+        subfolder: false,
     };
 
     /** set default settings at first launch */
@@ -302,6 +304,10 @@ let processFile = (filePath, fileName) => {
 const generateNewPath = (pathName) => {
 
     let objPath = path.parse(pathName);
+    if (settings.get('subfolder'))
+    {
+        objPath.dir = objPath.dir + '/minified';
+    }
 
     if (settings.get('folderswitch') === false &&
         typeof settings.get('savepath') !== 'undefined')
@@ -360,7 +366,7 @@ let sendToRenderer = (err, newFile, sizeOrig) => {
         mainWindow.webContents.send('error');
         dialog.showMessageBox({
             'type': 'error',
-            'message': 'I\'m not able to write your new image. Sorry!'
+            'message': 'I\'m not able to write your new image. Sorry! Error: ' + err
         });
     }
 };
