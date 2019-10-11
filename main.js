@@ -27,7 +27,7 @@ log.info('App starting...');
 let svg = new svgo();
 let mainWindow;
 global.debug = {
-    devTools: 0
+    devTools: 1
 };
 
 /**
@@ -232,7 +232,6 @@ let processFile = (filePath, fileName) => {
                     fs.writeFile(newFile, result.data, (err) => {
                         touchBarResult.label = 'Your shrinked image: ' +
                             newFile;
-                        log.info('asdasd  ' + typeof err);
 
                         sendToRenderer(err, newFile, sizeOrig);
                     });
