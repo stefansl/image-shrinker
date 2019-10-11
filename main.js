@@ -245,8 +245,9 @@ let processFile = (filePath, fileName) => {
             {
                 // Create temp file from original
                 let origFile;
+                let addTmpFile = !settings.get('suffix') && !settings.get('subfolder');
 
-                if (!settings.get('suffix')) {
+                if (addTmpFile) {
                     origFile = newFile + '.tmp';
                     fs.copyFileSync(filePath, origFile);
                 }else {
@@ -255,13 +256,10 @@ let processFile = (filePath, fileName) => {
 
                 //
                 execFile(mozjpeg, ['-outfile', newFile, origFile], (err) => {
-                    if (!settings.get('suffix'))
-                    {
-                        fs.unlinkSync(origFile);
-                    }
+                    // Delete tmp file
+                    !addTmpFile || fs.unlinkSync(origFile);
 
                     touchBarResult.label = 'Your shrinked image: ' + newFile;
-
                     sendToRenderer(err, newFile, sizeOrig);
                 });
 
