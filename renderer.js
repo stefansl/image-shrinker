@@ -18,6 +18,7 @@ let dragzone = document.getElementById('dragzone'),
     clearlist = document.getElementById('clearlist'),
     updatecheck = document.getElementById('updatecheck'),
     suffix = document.getElementById('suffix'),
+    subfolder = document.getElementById('subfolder'),
     notification = document.getElementById('notification');
 
 /*
@@ -28,6 +29,8 @@ notification.checked = userSetting.notification;
 clearlist.checked = userSetting.clearlist;
 updatecheck.checked = userSetting.updatecheck;
 suffix.checked = userSetting.suffix;
+subfolder.checked = userSetting.subfolder;
+
 
 if (userSetting.folderswitch === false)
 {
