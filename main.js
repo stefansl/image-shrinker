@@ -89,11 +89,9 @@ const createWindow = () => {
     };
 
     /** set missing settings */
-    Object.keys(defaultSettings).filter((setting) => {
-        if (!settings.has(setting)) {
-            settings.set(setting, defaultSettings[setting]);
-        }
-    });
+    let actualSettings = settings.getAll();
+    const newSettings = Object.assign({}, defaultSettings, actualSettings);
+    settings.setAll(newSettings);
 
     mainWindow.setTouchBar(touchBar);
     require('./menu/mainmenu');
