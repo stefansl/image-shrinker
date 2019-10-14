@@ -52,12 +52,12 @@ const createWindow = () => {
         }
     });
 
-    /** show it when it's ready */
+    /** Show window when ready */
     mainWindow.on('ready-to-show', () => {
         mainWindow.show();
     });
 
-    /** and load the index.html of the app. */
+    /** Load index.html of the app. */
     mainWindow.loadURL(path.join('file://', __dirname, '/index.html')).then(
         () => {
             /** Open the DevTools. */
@@ -79,7 +79,7 @@ const createWindow = () => {
     });
 
     /** Default settings */
-    let defaultSettings = {
+    const defaultSettings = {
         notification: true,
         folderswitch: true,
         clearlist: false,
@@ -166,13 +166,13 @@ app.on('activate', () => {
     }
 });
 
-/** when the update has been downloaded and is ready to be installed, notify the BrowserWindow */
+/** When the update has been downloaded and is ready to be installed, notify the BrowserWindow */
 autoUpdater.on('update-downloaded', (info) => {
     log.info(info);
     mainWindow.webContents.send('updateReady');
 });
 
-/** when receiving a quitAndInstall signal, quit and install the new version ;) */
+/** When receiving a quitAndInstall signal, quit and install the new version ;) */
 ipcMain.on('quitAndInstall', (event, arg) => {
     log.info(event);
     log.info(arg);
@@ -232,7 +232,7 @@ let processFile = (filePath, fileName) => {
             case '.jpg':
             case '.jpeg':
             {
-                // Create temp file from original
+                /**  Create temp file from original, see #54 **/
                 let origFile;
                 let addTmpFile = !settings.get('suffix') && !settings.get('subfolder');
 
@@ -243,9 +243,9 @@ let processFile = (filePath, fileName) => {
                     origFile = filePath;
                 }
 
-                //
                 execFile(mozjpeg, ['-outfile', newFile, origFile], (err) => {
-                    // Delete tmp file
+
+                    /**  Delete tmp file **/
                     !addTmpFile || fs.unlinkSync(origFile);
 
                     touchBarResult.label = 'Your shrinked image: ' + newFile;
