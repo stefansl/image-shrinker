@@ -89,8 +89,7 @@ const createWindow = () => {
     };
 
     /** set missing settings */
-    let actualSettings = settings.getAll();
-    const newSettings = Object.assign({}, defaultSettings, actualSettings);
+    const newSettings = Object.assign({}, defaultSettings, settings.getAll());
     settings.setAll(newSettings);
 
     mainWindow.setTouchBar(touchBar);
