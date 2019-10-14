@@ -88,18 +88,10 @@ const createWindow = () => {
         subfolder: false,
     };
 
-    /** set default settings at first launch */
-    if (Object.keys(settings.getAll()).length === 0)
-    {
-        settings.setAll(defaultSettings);
-    }
-
     /** set missing settings */
-    let settingsAll = settings.getAll();
-    Object.keys(defaultSettings).forEach((key) => {
-        if (!settingsAll.hasOwnProperty(key))
-        {
-            settings.set(key, defaultSettings[key]);
+    Object.keys(defaultSettings).filter((setting) => {
+        if (!settings.has(setting)) {
+            settings.set(setting, defaultSettings[setting]);
         }
     });
 
