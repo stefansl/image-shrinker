@@ -1,5 +1,6 @@
-const { app, nativeImage, BrowserWindow, ipcMain, dialog, TouchBar } = require(
+const { app, BrowserWindow, ipcMain, dialog, TouchBar } = require(
     'electron');
+const nativeImage = require('electron').nativeImage;
 const { autoUpdater } = require('electron-updater');
 const log = require('electron-log');
 const fs = require('fs');
@@ -18,7 +19,7 @@ const gifsicle = require('gifsicle');
  */
 autoUpdater.logger = log;
 
-autoUpdater.logger.transports.file.level = 'info';
+autoUpdater.logger['transports'].file.level = 'info';
 log.info('App starting...');
 
 /**
@@ -61,7 +62,7 @@ const createWindow = () => {
     mainWindow.loadURL(path.join('file://', __dirname, '/index.html')).then(
         () => {
             /** Open the DevTools. */
-            global.debug.devTools === 0 ||
+            global['debug'].devTools === 0 ||
             mainWindow.webContents.openDevTools();
         }
     ).catch(
@@ -71,7 +72,7 @@ const createWindow = () => {
     );
 
     /** Open the DevTools. */
-    global.debug.devTools === 0 || mainWindow.webContents.openDevTools();
+    global['debug'].devTools === 0 || mainWindow.webContents.openDevTools();
 
     /** Window closed */
     mainWindow.on('closed', () => {
@@ -274,7 +275,7 @@ let processFile = (filePath, fileName) => {
             }
             default:
                 mainWindow.webContents.send('error');
-                dialog.showMessageBox({
+                dialog.showMessageBoxSync({
                     'type': 'error',
                     'message': 'Only PNG SVG, JPG and GIF allowed'
                 });
@@ -304,7 +305,7 @@ const generateNewPath = (pathName) => {
     makeDir.sync(objPath.dir);
 
     /** Suffix setting */
-    let suffix = settings.get('suffix') ? '.min' : '';
+    const suffix = settings.get('suffix') ? '.min' : '';
     objPath.base = objPath.name + suffix + objPath.ext;
 
     return path.format(objPath);
@@ -350,7 +351,7 @@ let sendToRenderer = (err, newFile, sizeOrig) => {
     {
         log.error(err);
         mainWindow.webContents.send('error');
-        dialog.showMessageBox({
+        dialog.showMessageBoxSync({
             'type': 'error',
             'message': 'I\'m not able to write your new image. Sorry! Error: ' + err
         });
