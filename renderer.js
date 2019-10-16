@@ -4,8 +4,10 @@ const { dialog } = require('electron').remote;
 const fs = require('fs');
 const path = require('path');
 const log = require('electron-log');
+const cutFolderName = require(path.resolve('lib/cutfoldername'));
 
-let dragzone = document.getElementById('dragzone'),
+
+const dragzone = document.getElementById('dragzone'),
     resultBox = document.getElementById('result'),
     btnOpenSettings = document.getElementById('btnOpenSettings'),
     btnCloseSettings = document.getElementById('btnCloseSettings'),
@@ -147,10 +149,10 @@ btnSavepath.onclick = () => {
  */
 Array.from(switches).forEach(switchEl => {
     switchEl.onchange = e => {
-        settings.set(e.target.name, e.target.checked);
-        if (e.target.name === 'folderswitch')
+        settings.set(e.target['name'], e.target['checked']);
+        if (e.target['name'] === 'folderswitch')
         {
-            if (e.target.checked === false)
+            if (!e.target['checked'])
             {
                 wrapperSavePath.classList.remove('d-none');
             } else
@@ -178,7 +180,7 @@ btnCloseSettings.onclick = e => {
 
 // Close on pressing ESC
 document.onkeyup = e => {
-    if (e.key === 27)
+    if (e.key === 'Escape')
     {
         menuSettings.classList.remove('is--open');
     }
@@ -188,13 +190,13 @@ document.onkeyup = e => {
  * Renderer process
  */
 ipcRenderer.on('isShrinked', (event, path, sizeBefore, sizeAfter) => {
-    let percent = Math.round((100 / sizeBefore) * (sizeBefore - sizeAfter));
+    const percent = Math.round((100 / sizeBefore) * (sizeBefore - sizeAfter));
 
     // Remove loader
     dragzone.classList.remove('is--processing');
 
     // Create container
-    let resContainer = document.createElement('div');
+    const resContainer = document.createElement('div');
     resContainer.className = 'resLine';
     resContainer.innerHTML =
         '<span>You saved ' +
@@ -311,7 +313,7 @@ function traverseFileTree(item, path)
     } else if (item.isDirectory)
     {
         // Get folder contents
-        let dirReader = item.createReader();
+        const dirReader = item.createReader();
         dirReader.readEntries(function(entries) {
             for (let i in entries)
             {
@@ -319,19 +321,4 @@ function traverseFileTree(item, path)
             }
         });
     }
-}
-
-/*
- * Cut path from beginning, if necessary
- * return string
- */
-function cutFolderName(path)
-{
-    let length = path.length;
-    if (length >= 48)
-    {
-        path = '... ' + path.substr(length - 48);
-    }
-
-    return path;
 }
