@@ -192,7 +192,7 @@ ipcMain.on(
  * @param  {string} filePath Filepath
  * @param  {string} fileName Filename
  */
-let processFile = (filePath, fileName) => {
+const processFile = (filePath, fileName) => {
 
     /** Focus window on drag */
     !mainWindow || mainWindow.focus();
@@ -212,7 +212,7 @@ let processFile = (filePath, fileName) => {
         }
 
         app.addRecentDocument(filePath);
-        let newFile = generateNewPath(filePath);
+        const newFile = generateNewPath(filePath);
 
         switch (path.extname(fileName).toLowerCase())
         {
@@ -317,16 +317,15 @@ const generateNewPath = (pathName) => {
  * @param  {boolean} mb     If true return as MB
  * @return {number}         filesize in MB or KB
  */
-let getFileSize = (filePath, mb) => {
+const getFileSize = (filePath, mb) => {
     const stats = fs.statSync(filePath);
-    let fileSize = stats.size;
 
     if (mb)
     {
-        fileSize = fileSize / 1024;
+        return stats.size / 1024;
     }
 
-    return fileSize;
+    return stats.size;
 };
 
 /**
@@ -335,7 +334,7 @@ let getFileSize = (filePath, mb) => {
  * @param  {string} newFile  New filename
  * @param  {number}  sizeOrig Original filesize
  */
-let sendToRenderer = (err, newFile, sizeOrig) => {
+const sendToRenderer = (err, newFile, sizeOrig) => {
 
     if (!err)
     {
