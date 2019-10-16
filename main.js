@@ -291,15 +291,16 @@ const processFile = (filePath, fileName) => {
 const generateNewPath = (pathName) => {
 
     let objPath = path.parse(pathName);
-    if (settings.get('subfolder'))
-    {
-        objPath.dir = objPath.dir + '/minified';
-    }
 
     if (settings.get('folderswitch') === false &&
         typeof settings.get('savepath') !== 'undefined')
     {
         objPath.dir = settings.get('savepath')[0];
+    }
+
+    if (settings.get('subfolder'))
+    {
+        objPath.dir = objPath.dir + '/minified';
     }
 
     makeDir.sync(objPath.dir);
