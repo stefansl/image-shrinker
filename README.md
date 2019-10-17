@@ -27,13 +27,20 @@ $ npm install
 ```
 Generate your macOS package
 ```shell
-npm run pack-mac
+electron-builder build --mac
 ```
 
 Generate your Linux package
 ```shell
-npm run pack-linux
+electron-builder build --linux
 ```
+
+Generate your Windows package
+```shell
+electron-builder build --win
+```
+
+Notice: I did not test Windows and Linux. Feel free to commit a pull request.
 
 ## Credits
 Thank you, guys!
