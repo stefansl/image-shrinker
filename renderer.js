@@ -47,7 +47,7 @@ if (userSetting.folderswitch === false)
  * @param {{savepath:string}} userSetting
  */
 if (userSetting.savepath)
-    btnSavepath.innerText = cutFolderName(userSetting.savepath[0]);
+    btnSavepath.innerText = cutFolderName(userSetting.savepath[0], 48);
 
 /*
  * Open filepicker
@@ -136,7 +136,7 @@ btnSavepath.onclick = () => {
         }).then(result => {
         if (result.filePaths)
         {
-            btnSavepath.innerText = cutFolderName(result.filePaths[0]);
+            btnSavepath.innerText = cutFolderName(result.filePaths[0], 48);
             settings.set('savepath', result.filePaths);
         }
     }).catch(err => {
