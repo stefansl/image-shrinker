@@ -4,7 +4,6 @@ const { dialog } = require('electron').remote;
 const fs = require('fs');
 const path = require('path');
 const log = require('electron-log');
-const cutFolderName = require(path.resolve('lib/cutfoldername'));
 
 
 const dragzone = document.getElementById('dragzone'),
@@ -42,6 +41,18 @@ if (userSetting.folderswitch === false)
 {
     folderswitch.checked = true;
 }
+
+
+/*
+ * Cut path from beginning, if necessary
+ * @param  {string} path    Filepath
+ * @param  {integer} length max length
+ * @return {string}         truncated string
+ */
+const cutFolderName = (path, length = 20) => {
+    return path.length >= length ? '... ' + path.substr(path.length - length) : path;
+};
+
 
 /**
  * @param {{savepath:string}} userSetting
