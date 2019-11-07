@@ -50,6 +50,7 @@
     "electron": "^6.0.12",
     "electron-builder": "^22.1.0",
     "electron-installer-dmg": "^3.0.0",
+    "electron-notarize": "^0.2.0",
     "fs-extra": "^8.1.0"
   },
   "dependencies": {
@@ -65,10 +66,15 @@
   },
   "build": {
     "appId": "de.clickpress.image-shrinker",
+    "afterSign": "lib/notarize.js",
     "mac": {
       "category": "public.app-category.developer-tools",
       "target": [],
-      "type": "distribution"
+      "type": "distribution",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist"
     },
     "win": {
       "icon": "256x256.png"
