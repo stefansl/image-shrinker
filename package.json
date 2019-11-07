@@ -46,15 +46,16 @@
   "author": "Stefan Schulz-Lauterbach",
   "license": "CC0-1.0",
   "devDependencies": {
+    "dotenv": "^8.2.0",
     "electron": "^6.0.12",
-    "electron-builder": "^21.2.0",
+    "electron-builder": "^22.1.0",
     "electron-installer-dmg": "^3.0.0",
     "fs-extra": "^8.1.0"
   },
   "dependencies": {
     "electron-log": "^3.0.8",
     "electron-settings": "^3.2.0",
-    "electron-updater": "^4.1.2",
+    "electron-updater": "^4.2.0",
     "gifsicle": "^4.0.1",
     "make-dir": "^3.0.0",
     "mozjpeg": "^6.0.1",

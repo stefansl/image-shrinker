@@ -13,3 +13,4 @@ Image Shrinker-linux-x64/
 /dist/
 /assets/css/imageshrinker.css.map
 /assets/css/spectre.css.map
+/.env

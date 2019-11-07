@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain, dialog, TouchBar } = require(
     'electron');
+const dotenv = require('dotenv').config();
 const nativeImage = require('electron').nativeImage;
 const { autoUpdater } = require('electron-updater');
 const log = require('electron-log');
@@ -14,6 +15,19 @@ const makeDir = require('make-dir');
 const { TouchBarButton } = TouchBar;
 const gifsicle = require('gifsicle');
 
+global.debug = {
+    devTools: 0
+};
+
+/**
+ * Support for .env
+ */
+if(!dotenv.error){
+    global.debug = {
+        devTools: process.env.ELECTRON_DEBUG
+    };
+}
+
 /**
  * Start logging in os log
  */
@@ -27,9 +41,7 @@ log.info('App starting...');
  */
 let svg = new svgo();
 let mainWindow;
-global.debug = {
-    devTools: 0
-};
+
 
 /**
  * Create the browser window
