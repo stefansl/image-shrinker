@@ -52,4 +52,4 @@ Thank you, guys!
 * Poly background: <http://alssndro.github.io/trianglify-background-generator>
 * CSS: [Spectre Css](https://picturepan2.github.io/spectre/)
 * Font: [Mozillas Fira Sans](https://github.com/mozilla/Fira)
-* gifsicle: <https://www.lcdf.org/gifsicle/>
+* gifsicle: <https://github.com/kohler/gifsicle>
