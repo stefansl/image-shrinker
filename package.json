@@ -46,7 +46,7 @@
   "author": "Stefan Schulz-Lauterbach",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^6.1.5",
+    "electron": "^9.1.0",
     "electron-builder": "^22.2.0",
     "electron-installer-dmg": "^3.0.0",
     "electron-notarize": "^0.2.1",
