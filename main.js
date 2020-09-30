@@ -233,7 +233,7 @@ const processFile = (filePath, fileName) => {
             {
                 svg.optimize(data).then((result) => {
                     fs.writeFile(newFile, result.data, (err) => {
-                        touchBarResult.label = 'Your shrinked image: ' +
+                        touchBarResult.label = 'Your shrunken image: ' +
                             newFile;
 
                         sendToRenderer(err, newFile, sizeOrig);
@@ -262,7 +262,7 @@ const processFile = (filePath, fileName) => {
                     /**  Delete tmp file **/
                     !addTmpFile || fs.unlinkSync(origFile);
 
-                    touchBarResult.label = 'Your shrinked image: ' + newFile;
+                    touchBarResult.label = 'Your shrunken image: ' + newFile;
                     sendToRenderer(err, newFile, sizeOrig);
                 });
 
@@ -271,7 +271,7 @@ const processFile = (filePath, fileName) => {
             case '.png':
             {
                 execFile(pngquant, ['-fo', newFile, filePath], (err) => {
-                    touchBarResult.label = 'Your shrinked image: ' + newFile;
+                    touchBarResult.label = 'Your shrunken image: ' + newFile;
                     sendToRenderer(err, newFile, sizeOrig);
                 });
                 break;
@@ -280,7 +280,7 @@ const processFile = (filePath, fileName) => {
             {
                 execFile(gifsicle, ['-o', newFile, filePath, '-O=2', '-i'],
                     err => {
-                        touchBarResult.label = 'Your shrinked image: ' +
+                        touchBarResult.label = 'Your shrunken image: ' +
                             newFile;
                         sendToRenderer(err, newFile, sizeOrig);
                     });
@@ -297,7 +297,7 @@ const processFile = (filePath, fileName) => {
 };
 
 /**
- * Generate new path to shrinked file
+ * Generate new path to shrunken file
  * @param  {string} pathName Filepath
  * @return {object}         filepath object
  */
