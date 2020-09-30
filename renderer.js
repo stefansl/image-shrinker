@@ -137,7 +137,7 @@ document.ondrop = e => {
 };
 
 /*
- * Choose folder for saving shrinked images
+ * Choose folder for saving shrunked images
  */
 btnSavepath.onclick = () => {
     dialog.showOpenDialog(
@@ -231,7 +231,7 @@ ipcRenderer.on('isShrinked', (event, path, sizeBefore, sizeAfter) => {
     // Notification
     if (settings.get('notification'))
     {
-        new window.Notification('Image shrinked, pal!', {
+        new window.Notification('Image shrunk, pal!', {
             body: path,
             silent: true
         });
