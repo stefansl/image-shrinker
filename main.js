@@ -59,9 +59,10 @@ const createWindow = () => {
         backgroundColor: '#F7F7F7',
         resizable: true,
         show: false,
-        icon: path.join(__dirname, 'assets/icons/png/64x64.png'),
+        //icon: path.join(__dirname, 'assets/icons/png/64x64.png'),
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: true,
+            enableRemoteModule: true
         }
     });
 
@@ -102,8 +103,8 @@ const createWindow = () => {
     };
 
     /** set missing settings */
-    const newSettings = Object.assign({}, defaultSettings, settings.getAll());
-    settings.setAll(newSettings);
+    const newSettings = Object.assign({}, defaultSettings, settings.get());
+    settings.set(newSettings);
 
     mainWindow.setTouchBar(touchBar);
     require('./menu/mainmenu');

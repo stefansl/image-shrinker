@@ -5,7 +5,6 @@ const fs = require('fs');
 const path = require('path');
 const log = require('electron-log');
 
-
 const dragzone = document.getElementById('dragzone'),
     resultBox = document.getElementById('result'),
     btnOpenSettings = document.getElementById('btnOpenSettings'),
@@ -25,7 +24,7 @@ const dragzone = document.getElementById('dragzone'),
 /*
  * Settings
  */
-let userSetting = settings.getAll();
+let userSetting = settings.get();
 notification.checked = userSetting.notification;
 clearlist.checked = userSetting.clearlist;
 updatecheck.checked = userSetting.updatecheck;
