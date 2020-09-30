@@ -24,13 +24,12 @@ const dragzone = document.getElementById('dragzone'),
 /*
  * Settings
  */
-let userSetting = settings.get();
+let userSetting = settings.getSync();
 notification.checked = userSetting.notification;
 clearlist.checked = userSetting.clearlist;
 updatecheck.checked = userSetting.updatecheck;
 suffix.checked = userSetting.suffix;
 subfolder.checked = userSetting.subfolder;
-
 
 if (userSetting.folderswitch === false)
 {
@@ -137,7 +136,7 @@ document.ondrop = e => {
 };
 
 /*
- * Choose folder for saving shrunked images
+ * Choose folder for saving shrunken images
  */
 btnSavepath.onclick = () => {
     dialog.showOpenDialog(

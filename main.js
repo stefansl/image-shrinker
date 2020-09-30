@@ -103,9 +103,8 @@ const createWindow = () => {
     };
 
     /** set missing settings */
-    const newSettings = Object.assign({}, defaultSettings, settings.get());
-    settings.set(newSettings);
-
+    const newSettings = Object.assign({}, defaultSettings, settings.getSync());
+    settings.setSync(newSettings);
     mainWindow.setTouchBar(touchBar);
     require('./menu/mainmenu');
 };
@@ -305,7 +304,7 @@ const generateNewPath = (pathName) => {
 
     let objPath = path.parse(pathName);
 
-    if (settings.get('folderswitch') === false &&
+    if ( settings.get('folderswitch') === false &&
         typeof settings.get('savepath') !== 'undefined')
     {
         objPath.dir = settings.get('savepath')[0];
