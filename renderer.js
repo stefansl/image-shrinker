@@ -210,7 +210,7 @@ ipcRenderer.on('isShrinked', (event, path, sizeBefore, sizeAfter) => {
     resContainer.innerHTML =
         '<span>You saved ' +
         percent +
-        '%. Your shrinked image is here:</span><br>';
+        '%. Your shrunken image is here:</span><br>';
 
     // Create link
     let resElement = document.createElement('a');
