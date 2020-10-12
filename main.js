@@ -156,7 +156,7 @@ app.on('will-finish-launching', () => {
 /** Start app */
 app.on('ready', () => {
     createWindow();
-    if (settings.get('updatecheck') === true)
+    if (settings.getSync('updatecheck') === true)
     {
         autoUpdater.checkForUpdatesAndNotify().catch((error) => {
             log.error(error);
@@ -247,7 +247,7 @@ const processFile = (filePath, fileName) => {
             {
                 /**  Create temp file from original, see #54 **/
                 let origFile;
-                let addTmpFile = !settings.get('suffix') && !settings.get('subfolder');
+                let addTmpFile = !settings.getSync('suffix') && !settings.getSync('subfolder');
 
                 if (addTmpFile) {
                     origFile = newFile + '.tmp';
