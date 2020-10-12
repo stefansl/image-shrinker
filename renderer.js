@@ -74,8 +74,7 @@ dragzone.onclick = () => {
 
         // Add loader
         dragzone.classList.add('is--processing');
-
-        if (settings.get('clearlist') === true)
+        if (settings.getSync('clearlist') === true)
         {
             resultBox.innerHTML = '';
         }
@@ -124,7 +123,7 @@ document.ondrop = e => {
         }
     }
 
-    if (settings.get('clearlist'))
+    if (settings.getSync('clearlist'))
     {
         resultBox.innerHTML = '';
     }
@@ -158,7 +157,7 @@ btnSavepath.onclick = () => {
  */
 Array.from(switches).forEach(switchEl => {
     switchEl.onchange = e => {
-        settings.set(e.target['name'], e.target['checked']);
+        settings.setSync(e.target['name'], e.target['checked']);
         if (e.target['name'] === 'folderswitch')
         {
             if (!e.target['checked'])
@@ -171,7 +170,6 @@ Array.from(switches).forEach(switchEl => {
         }
     };
 });
-
 /*
  * Settings menu
  */
@@ -228,7 +226,8 @@ ipcRenderer.on('isShrinked', (event, path, sizeBefore, sizeAfter) => {
     resultBox.prepend(resContainer);
 
     // Notification
-    if (settings.get('notification'))
+
+    if (settings.getSync('notification'))
     {
         new window.Notification('Image shrunk, pal!', {
             body: path,
@@ -307,6 +306,7 @@ function traverseFileTree(item, path)
 {
     const exclude = ['.DS_Store'];
     path = path || '';
+
     if (item.isFile)
     {
         // Get file
@@ -317,6 +317,7 @@ function traverseFileTree(item, path)
 
                 return false;
             }
+
             ipcRenderer.send('shrinkImage', f.name, f.path, f.lastModified);
         });
     } else if (item.isDirectory)

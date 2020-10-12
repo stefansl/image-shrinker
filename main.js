@@ -304,13 +304,13 @@ const generateNewPath = (pathName) => {
 
     let objPath = path.parse(pathName);
 
-    if ( settings.get('folderswitch') === false &&
-        typeof settings.get('savepath') !== 'undefined')
+    if ( settings.getSync('folderswitch') === false &&
+        typeof settings.getSync('savepath') !== 'undefined')
     {
-        objPath.dir = settings.get('savepath')[0];
+        objPath.dir = settings.getSync('savepath')[0];
     }
 
-    if (settings.get('subfolder'))
+    if (settings.getSync('subfolder'))
     {
         objPath.dir = objPath.dir + '/minified';
     }
@@ -318,7 +318,7 @@ const generateNewPath = (pathName) => {
     makeDir.sync(objPath.dir);
 
     /** Suffix setting */
-    const suffix = settings.get('suffix') ? '.min' : '';
+    const suffix = settings.getSync('suffix') ? '.min' : '';
     objPath.base = objPath.name + suffix + objPath.ext;
 
     return path.format(objPath);
