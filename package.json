@@ -1,6 +1,6 @@
 {
   "name": "image-shrinker",
-  "version": "1.6.4",
+  "version": "1.6.5",
   "description": "Minify your images and graphics with just one drop",
   "main": "main.js",
   "title": "Image Shrinker",
@@ -46,8 +46,8 @@
   "author": "Stefan Schulz-Lauterbach",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^10.1.0",
-    "electron-builder": "^22.7.0",
+    "electron": "^10.1.5",
+    "electron-builder": "^22.9.1",
     "electron-installer-dmg": "^3.0.0",
     "electron-notarize": "^1.0.0",
     "fs-extra": "^9.0.1"
