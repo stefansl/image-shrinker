@@ -238,7 +238,7 @@ const processFile = (filePath, fileName) => {
                         sendToRenderer(err, newFile, sizeOrig);
                     });
                 }).catch((error) => {
-                    dialog(error.message);
+                    dialog.showErrorBox('Error', error.message);
                 });
                 break;
             }
