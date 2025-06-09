@@ -5,7 +5,7 @@ const log = require('electron-log');
 const fs = require('fs');
 const path = require('path');
 const settings = require('electron-settings');
-const svgo = require('svgo');
+const { optimize } = require('svgo');
 const execFile = require('child_process').execFile;
 const mozjpeg = require('mozjpeg');
 const pngquant = require('pngquant-bin');
@@ -23,7 +23,6 @@ log.info('App starting...');
 /**
  * Init vars
  */
-let svg = new svgo();
 let mainWindow;
 global.debug = {
     devTools: 1
@@ -47,7 +46,8 @@ const createWindow = () => {
         show: false,
         icon: path.join(__dirname, 'assets/icons/png/64x64.png'),
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: true,
+            contextIsolation: false
         }
     });
 
@@ -176,6 +176,15 @@ app.on('activate', () => {
     }
 });
 
+/** dialog helpers for renderer process */
+ipcMain.handle('show-open-dialog', async () => {
+    return dialog.showOpenDialog(mainWindow, { properties: ['openFile', 'multiSelections'] });
+});
+
+ipcMain.handle('show-savepath-dialog', async () => {
+    return dialog.showOpenDialog(mainWindow, { properties: ['openDirectory', 'createDirectory'] });
+});
+
 /** when the update has been downloaded and is ready to be installed, notify the BrowserWindow */
 autoUpdater.on('update-downloaded', (info) => {
     log.info(info);
@@ -233,15 +242,16 @@ let processFile = (filePath, fileName) => {
         {
             case '.svg':
             {
-                svg.optimize(data).then((result) => {
+                try {
+                    const result = optimize(data);
                     fs.writeFile(newFile, result.data, (error) => {
                         touchBarResult.label = 'Your shrinked image: ' + newFile;
 
                         !error ? sendToRenderer(newFile, sizeOrig, filePathCopy) : errorHandler(error);
                     });
-                }).catch((error) => {
-                    dialog(error.message);
-                });
+                } catch (error) {
+                    dialog.showErrorBox('SVGO Error', error.message);
+                }
                 break;
             }
             case '.jpg':

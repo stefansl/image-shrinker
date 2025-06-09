@@ -1,6 +1,5 @@
 const { ipcRenderer, shell } = require('electron');
 const settings = require('electron-settings');
-const { dialog } = require('electron').remote;
 const fs = require('fs');
 const path = require('path');
 const log = require('electron-log');
@@ -46,10 +45,7 @@ if (userSetting.savepath)
  * Open filepicker
  */
 dragzone.onclick = () => {
-    dialog.showOpenDialog(
-        {
-            properties: ['openFile', 'multiSelections']
-        }).then(result => {
+    ipcRenderer.invoke('show-open-dialog').then(result => {
 
         if (result.canceled)
         {
@@ -123,10 +119,7 @@ document.ondrop = e => {
  * Choose folder for saving shrinked images
  */
 btnSavepath.onclick = () => {
-    dialog.showOpenDialog(
-        {
-            properties: ['openDirectory', 'createDirectory']
-        }).then(result => {
+    ipcRenderer.invoke('show-savepath-dialog').then(result => {
         if (result.filePaths)
         {
             btnSavepath.innerText = cutFolderName(result.filePaths[0]);
