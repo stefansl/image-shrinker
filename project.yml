@@ -1,0 +1,25 @@
+name: ImageShrinker
+options:
+  bundleIdPrefix: de.clickpress
+  deploymentTarget:
+    macOS: "14.0"
+packages:
+  ImageShrinkerCore:
+    path: .
+targets:
+  ImageShrinker:
+    type: application
+    platform: macOS
+    sources: [Sources/ImageShrinkerApp]
+    settings:
+      base:
+        PRODUCT_NAME: "Image Shrinker"
+        PRODUCT_BUNDLE_IDENTIFIER: de.clickpress.image-shrinker
+        INFOPLIST_FILE: Sources/ImageShrinkerApp/Info.plist
+        CODE_SIGN_ENTITLEMENTS: Sources/ImageShrinkerApp/ImageShrinker.entitlements
+        MARKETING_VERSION: "2.0.0"
+        CURRENT_PROJECT_VERSION: "1"
+        ENABLE_HARDENED_RUNTIME: YES
+    dependencies:
+      - package: ImageShrinkerCore
+        product: ImageShrinkerCore

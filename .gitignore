@@ -18,3 +18,4 @@ Image Shrinker-linux-x64/
 # SwiftPM / Xcode
 .build/
 ImageShrinker.xcodeproj/
+build/dd/
