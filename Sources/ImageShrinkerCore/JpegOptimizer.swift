@@ -5,7 +5,30 @@ public struct JpegOptimizer: ImageOptimizer {
     public init(binary: URL) { self.binary = binary }
 
     public func optimize(input: URL, output: URL) throws {
-        try ProcessRunner.run(binary, ["-outfile", output.path, input.path])
+        // cjpeg writes its output by truncating the target file up front, so
+        // when `output` resolves to the same file as `input` (e.g. suffix=false,
+        // subfolder=false, folderSwitch=true in OutputPathBuilder), running
+        // cjpeg directly on it destroys the original before cjpeg can read it,
+        // leaving a 0-byte file even though cjpeg then exits with an error.
+        // Guard by running against a temp copy in that case (legacy #54).
+        let sameFile = input.standardizedFileURL.path == output.standardizedFileURL.path
+        let source: URL
+        if sameFile {
+            let tempCopy = FileManager.default.temporaryDirectory
+                .appendingPathComponent(UUID().uuidString)
+                .appendingPathExtension(input.pathExtension)
+            try FileManager.default.copyItem(at: input, to: tempCopy)
+            source = tempCopy
+        } else {
+            source = input
+        }
+        defer {
+            if sameFile {
+                try? FileManager.default.removeItem(at: source)
+            }
+        }
+
+        try ProcessRunner.run(binary, ["-outfile", output.path, source.path])
         guard TestableFileSize.nonEmpty(output) else { throw OptimizerError.invalidOutput }
     }
 }
