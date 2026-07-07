@@ -17,14 +17,40 @@ enum ProcessRunner {
         proc.executableURL = exe
         proc.arguments = args
         let err = Pipe()
+        let out = Pipe()
         proc.standardError = err
-        proc.standardOutput = Pipe()
+        proc.standardOutput = out
+
+        // Drain both pipes concurrently on background queues, started before
+        // launching the process, to avoid a classic Process/Pipe deadlock:
+        // if the child writes more than the OS pipe buffer (~64KB) before
+        // exiting, it blocks on the write until we read, but waitUntilExit()
+        // would otherwise block until the child exits -- a cycle that never
+        // resolves unless both pipes are drained concurrently with the wait.
+        var errData = Data()
+        var outData = Data()
+        let group = DispatchGroup()
+
+        group.enter()
+        DispatchQueue.global(qos: .utility).async {
+            errData = err.fileHandleForReading.readDataToEndOfFile()
+            group.leave()
+        }
+
+        group.enter()
+        DispatchQueue.global(qos: .utility).async {
+            outData = out.fileHandleForReading.readDataToEndOfFile()
+            group.leave()
+        }
+
         try proc.run()
         proc.waitUntilExit()
+        group.wait()
+
         guard proc.terminationStatus == 0 else {
-            let msg = String(data: err.fileHandleForReading.readDataToEndOfFile(),
-                             encoding: .utf8) ?? ""
+            let msg = String(data: errData, encoding: .utf8) ?? ""
             throw OptimizerError.processFailed(code: proc.terminationStatus, message: msg)
         }
+        _ = outData
     }
 }
