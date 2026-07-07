@@ -14,3 +14,8 @@ Image Shrinker-linux-x64/
 /assets/css/imageshrinker.css.map
 /assets/css/spectre.css.map
 /.env
+
+# SwiftPM / Xcode
+.build/
+ImageShrinker.xcodeproj/
+build/dd/
