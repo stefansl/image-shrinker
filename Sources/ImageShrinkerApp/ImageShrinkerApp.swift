@@ -17,6 +17,7 @@ struct ImageShrinkerApp: App {
                 .onAppear {
                     AppDelegate.model = model
                     AppDelegate.settingsProvider = { settings.current }
+                    AppDelegate.flushPending()
                 }
         }
         .windowResizability(.contentSize)
