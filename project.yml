@@ -23,3 +23,11 @@ targets:
     dependencies:
       - package: ImageShrinkerCore
         product: ImageShrinkerCore
+    postCompileScripts:
+      - name: Copy CLI binaries
+        script: |
+          set -e
+          DEST="$CODESIGNING_FOLDER_PATH/Contents/Resources/bin"
+          mkdir -p "$DEST"
+          cp "$SRCROOT/bin/cjpeg" "$SRCROOT/bin/pngquant" "$SRCROOT/bin/gifsicle" "$DEST/"
+          chmod +x "$DEST/cjpeg" "$DEST/pngquant" "$DEST/gifsicle"
