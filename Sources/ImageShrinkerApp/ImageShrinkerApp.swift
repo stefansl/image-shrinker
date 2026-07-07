@@ -4,6 +4,8 @@ import SwiftUI
 struct ImageShrinkerApp: App {
     @StateObject private var settings = SettingsStore()
 
+    init() { NotificationManager.shared.requestAuthorization() }
+
     var body: some Scene {
         WindowGroup {
             ContentView()
